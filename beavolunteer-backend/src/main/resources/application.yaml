@@ -1,0 +1,15 @@
+spring.jpa.show-sql: true
+
+spring.jpa.hibernate.ddl-auto: update
+spring.datasource:
+  driver_class_name: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/menus?useSSL=false
+  username: root
+  password: goodreads
+  timeWindow: 2023-02-02T10:51:37.243515Z
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql=true:
+        enable_lazy_load_no_trans: true
