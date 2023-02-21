@@ -24,6 +24,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/")
 public class UserController extends Controller{
@@ -85,6 +86,5 @@ public class UserController extends Controller{
     public List<UserOutDTO> getAllUsers() {
         return UserMapper.usersToDTO(userService.getAll());
     }
-
-
+    
 }

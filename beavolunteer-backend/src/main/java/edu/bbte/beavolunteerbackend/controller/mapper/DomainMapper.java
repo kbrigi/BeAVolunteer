@@ -16,6 +16,7 @@ public class DomainMapper {
 
     public static DomainDTO domainToDTO(Domain domain) {
         DomainDTO domainDTO = new DomainDTO();
+        domainDTO.setDomain_id(domain.getDomainId());
         domainDTO.setDomain_name(domain.getDomainName());
         domainDTO.setDomain_img("http://localhost:8080/domain/image/" + domain.getDomainName());
         return domainDTO;

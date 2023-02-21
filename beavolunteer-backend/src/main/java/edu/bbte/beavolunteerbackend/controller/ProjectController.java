@@ -17,6 +17,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/proj")
 public class ProjectController extends Controller{

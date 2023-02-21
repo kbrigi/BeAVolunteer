@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class DomainDTO {
+    Long domain_id;
     String domain_name;
     String domain_img;
 }

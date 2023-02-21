@@ -16,6 +16,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Collection;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/domain")
 public class DomainController extends Controller{
