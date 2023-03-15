@@ -9,6 +9,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
 import edu.bbte.beavolunteerbackend.service.UserService;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Blob;
@@ -27,6 +27,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/")
+@Slf4j
 public class UserController extends Controller{
     @Autowired
     private UserService userService;
@@ -42,9 +43,10 @@ public class UserController extends Controller{
     }
 
     @PostMapping(value = "/org", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> saveOrganization(@RequestPart String organization,
-                                                   @RequestPart("file") MultipartFile file) throws SQLException, IOException {
+    public ResponseEntity<String> saveOrganization(@RequestPart(value = "organization") String organization,
+                                                   @RequestPart(value = "file") MultipartFile file) throws SQLException, IOException {
         Blob blob = prepareImage(file);
+        log.info(organization, "file:", file);
         if (blob == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -86,5 +88,5 @@ public class UserController extends Controller{
     public List<UserOutDTO> getAllUsers() {
         return UserMapper.usersToDTO(userService.getAll());
     }
-    
+
 }

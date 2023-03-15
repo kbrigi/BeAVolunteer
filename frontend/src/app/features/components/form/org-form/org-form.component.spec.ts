@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DomainsComponent } from './domains.component';
+import { OrgFormComponent } from './org-form.component';
 
-describe('DomainsComponent', () => {
-  let component: DomainsComponent;
-  let fixture: ComponentFixture<DomainsComponent>;
+describe('OrgFormComponent', () => {
+  let component: OrgFormComponent;
+  let fixture: ComponentFixture<OrgFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DomainsComponent ]
+      declarations: [ OrgFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DomainsComponent);
+    fixture = TestBed.createComponent(OrgFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

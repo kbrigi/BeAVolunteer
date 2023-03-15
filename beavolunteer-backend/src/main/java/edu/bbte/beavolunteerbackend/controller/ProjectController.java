@@ -51,11 +51,6 @@ public class ProjectController extends Controller{
         return projectService.getProjectById(id);
     }
 
-//    @GetMapping()
-//    public ProjectOutDTO getProjectByName(@RequestParam String name) {
-//        return projectService.getProjectByName(name);
-//    }
-
     @GetMapping("/all")
     public List<ProjectOutDTO> getProjects() {
         return projectService.getAll();

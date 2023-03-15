@@ -20,7 +20,7 @@ public class User {
     private Long id;
 
     @NotBlank(message = "username should not be blank")
-    @Size(min = 3, message = "username should be at least 3 chars")
+    @Size(min = 5, message = "username should be at least 3 chars")
     @Size(max = 15, message = "username should be at most 15 chars")
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;

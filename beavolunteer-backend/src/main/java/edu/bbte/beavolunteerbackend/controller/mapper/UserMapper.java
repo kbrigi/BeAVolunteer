@@ -8,6 +8,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.model.Organization;
 import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.Volunteer;
+import edu.bbte.beavolunteerbackend.util.Gender;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,8 @@ public class UserMapper {
         volunteer.setId(id);
         volunteer.setAge(userDTO.getAge());
         volunteer.setDescription(userDTO.getDescription());
-        volunteer.setGender(userDTO.getGender());
+        String gender = userDTO.getGender();
+        volunteer.setGender(Gender.valueOf(gender));
         volunteer.setPhoneNr(userDTO.getPhoneNr());
         volunteer.setVolunteered(userDTO.getVolunteered());
         return volunteer;
@@ -36,7 +38,6 @@ public class UserMapper {
 
     public static Organization orgDTOToUser(OrganizationDTO organizationDTO, Long id) {
         Organization org = new Organization();
-        //needed or auto?
         org.setId(id);
         org.setDescription(organizationDTO.getDescription());
         org.setPhoneNr(organizationDTO.getPhoneNr());

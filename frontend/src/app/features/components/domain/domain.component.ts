@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Domain } from '../../models/domain.model';
 import { DomainService } from '../../services/domain/domain.service';
-// import { MatCardModule } from '@angular/material/card'
 
 @Component({
-  selector: 'app-domains',
-  templateUrl: './domains.component.html',
-  styleUrls: ['./domains.component.css']
+  selector: 'app-domain',
+  templateUrl: './domain.component.html',
+  styleUrls: ['./domain.component.css']
 })
-export class DomainsComponent implements OnInit {
+export class DomainComponent implements OnInit {
 
   domains: Domain[] = [];
 
@@ -21,9 +20,7 @@ export class DomainsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.domainService.getAllDomains().subscribe((result: Domain[]) => 
-      this.domains = result
-    )
-    alert(this.domains);
+    this.getAllDomains();
+    // alert(this.domains);
   }
 }
