@@ -17,6 +17,7 @@ import { DomainComponent } from './features/components/domain/domain.component';
 import { CoreModule } from './core/core.module';
 import { VolunteerFormComponent } from './features/components/form/volunteer-form/volunteer-form.component';
 import { OrgFormComponent } from './features/components/form/org-form/org-form.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { OrgFormComponent } from './features/components/form/org-form/org-form.c
     MatInputModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxMatFileInputModule,
   ],
   exports: [VolunteerFormComponent],
   providers: [],

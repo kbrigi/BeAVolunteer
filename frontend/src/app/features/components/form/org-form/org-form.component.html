@@ -77,11 +77,12 @@
       </div>
 
       <div class="row">
-        <ngx-mat-file-input name="picture" (change)="uploadFile($event)" [formControl]="fileControl" [accept]=".png, .jpg, .jpeg"
-        [color]="color">
-           <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-        </ngx-mat-file-input>
-        <!-- <label class="org-image" for="img">Select image</label>
+        <mat-form-field>
+          <!-- <label class="org-image" for="img">Select a logo</label> -->
+          <ngx-mat-file-input id="img" name="picture" (change)="uploadFile($event)" placeholder="Select a logo">
+            <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
+          </ngx-mat-file-input>
+        <!-- 
         <input
           class="field pic-choose"
           type="file"
@@ -90,6 +91,7 @@
           name="picture"
           (change)="uploadFile($event)"
         /> -->
+      </mat-form-field>
       </div>
 
       <div class="row">
