@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,13 +20,15 @@ import { CoreModule } from './core/core.module';
 import { VolunteerFormComponent } from './features/components/form/volunteer-form/volunteer-form.component';
 import { OrgFormComponent } from './features/components/form/org-form/org-form.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { ProjFormComponent } from './features/components/form/proj-form/proj-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DomainComponent,
     VolunteerFormComponent,
-    OrgFormComponent
+    OrgFormComponent,
+    ProjFormComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +46,11 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatCheckboxModule,
     MatSnackBarModule,
     NgxMatFileInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule 
   ],
   exports: [VolunteerFormComponent],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

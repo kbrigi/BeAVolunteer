@@ -1,10 +1,10 @@
 export type Volunteer = { 
-    email: String,
-    user: String,
-    password: String,
+    email: string,
+    user: string,
+    password: string,
     age: Number,
-    description: String,
-    gender: String,
-    phoneNr: String,
+    description: string,
+    gender: string,
+    phoneNr: string,
     volunteered: Boolean
 }

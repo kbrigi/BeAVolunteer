@@ -1,0 +1,48 @@
+<div class="container">
+    <form [formGroup]="projForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+
+        <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Project Name</mat-label>
+              <input matInput formControlName="project_name">
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error *ngIf="projForm.controls['project_name'].invalid">Project's name must have min. length 5.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Description</mat-label>
+              <mat-icon matSuffix>description</mat-icon>
+              <textarea matInput rows="4" formControlName="project_description"></textarea>
+              <mat-error *ngIf="projForm.controls['project_description'].invalid">Project's description must have min. length 15.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Expiration date</mat-label>
+                <input matInput formControlName="expiration_date" [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="row"> 
+            <mat-form-field>
+              <ngx-mat-file-input id="img" formControlName="img" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">
+                <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+        </div>    
+
+        <div class="row">
+            <button class="button" [disabled]="!projForm.valid" mat-raised-button mat-button
+                    type="submit">
+              Submit
+            </button>
+          </div>
+
+    </form>
+</div>

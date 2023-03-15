@@ -23,6 +23,7 @@ public class ProjectService  extends ImgService  {
         if (projectRepository.checkName(projectDTO.getProject_name()) == 0) {
             Project project = ProjectMapper.projectDTOToEntity(projectDTO);
             project.setProjectImg(img);
+//            set depending to token
             project.setOwnerId(4L);
             projectRepository.insertProject(project.getCreationDate(), project.getExpirationDate(),
                     project.getProjectDescription(), project.getProjectImg(), project.getProjectName(), project.getOwnerId());
