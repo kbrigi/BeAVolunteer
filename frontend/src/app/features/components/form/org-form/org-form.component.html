@@ -3,7 +3,7 @@
   
       <div class="row">
         <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
+          <mat-label>Organization Name</mat-label>
           <input matInput formControlName="user">
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error *ngIf="registrationForm.controls['user'].invalid">Username must have min. length 5.</mat-error>
@@ -76,23 +76,24 @@
         </mat-form-field>
       </div>
 
-      <div class="row">
+       <div class="row"> 
         <mat-form-field>
-          <!-- <label class="org-image" for="img">Select a logo</label> -->
-          <ngx-mat-file-input id="img" name="picture" (change)="uploadFile($event)" placeholder="Select a logo">
-            <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
+
+          <label class="org-image" for="img">Select a logo</label>
+          <ngx-mat-file-input id="img" name="picture" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
+            <mat-icon style="padding: 12px;" ngxMatFileInputIcon>folder</mat-icon>
           </ngx-mat-file-input>
-        <!-- 
-        <input
+        
+        <!-- <input
           class="field pic-choose"
           type="file"
           id="img"
           accept="image/*"
           name="picture"
           (change)="uploadFile($event)"
-        /> -->
+        />  -->
       </mat-form-field>
-      </div>
+      </div> 
 
       <div class="row">
         <mat-form-field appearance="fill">
