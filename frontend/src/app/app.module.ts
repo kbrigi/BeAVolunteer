@@ -21,6 +21,7 @@ import { VolunteerFormComponent } from './features/components/form/volunteer-for
 import { OrgFormComponent } from './features/components/form/org-form/org-form.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { ProjFormComponent } from './features/components/form/proj-form/proj-form.component';
+import { LoginFormComponent } from './features/components/form/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProjFormComponent } from './features/components/form/proj-form/proj-for
     DomainComponent,
     VolunteerFormComponent,
     OrgFormComponent,
-    ProjFormComponent
+    ProjFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

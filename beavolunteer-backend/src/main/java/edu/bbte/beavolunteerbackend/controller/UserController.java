@@ -24,6 +24,11 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
+//TO DO
+// - password resetting
+// - user update
+// - delete user! + connection
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/")
@@ -72,6 +77,10 @@ public class UserController extends Controller{
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(logo);
     }
 
+    @GetMapping("/users")
+    public List<UserOutDTO> getAllUsers() {
+        return UserMapper.usersToDTO(userService.getAll());
+    }
 
     @PostMapping(value = "/login")
     public void login(@RequestBody @Valid UserDTO userDTO) {
@@ -82,11 +91,6 @@ public class UserController extends Controller{
         } catch (BusinessException businessException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, businessException.getMessage());
         }
-    }
-
-    @GetMapping("/users")
-    public List<UserOutDTO> getAllUsers() {
-        return UserMapper.usersToDTO(userService.getAll());
     }
 
 }
