@@ -1,6 +1,6 @@
 package edu.bbte.beavolunteerbackend.controller.dto.outgoing;
 
-import edu.bbte.beavolunteerbackend.util.Role;
+import edu.bbte.beavolunteerbackend.model.Role;
 import lombok.Data;
 
 @Data

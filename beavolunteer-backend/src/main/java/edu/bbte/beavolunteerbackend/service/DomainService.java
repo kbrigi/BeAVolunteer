@@ -3,7 +3,7 @@ package edu.bbte.beavolunteerbackend.service;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.model.Domain;
-import edu.bbte.beavolunteerbackend.repository.DomainRepository;
+import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

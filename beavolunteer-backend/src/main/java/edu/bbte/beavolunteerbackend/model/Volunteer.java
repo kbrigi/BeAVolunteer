@@ -1,6 +1,5 @@
 package edu.bbte.beavolunteerbackend.model;
 
-import edu.bbte.beavolunteerbackend.util.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;

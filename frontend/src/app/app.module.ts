@@ -15,44 +15,27 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DomainComponent } from './features/components/domain/domain.component';
+import { DomainComponent } from './feature/components/domain/domain.component';
 import { CoreModule } from './core/core.module';
-import { VolunteerFormComponent } from './features/components/form/volunteer-form/volunteer-form.component';
-import { OrgFormComponent } from './features/components/form/org-form/org-form.component';
+import { VolunteerFormComponent } from './feature/components/form/volunteer-form/volunteer-form.component';
+import { OrgFormComponent } from './feature/components/form/org-form/org-form.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { ProjFormComponent } from './features/components/form/proj-form/proj-form.component';
-import { LoginFormComponent } from './features/components/form/login-form/login-form.component';
+import { ProjFormComponent } from './feature/components/form/proj-form/proj-form.component';
+import { LoginFormComponent } from './feature/components/form/login-form/login-form.component';
+import { FeatureModule } from './feature/feature.module';
+import { HeaderComponent } from './core/components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DomainComponent,
-    VolunteerFormComponent,
-    OrgFormComponent,
-    ProjFormComponent,
-    LoginFormComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    MatCardModule,
-    HttpClientModule,
-    FormsModule,
-    MatIconModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    NgxMatFileInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule 
+    FeatureModule, 
   ],
-  exports: [VolunteerFormComponent],
-  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

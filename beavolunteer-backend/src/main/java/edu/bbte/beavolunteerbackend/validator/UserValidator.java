@@ -1,7 +1,7 @@
 package edu.bbte.beavolunteerbackend.validator;
 
 import edu.bbte.beavolunteerbackend.model.User;
-import edu.bbte.beavolunteerbackend.repository.UserRepository;
+import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

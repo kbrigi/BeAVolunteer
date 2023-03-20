@@ -1,0 +1,29 @@
+<div class="container" style="margin: 15% 35%;">
+    <form [formGroup]="loginForm" #formDirective="ngForm" (ngSubmit)="login(formDirective)">
+  
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>email</mat-label>
+          <input matInput formControlName="email">
+          <mat-icon matSuffix>account_circle</mat-icon>
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input [type]="'password'" matInput formControlName="password">
+          <mat-icon matSuffix> lock</mat-icon>
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <button class="button" [disabled]="!loginForm.valid" mat-raised-button mat-button color="primary"
+                type="submit">
+          Login
+        </button>
+      </div>
+  
+    </form>
+  </div>
+  

@@ -4,7 +4,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.ProjectInDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.model.Project;
-import edu.bbte.beavolunteerbackend.repository.ProjectRepository;
+import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

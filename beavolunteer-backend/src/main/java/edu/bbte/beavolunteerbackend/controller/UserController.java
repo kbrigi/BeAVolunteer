@@ -2,6 +2,7 @@ package edu.bbte.beavolunteerbackend.controller;
 
 import com.google.gson.Gson;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.TokenOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
@@ -83,12 +84,12 @@ public class UserController extends Controller{
     }
 
     @PostMapping(value = "/login")
-    public void login(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<TokenOutDTO> login(@RequestBody @Valid UserDTO userDTO) {
         try {
-            String token = userService.matchUser(userDTO.getUser(), userDTO.getPassword());
-            ResponseEntity.ok();
-                    //ResponseEntity.ok(new TokenRespDTO(token));
+            String token = userService.matchUser(userDTO.getEmail(), userDTO.getPassword());
+            return ResponseEntity.ok(new TokenOutDTO(token));
         } catch (BusinessException businessException) {
+            log.error(businessException.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, businessException.getMessage());
         }
     }

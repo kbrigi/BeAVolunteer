@@ -1,0 +1,45 @@
+<nav>
+    <div class="header" style="display: flex; align-items: center; flex: 1;justify-content: flex-end">
+  
+      <!-- <form class="searchbar-form">
+        <mat-form-field class="searchbar" appearance="outline">
+          <div class="searchbar-div">
+            <input placeholder="Product Name" type="text" #nameProduct name="nameProduct" matInput
+                   [formControl]="myControl" [matAutocomplete]="auto"/>
+            <button color="primary" class="searchButton" mat-icon-button (click)="clickedFn()">
+              <mat-icon>search</mat-icon>
+            </button>
+  
+          </div>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+  
+        </mat-form-field>
+      </form> -->
+  
+      <div >
+        <button class="button" *ngIf="logedin" (click)="logout()">Logout
+        </button>
+  
+        <button class="button" *ngIf="!logedin"><a routerLink="/login">Login</a>
+        </button>
+  
+  
+        <button class="button" ><a routerLink="/registration/user"> New user</a>
+        </button>
+
+          
+        <button class="button" ><a routerLink="/registration/org"> New org</a>
+        </button>
+
+          
+        <button class="button" ><a routerLink="/save/project"> New project</a>
+        </button>
+
+      </div>
+  
+    </div>
+  </nav>

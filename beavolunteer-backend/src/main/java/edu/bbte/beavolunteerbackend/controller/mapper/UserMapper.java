@@ -8,7 +8,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.model.Organization;
 import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.Volunteer;
-import edu.bbte.beavolunteerbackend.util.Gender;
+import edu.bbte.beavolunteerbackend.model.Gender;
 
 import java.util.List;
 import java.util.stream.Collectors;

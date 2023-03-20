@@ -1,6 +1,5 @@
 package edu.bbte.beavolunteerbackend.model;
 
-import edu.bbte.beavolunteerbackend.util.Role;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
