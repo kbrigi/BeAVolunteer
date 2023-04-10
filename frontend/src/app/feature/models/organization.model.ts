@@ -1,4 +1,4 @@
-import { Domain } from "./domain.model"
+import { Domain } from "../../domain/models/domain.model"
 
 export type Organization = { 
     email: string,

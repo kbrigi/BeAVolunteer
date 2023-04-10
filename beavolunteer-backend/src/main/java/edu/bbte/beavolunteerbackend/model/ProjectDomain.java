@@ -8,26 +8,18 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Data
-@Table(name = "ORGANIZATION_DOMAIN")
-public class OrganizationDomain {
+@Table(name = "PROJECT_DOMAIN")
+public class ProjectDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "organization_domain_id")
-    private Long organizationDomainId;
+    @Column(name = "project_domain_id")
+    private Long projectDomainId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORGANIZATION_ID")
-    private Organization organization;
+    private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID")
     private Domain domain;
-
-    public OrganizationDomain(Domain domain, Organization org) {
-        this.domain = domain;
-        this.organization = org;
-    }
-
-    public OrganizationDomain() {
-    }
 }

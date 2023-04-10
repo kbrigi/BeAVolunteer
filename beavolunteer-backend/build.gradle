@@ -18,10 +18,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-    implementation 'org.projectlombok:lombok:1.18.26'
-	implementation 'org.jetbrains:annotations:23.1.0'
-	implementation 'org.projectlombok:lombok:1.18.26'
-	implementation 'org.projectlombok:lombok:1.18.26'
+	implementation 'org.jetbrains:annotations:24.0.1'
 	implementation 'org.projectlombok:lombok:1.18.26'
 	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
 
@@ -36,9 +33,6 @@ dependencies {
 
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
-
-
-//
 //	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.3.Final'
 //	annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.3.Final'
 }

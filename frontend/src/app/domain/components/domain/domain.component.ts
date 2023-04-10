@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Domain } from '../../models/domain.model';
-import { DomainService } from '../../services/domain/domain.service';
+import { DomainService } from '../../services/domain.service';
 
 @Component({
   selector: 'app-domain',

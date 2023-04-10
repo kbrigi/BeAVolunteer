@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import edu.bbte.beavolunteerbackend.model.User;
-import lombok.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

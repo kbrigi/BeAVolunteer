@@ -15,15 +15,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DomainComponent } from './feature/components/domain/domain.component';
 import { CoreModule } from './core/core.module';
-import { VolunteerFormComponent } from './feature/components/form/volunteer-form/volunteer-form.component';
-import { OrgFormComponent } from './feature/components/form/org-form/org-form.component';
-import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { ProjFormComponent } from './feature/components/form/proj-form/proj-form.component';
-import { LoginFormComponent } from './feature/components/form/login-form/login-form.component';
 import { FeatureModule } from './feature/feature.module';
 import { HeaderComponent } from './core/components/header/header.component';
+import { DomainModule } from './domain/domain.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +29,8 @@ import { HeaderComponent } from './core/components/header/header.component';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    FeatureModule, 
+    FeatureModule,
+    DomainModule, 
   ],
   bootstrap: [AppComponent]
 })

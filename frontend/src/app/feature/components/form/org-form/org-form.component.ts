@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective, AbstractControl } from '@angular/forms';
-import { NgxMatFileInputComponent } from '@angular-material-components/file-input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Domain } from 'src/app/feature/models/domain.model';
+import { Domain } from 'src/app/domain/models/domain.model';
 import { Organization } from 'src/app/feature/models/organization.model';
-import { DomainService } from 'src/app/feature/services/domain/domain.service';
 import { OrgService } from 'src/app/feature/services/user/org/org.service';
+import { DomainService } from 'src/app/domain/services/domain.service';
 
 @Component({
   selector: 'app-org-form',

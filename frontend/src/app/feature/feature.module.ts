@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomainComponent } from './components/domain/domain.component';
+import { DomainComponent } from '../domain/components/domain/domain.component';
 import { LoginFormComponent } from './components/form/login-form/login-form.component';
 import { OrgFormComponent } from './components/form/org-form/org-form.component';
 import { ProjFormComponent } from './components/form/proj-form/proj-form.component';
@@ -22,13 +22,11 @@ import { VolunteerService } from './services/user/volunteer/volunteer.service';
 import { OrgService } from './services/user/org/org.service';
 import { LoginService } from './services/user/login/login.service';
 import { ProjectService } from './services/project/project.service';
-import { DomainService } from './services/domain/domain.service';
 
 
 
 @NgModule({
   declarations: [
-    DomainComponent,
     VolunteerFormComponent,
     OrgFormComponent,
     ProjFormComponent,
@@ -55,8 +53,7 @@ import { DomainService } from './services/domain/domain.service';
       VolunteerService,
       OrgService,
       LoginService,
-      ProjectService,
-      DomainService
+      ProjectService
   ],
 })
 export class FeatureModule { }

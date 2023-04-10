@@ -40,10 +40,9 @@ export class ProjFormComponent {
   }
 
   onSubmit(formDirective: FormGroupDirective) {
-    console.log(this.projForm.value)
     let formData: any = new FormData();
-    let org: Partial<Project> = this.projForm.value as Partial<Project>;
-    formData.append('project', JSON.stringify(org));
+    let proj: Partial<Project> = this.projForm.value as Partial<Project>;
+    formData.append('project', JSON.stringify(proj));
     formData.append('file', this.projForm.controls['img'].value);
     this.projectService.save(formData).subscribe({
       next: () => {

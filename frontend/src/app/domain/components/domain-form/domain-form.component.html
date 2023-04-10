@@ -1,0 +1,29 @@
+<div class="container" style="margin: 15% 35%;">
+    <form [formGroup]="domainForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+
+        <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Domain Name</mat-label>
+              <input matInput formControlName="domain_name">
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error *ngIf="domainForm.controls['domain_name'].invalid">Domain's name must have min. length 5.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="row"> 
+            <mat-form-field>
+              <ngx-mat-file-input id="domain_img" formControlName="domain_img" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">
+                <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+        </div>    
+
+        <div class="row">
+            <button class="button" [disabled]="!domainForm.valid" mat-raised-button mat-button
+                    type="submit">
+              Submit
+            </button>
+          </div>
+
+    </form>
+</div>

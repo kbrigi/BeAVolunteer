@@ -24,7 +24,7 @@ import static edu.bbte.beavolunteerbackend.controller.mapper.UserMapper.*;
 @Slf4j
 @Service
 public class UserService extends ImgService {
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserRepository userRepository;

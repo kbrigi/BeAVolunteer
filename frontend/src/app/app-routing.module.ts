@@ -4,6 +4,7 @@ import { LoginFormComponent } from './feature/components/form/login-form/login-f
 import { OrgFormComponent } from './feature/components/form/org-form/org-form.component';
 import { ProjFormComponent } from './feature/components/form/proj-form/proj-form.component';
 import { VolunteerFormComponent } from './feature/components/form/volunteer-form/volunteer-form.component';
+import { DomainFormComponent } from './domain/components/domain-form/domain-form.component';
 
 const routes: Routes = [
   {
@@ -25,8 +26,12 @@ const routes: Routes = [
     path: 'login',
     component: LoginFormComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'save/domain',
+    component: DomainFormComponent,
+    pathMatch: 'full'
   }
-
 ];
 
 @NgModule({

@@ -11,7 +11,6 @@ export class ProjectService {
   
   save(formData: FormData) : Observable<void> {
     return this.service.post(`${environment.apiUrl}/proj/save`, formData);
-    
   }
 
 }

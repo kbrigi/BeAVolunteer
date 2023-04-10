@@ -17,6 +17,9 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
+//TO DO
+// Filter: get projects by given domains
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/proj")

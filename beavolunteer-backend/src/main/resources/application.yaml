@@ -1,5 +1,4 @@
 spring.jpa.show-sql: true
-
 spring.jpa.hibernate.ddl-auto: update
 spring.datasource:
   driver_class_name: com.mysql.cj.jdbc.Driver
@@ -13,6 +12,10 @@ spring:
       hibernate:
         format_sql=true:
         enable_lazy_load_no_trans: true
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
 server:
   error:
     include-message: always

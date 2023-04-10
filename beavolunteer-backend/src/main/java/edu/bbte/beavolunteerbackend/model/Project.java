@@ -1,9 +1,12 @@
 package edu.bbte.beavolunteerbackend.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -44,5 +47,7 @@ public class Project {
 
     @Column()
     private Date expirationDate;
+
+
 
 }
