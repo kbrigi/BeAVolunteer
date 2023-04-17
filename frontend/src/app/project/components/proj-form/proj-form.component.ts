@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } f
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Domain } from 'src/app/domain/models/domain.model';
 import { DomainService } from 'src/app/domain/services/domain.service';
-import { Project } from 'src/app/feature/models/project.model';
-import { ProjectService } from 'src/app/feature/services/project/project.service';
+import { Project } from 'src/app/project/models/project.model';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-proj-form',

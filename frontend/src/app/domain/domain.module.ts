@@ -26,7 +26,6 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatIconModule,
     MatInputModule
-
   ],
   providers: [
     DomainComponent,

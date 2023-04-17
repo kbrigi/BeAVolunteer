@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginFormComponent } from './components/form/login-form/login-form.component';
 import { OrgFormComponent } from './components/form/org-form/org-form.component';
-import { ProjFormComponent } from './components/form/proj-form/proj-form.component';
+import { ProjFormComponent } from '../project/components/proj-form/proj-form.component';
 import { VolunteerFormComponent } from './components/form/volunteer-form/volunteer-form.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,7 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VolunteerService } from './services/user/volunteer/volunteer.service';
 import { OrgService } from './services/user/org/org.service';
 import { LoginService } from './services/user/login/login.service';
-import { ProjectService } from './services/project/project.service';
 
 
 
@@ -28,7 +27,6 @@ import { ProjectService } from './services/project/project.service';
   declarations: [
     VolunteerFormComponent,
     OrgFormComponent,
-    ProjFormComponent,
     LoginFormComponent
   ],
   imports: [
@@ -45,15 +43,13 @@ import { ProjectService } from './services/project/project.service';
     MatCheckboxModule,
     MatSnackBarModule,
     NgxMatFileInputModule,
-    MatDatepickerModule,
     MatNativeDateModule,
   ],
   exports: [],
   providers: [
       VolunteerService,
       OrgService,
-      LoginService,
-      ProjectService
+      LoginService      
   ],
 })
 export class FeatureModule { }
