@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Domain } from 'src/app/domain/models/domain.model';
+import { DomainService } from 'src/app/domain/services/domain.service';
 import { Project } from 'src/app/feature/models/project.model';
 import { ProjectService } from 'src/app/feature/services/project/project.service';
 
@@ -16,10 +18,16 @@ export class ProjFormComponent {
   minDate = new Date(Date.now() + (3600 * 1000 * 168)); 
   // 3 months from now
   maxDate = new Date(Date.now() + (3600 * 1000 * 2160)); 
-
+  domains: Domain[] = [];
   
-  constructor(private formBuilder: FormBuilder, private projectService: ProjectService, private _snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private projectService: ProjectService, private _snackBar: MatSnackBar, private domainService: DomainService) {
     this.projForm = this.initForm();
+  }
+
+  ngOnInit(): void {
+    this.domainService.getAllDomains().subscribe((result: Domain[]) => 
+      this.domains = result
+    )
   }
 
   private initForm(): FormGroup {
@@ -28,6 +36,7 @@ export class ProjFormComponent {
       project_description: new FormControl('', [Validators.required, Validators.minLength(15)]),
       img: new FormControl('', [Validators.required]),
       expiration_date:  new FormControl('', [Validators.required]),
+      domains:  new FormControl('')
     })
   }
 

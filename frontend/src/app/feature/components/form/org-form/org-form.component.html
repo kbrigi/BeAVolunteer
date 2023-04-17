@@ -76,24 +76,28 @@
         </mat-form-field>
       </div>
 
-       <div class="row"> 
+      <div class="row"> 
         <mat-form-field>
-
-          <label class="org-image" for="img">Select a logo</label>
-          <ngx-mat-file-input id="img" name="picture" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
-            <mat-icon style="padding: 12px;" ngxMatFileInputIcon>folder</mat-icon>
+          <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
           </ngx-mat-file-input>
-        
-        <!-- <input
+        </mat-form-field>
+    </div>  
+       <!-- <div class="row"> 
+        <mat-form-field>
+           <label class="org-image" for="logo">Select a logo</label> 
+            <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
+              <mat-icon style="padding: 12px;" ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+         <input
           class="field pic-choose"
           type="file"
-          id="img"
-          accept="image/*"
-          name="picture"
+          id="logo"
+          name="logo"
           (change)="uploadFile($event)"
-        />  -->
-      </mat-form-field>
-      </div> 
+        />  
+        </mat-form-field>
+      </div>  -->
 
       <div class="row">
         <mat-form-field appearance="fill">

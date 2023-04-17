@@ -112,12 +112,13 @@ public class UserService extends ImgService {
     }
 
     public void saveOrganizationDomain(List<DomainDTO> domains, Organization org) {
-//        OrganizationDomain orgDomain = new OrganizationDomain();
         for ( DomainDTO d : domains ) {
-//            orgDomain.setDomain(domainRepository.findByName(d.getDomain_name()));
-//            orgDomain.setOrganization(org);
             organizationDomainRepository.saveAndFlush(
                     new OrganizationDomain(domainRepository.findByName(d.getDomain_name()), org));
         }
+    }
+
+    public User getUserFromUsername(String username) {
+        return userRepository.matchUser(username);
     }
 }

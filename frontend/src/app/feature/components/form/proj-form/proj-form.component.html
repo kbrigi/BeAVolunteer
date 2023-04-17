@@ -29,6 +29,17 @@
             </mat-form-field>
         </div>
 
+        
+        <div class="row">
+          <mat-form-field appearance="fill">
+            <mat-label>Domains</mat-label>
+            <mat-icon matSuffix>workspaces</mat-icon>
+            <mat-select class="domains" formControlName="domains" multiple>
+              <mat-option *ngFor="let domain of domains" [value]="domain">{{ domain.domain_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="row"> 
             <mat-form-field>
               <ngx-mat-file-input id="img" formControlName="img" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">

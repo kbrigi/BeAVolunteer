@@ -29,7 +29,7 @@ export class VolunteerFormComponent {
       password: new FormControl('', [Validators.required, Validators.pattern(passwordRegex)]),
       confirmationPassword: new FormControl('', [Validators.required, Validators.pattern(passwordRegex)]),
       phoneNr: new FormControl('', [Validators.required, Validators.pattern('^[0][7][0-9]{8}$')]),
-      age: new FormControl('', [Validators.required, Validators.min(14), Validators.pattern('/^[1-9][0-9]$/')]),
+      age: new FormControl('', [Validators.required, Validators.min(14), Validators.pattern('[1-9][0-9]')]),
       description: new FormControl(''),
       gender: new FormControl(''),
       volunteered:  new FormControl('')

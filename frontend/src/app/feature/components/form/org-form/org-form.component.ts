@@ -46,14 +46,17 @@ export class OrgFormComponent {
   }
 
   onSubmit(formDirective: FormGroupDirective) {
-    console.log(this.registrationForm.value)
+    // console.log(this.registrationForm.value)
     this.registrationForm.removeControl('confirmationPassword')
     let formData: any = new FormData();
     let org: Partial<Organization> = this.registrationForm.value as Partial<Organization>;
     org.logo = undefined;
     formData.append('organization', JSON.stringify(org));
     formData.append('file', this.registrationForm.controls['logo'].value);
-    console.log( JSON.stringify(org), this.registrationForm.controls['logo'].value)
+    console.log( JSON.stringify(org))
+    for (var pair of formData.entries()) {
+      console.log(pair); 
+    }
     this.orgService.registration(formData).subscribe({
       next: () => {
         this._snackBar.open('Successfull registration! Your account is created!', 'OK', {
@@ -86,7 +89,7 @@ export class OrgFormComponent {
   uploadFile(event: any) {
     const file = (event.target as HTMLInputElement).files![0];
     this.registrationForm.patchValue({
-      logo: file,
+      file: file,
     });
     this.registrationForm.get('logo')!.updateValueAndValidity();
   }

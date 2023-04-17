@@ -22,25 +22,22 @@
       </form> -->
   
       <div >
-        <button class="button" *ngIf="logedin" (click)="logout()">Logout
+        <button class="button" *ngIf="logedin" (click)="logout()"><a routerLink="/login">Logout</a>
         </button>
   
         <button class="button" *ngIf="!logedin"><a routerLink="/login">Login</a>
         </button>
   
-  
-        <button class="button" ><a routerLink="/registration/user"> New user</a>
+        <button class="button" *ngIf="!logedin"><a routerLink="/registration/user"> New user</a>
         </button>
 
-          
-        <button class="button" ><a routerLink="/registration/org"> New org</a>
+        <button class="button" *ngIf="!logedin"><a routerLink="/registration/org"> New org</a>
         </button>
 
-          
-        <button class="button" ><a routerLink="/save/project"> New project</a>
+        <button class="button" *ngIf="logedin"><a routerLink="/save/project"> New project</a>
         </button>
 
-        <button class="button" ><a routerLink="/save/domain"> New domain</a>
+        <button class="button" *ngIf="logedin"><a routerLink="/save/domain"> New domain</a>
         </button>
 
       </div>

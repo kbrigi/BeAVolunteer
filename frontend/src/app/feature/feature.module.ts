@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomainComponent } from '../domain/components/domain/domain.component';
 import { LoginFormComponent } from './components/form/login-form/login-form.component';
 import { OrgFormComponent } from './components/form/org-form/org-form.component';
 import { ProjFormComponent } from './components/form/proj-form/proj-form.component';
@@ -30,7 +29,8 @@ import { ProjectService } from './services/project/project.service';
     VolunteerFormComponent,
     OrgFormComponent,
     ProjFormComponent,
-    LoginFormComponent],
+    LoginFormComponent
+  ],
   imports: [
     CommonModule,
     MatCardModule,

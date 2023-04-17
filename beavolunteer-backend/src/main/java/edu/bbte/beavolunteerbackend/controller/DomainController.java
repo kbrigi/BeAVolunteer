@@ -24,7 +24,7 @@ public class DomainController extends Controller{
     private DomainService domainService;
 
     @PostMapping(value = "/save", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> saveProject(@RequestPart String domain, @RequestPart("file") MultipartFile file) throws SQLException, IOException {
+    public ResponseEntity<String> saveDomain(@RequestPart String domain, @RequestPart("file") MultipartFile file) throws SQLException, IOException {
         Blob blob = prepareImage(file);
         if (blob == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

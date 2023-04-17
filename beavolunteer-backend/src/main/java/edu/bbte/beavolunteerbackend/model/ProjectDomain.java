@@ -16,10 +16,19 @@ public class ProjectDomain {
     private Long projectDomainId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORGANIZATION_ID")
+    @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID")
     private Domain domain;
+
+    public ProjectDomain(Domain domain, Project project) {
+        this.domain = domain;
+        this.project = project;
+    }
+
+    public ProjectDomain() {
+
+    }
 }

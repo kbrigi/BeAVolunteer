@@ -16,7 +16,6 @@ public class ProjectMapper {
         project.setProjectDescription(projectDTO.getProject_description());
         project.setCreationDate(new Date());
         project.setExpirationDate(projectDTO.getExpiration_date());
-        project.set
         return project;
     }
 

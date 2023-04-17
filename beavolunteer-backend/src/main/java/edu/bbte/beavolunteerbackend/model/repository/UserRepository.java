@@ -1,5 +1,6 @@
 package edu.bbte.beavolunteerbackend.model.repository;
 
+import edu.bbte.beavolunteerbackend.model.Role;
 import edu.bbte.beavolunteerbackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT user FROM User user WHERE user.userName = :username")
     User matchUser(@Param("username") String username);
-
 
 }
