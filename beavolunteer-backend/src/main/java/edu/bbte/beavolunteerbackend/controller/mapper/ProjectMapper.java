@@ -1,8 +1,11 @@
 package edu.bbte.beavolunteerbackend.controller.mapper;
 
+import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.ProjectInDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.model.Project;
+import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +33,9 @@ public class ProjectMapper {
         projectOutDTO.setProject_img("http://localhost:8080/proj/image/" + proj.getProjectId());
         projectOutDTO.setCreation_date(proj.getCreationDate());
         projectOutDTO.setExpiration_date(proj.getExpirationDate());
-        projectOutDTO.setOwner(proj.getOwner());
-        projectOutDTO.setOrganization(proj.getOrganization());
+        projectOutDTO.setOwner(UserMapper.userToDTO(proj.getOwner()));
+//        List<DomainDTO> domains = projectDomainRepository.findDomainsByProject(proj);
+//        projectOutDTO.setDomains(domains);
         return projectOutDTO;
     }
 }

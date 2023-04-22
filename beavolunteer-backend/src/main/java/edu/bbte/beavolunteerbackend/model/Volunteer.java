@@ -1,5 +1,6 @@
 package edu.bbte.beavolunteerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -20,6 +21,14 @@ public class Volunteer extends User {
 //    @Column(unique = true, nullable = false)
 //    private Long id;
 
+    @Pattern(regexp = "^[A-Z][a-z]{2,}$")
+    @Column(name = "SURNAME", nullable = false)
+    private String surname;
+
+    @Pattern(regexp = "^[A-Z][a-z]{2,}$")
+    @Column(name = "firstname", nullable = false)
+    private String firstName;
+
     @Pattern(regexp = "^[0][7][0-9]{8}$")
     @Column(name = "PHONE_NR", length = 10)
     private String phoneNr;
@@ -37,13 +46,10 @@ public class Volunteer extends User {
     @Column(name = "GENDER")
     private Gender gender;
 
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Collection<Project> projects;
 
-//    @MapsId
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    private User user;
 }

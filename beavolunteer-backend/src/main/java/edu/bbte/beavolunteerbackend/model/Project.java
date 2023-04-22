@@ -1,12 +1,10 @@
 package edu.bbte.beavolunteerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Blob;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -28,19 +26,19 @@ public class Project {
     @Lob
     private Blob projectImg;
 
-    @Column(name = "organization_id")
-    private Long organizationId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id", insertable = false, updatable = false)
-    private Organization organization;
+//    @Column(name = "organization_id")
+//    private Long organizationId;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "organization_id", insertable = false, updatable = false)
+//    private Organization organization;
 
     @Column(name = "owner_id")
     private Long ownerId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
-    private Volunteer owner;
+    private User owner;
 
     @Column(nullable = false)
     private Date creationDate;

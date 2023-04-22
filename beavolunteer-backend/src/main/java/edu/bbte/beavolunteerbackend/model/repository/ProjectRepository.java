@@ -19,10 +19,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO project (creation_date, expiration_date, project_description, project_img, project_name, owner_id, organization_id)" +
-            " VALUES (:start, :end, :desc, :img, :name, :owner, :org)", nativeQuery = true)
+    @Query(value = "INSERT INTO project (creation_date, expiration_date, project_description, project_img, project_name, owner_id)" +
+            " VALUES (:start, :end, :desc, :img, :name, :owner)", nativeQuery = true)
     void insertProject(@Param("start") Date start, @Param("end") Date end, @Param("desc") String desc,
-                       @Param("img") Blob img, @Param("name") String name, @Param("owner") Long owner, @Param("org") Long organizationId);
+                       @Param("img") Blob img, @Param("name") String name, @Param("owner") Long owner);
 
     @Query(value = "SELECT * FROM Project p WHERE p.project_name = :name", nativeQuery = true)
     Project getByName(@Param("name")String project_name);

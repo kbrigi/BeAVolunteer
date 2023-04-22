@@ -14,6 +14,7 @@ import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
 import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import edu.bbte.beavolunteerbackend.util.JWTToken;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ProjectService  extends ImgService  {
 
@@ -41,15 +43,18 @@ public class ProjectService  extends ImgService  {
             Project project = ProjectMapper.projectDTOToEntity(projectDTO);
             project.setProjectImg(img);
             User user = userRepository.getById(userID);
-            if (user.getRole() == Role.USER){
-                project.setOwnerId(userID);
-            }
-            else {
-                project.setOrganizationId(userID);
-            }
+            project.setOwnerId(userID);
+
+//            if (user.getRole() == Role.USER){
+//                project.setOwnerId(userID);
+//            }
+//            else {
+//                project.setOrganizationId(userID);
+//            }
             projectRepository.insertProject(project.getCreationDate(), project.getExpirationDate(),
-                    project.getProjectDescription(), project.getProjectImg(), project.getProjectName(), project.getOwnerId(), project.getOrganizationId());
-            saveProjectDomain(projectDTO.getDomains(), project);
+                    project.getProjectDescription(), project.getProjectImg(), project.getProjectName(), project.getOwnerId());
+            Project newProject = projectRepository.getByName(project.getProjectName());
+            saveProjectDomain(projectDTO.getDomains(), newProject);
         } else {
             throw new BusinessException("Project name must be unique");
         }
@@ -78,8 +83,7 @@ public class ProjectService  extends ImgService  {
 
     public void saveProjectDomain(List<DomainDTO> domains, Project project) {
         for ( DomainDTO d : domains ) {
-            projectDomainRepository.saveAndFlush(
-                    new ProjectDomain(domainRepository.findByName(d.getDomain_name()), project));
+            projectDomainRepository.insertProjectDomain(project.getProjectId(), domainRepository.findByName(d.getDomain_name()).getDomainId());
         }
     }
 }

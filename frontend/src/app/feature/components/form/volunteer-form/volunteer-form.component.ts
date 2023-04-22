@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Domain } from 'src/app/domain/models/domain.model';
+import { DomainService } from 'src/app/domain/services/domain.service';
 import { Volunteer } from 'src/app/feature/models/volunteer.model';
 import { VolunteerService } from 'src/app/feature/services/user/volunteer/volunteer.service';
 
@@ -12,19 +14,29 @@ import { VolunteerService } from 'src/app/feature/services/user/volunteer/volunt
 export class VolunteerFormComponent {
   @Output() submitForm = new EventEmitter<Volunteer>()
   registrationForm: FormGroup;
+  domains: Domain[] = [];
   genders: String[] = ["FEMALE", "MALE"];
   
-  constructor(private formBuilder: FormBuilder, private volunteerService: VolunteerService, private _snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private volunteerService: VolunteerService, private _snackBar: MatSnackBar, private domainService: DomainService) {
     this.registrationForm = this.initForm();
+  }
+
+  ngOnInit(): void {
+    this.domainService.getAllDomains().subscribe((result: Domain[]) => 
+      this.domains = result
+    )
   }
 
   private initForm(): FormGroup {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     const passwordRegex = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/
+    const nameRegex = /^[A-Z][a-z]{2,}$/
     // ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$
     return this.formBuilder.group({
       // check if unique
       user: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      surname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(nameRegex)]),
+      firstname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(nameRegex)]),
       email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)]),
       password: new FormControl('', [Validators.required, Validators.pattern(passwordRegex)]),
       confirmationPassword: new FormControl('', [Validators.required, Validators.pattern(passwordRegex)]),
@@ -32,6 +44,7 @@ export class VolunteerFormComponent {
       age: new FormControl('', [Validators.required, Validators.min(14), Validators.pattern('[1-9][0-9]')]),
       description: new FormControl(''),
       gender: new FormControl(''),
+      domains:  new FormControl(''),
       volunteered:  new FormControl('')
     })
   }

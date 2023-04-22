@@ -27,6 +27,8 @@ public class UserMapper {
         Volunteer volunteer = new Volunteer();
 //not sure if needed
         volunteer.setId(id);
+        volunteer.setFirstName(userDTO.getFirstname());
+        volunteer.setSurname(userDTO.getSurname());
         volunteer.setAge(userDTO.getAge());
         volunteer.setDescription(userDTO.getDescription());
         String gender = userDTO.getGender();

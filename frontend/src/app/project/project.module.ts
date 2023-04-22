@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { ProjListComponent } from './components/proj-form/proj-list/proj-list.component';
+import { ProjListComponent } from './components/proj-list/proj-list.component';
 
 
 

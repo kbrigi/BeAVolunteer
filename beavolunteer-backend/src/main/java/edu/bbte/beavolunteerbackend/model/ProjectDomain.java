@@ -15,11 +15,11 @@ public class ProjectDomain {
     @Column(name = "project_domain_id")
     private Long projectDomainId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DOMAIN_ID")
     private Domain domain;
 

@@ -1,11 +1,11 @@
 package edu.bbte.beavolunteerbackend.controller.dto.outgoing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.model.Organization;
 import edu.bbte.beavolunteerbackend.model.Volunteer;
 import lombok.Data;
 
-import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +16,6 @@ public class ProjectOutDTO {
     String project_img;
     Date creation_date;
     Date expiration_date;
-    Organization organization;
-    Volunteer owner;
+    UserOutDTO owner;
     List<DomainDTO> domains;
 }

@@ -13,10 +13,10 @@ export class DomainComponent implements OnInit {
 
   constructor(private domainService: DomainService) { }
 
-  getAllDomains() {
+  getAllDomains(): void {
     this.domainService.getAllDomains().subscribe((result: Domain[]) => 
       this.domains = result
-    )
+    );
   }
 
   ngOnInit(): void {

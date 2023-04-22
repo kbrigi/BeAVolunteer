@@ -1,15 +1,33 @@
 <div class="container" style="margin: 5% 35%;">
-    <form [formGroup]="registrationForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+    <form [formGroup]="registrationForm" style="height:auto" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
   
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Username</mat-label>
           <input matInput formControlName="user">
           <mat-icon matSuffix>account_circle</mat-icon>
-          <mat-error *ngIf="registrationForm.controls['user'].invalid">Username must have min. length 5.</mat-error>
+          <mat-error *ngIf="registrationForm.controls['user'].invalid">min. length 5.</mat-error>
         </mat-form-field>
       </div>
   
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Surname</mat-label>
+          <input matInput formControlName="surname">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="registrationForm.controls['surname'].invalid">min. length 3. and capitalize 1. letter</mat-error>
+        </mat-form-field>
+      </div>      
+      
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstname">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="registrationForm.controls['firstname'].invalid">min. length 3. and capitalize 1. letter</mat-error>
+        </mat-form-field>
+      </div>
+
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
@@ -33,9 +51,7 @@
           <mat-label>Password</mat-label>
           <input [type]="'password'" matInput formControlName="password">
           <mat-icon matSuffix> lock</mat-icon>
-          <mat-error *ngIf="registrationForm.controls['password'].invalid">min. 8 characters, min. 1 uppercase and 1
-            lowercase letter, min 1 number
-          </mat-error>
+          <mat-error *ngIf="registrationForm.controls['password'].invalid">min. 8 length and min. 1 number</mat-error>
         </mat-form-field>
       </div>
   
@@ -86,6 +102,16 @@
           </mat-select>
         </mat-form-field>
       </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Domains</mat-label>
+          <mat-icon matSuffix>workspaces</mat-icon>
+          <mat-select class="domains" formControlName="domains" multiple>
+            <mat-option *ngFor="let domain of domains" [value]="domain">{{ domain.domain_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
       
       <div class="row">
         <button class="button" [disabled]="!registrationForm.valid" mat-raised-button mat-button color="primary"

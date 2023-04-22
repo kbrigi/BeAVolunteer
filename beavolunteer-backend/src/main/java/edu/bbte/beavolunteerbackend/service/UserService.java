@@ -45,6 +45,9 @@ public class UserService extends ImgService {
     private OrganizationDomainRepository organizationDomainRepository;
 
     @Autowired
+    private VolunteerDomainRepository volunteerDomainRepository;
+
+    @Autowired
     private JWTToken jwToken;
 
     public void saveUser(VolunteerDTO userDTO) throws BusinessException {
@@ -57,8 +60,10 @@ public class UserService extends ImgService {
             User savedUser = userRepository.saveAndFlush(user);
 
             Volunteer volunteer = volunteerDTOToVolunteer(userDTO, savedUser.getId());
-            volunteerRepository.insertVolunteer(volunteer.getId(), volunteer.getPhoneNr(), volunteer.getDescription(),
+            volunteerRepository.insertVolunteer(volunteer.getId(), volunteer.getSurname(),
+                    volunteer.getFirstName(), volunteer.getPhoneNr(), volunteer.getDescription(),
                     volunteer.getAge(), volunteer.getVolunteered(), String.valueOf(volunteer.getGender()));
+            saveVolunteerDomain(userDTO.getDomains(), savedUser.getId());
         } else {
             throw new BusinessException(UserValidator.errorList.toString());
         }
@@ -115,6 +120,12 @@ public class UserService extends ImgService {
         for ( DomainDTO d : domains ) {
             organizationDomainRepository.saveAndFlush(
                     new OrganizationDomain(domainRepository.findByName(d.getDomain_name()), org));
+        }
+    }
+
+    public void saveVolunteerDomain(List<DomainDTO> domains, Long userId) {
+        for ( DomainDTO d : domains ) {
+            volunteerDomainRepository.insertVolunteerDomain(userId, domainRepository.findByName(d.getDomain_name()).getDomainId());
         }
     }
 

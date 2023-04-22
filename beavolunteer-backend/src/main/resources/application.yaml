@@ -16,6 +16,10 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+      enabled: true
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 server:
   error:
     include-message: always
