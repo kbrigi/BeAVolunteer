@@ -45,9 +45,9 @@ public class DomainController extends Controller{
         return domainService.getAll();
     }
 
-    @GetMapping(value = "/image/{id}")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable Long id) throws SQLException {
-        byte[] product = domainService.getImage(id);
+    @GetMapping(value = "/image/{name}")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable String name) throws SQLException {
+        byte[] product = domainService.getImage(name);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(product);
     }
 

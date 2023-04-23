@@ -44,8 +44,8 @@ public class DomainService extends ImgService {
         domainRepository.delete(domainRepository.getById(id));
     }
 
-    public byte[] getImage(Long id) throws SQLException {
-        Blob domainImg = domainRepository.getById(id).getDomainImg();
+    public byte[] getImage(String name) throws SQLException {
+        Blob domainImg = domainRepository.findByName(name).getDomainImg();
         return getImg(domainImg);
     }
 

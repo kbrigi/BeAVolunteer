@@ -21,8 +21,18 @@ public class Domain {
     @Lob
     private Blob domainImg;
 
+    public Domain(Long domainId, String domainName, Blob domainImg) {
+        this.domainId = domainId;
+        this.domainName = domainName;
+        this.domainImg = domainImg;
+    }
+
+    public Domain() {
+    }
+
     public void reset(){
         domainName = null;
         domainImg = null;
     }
+
 }
