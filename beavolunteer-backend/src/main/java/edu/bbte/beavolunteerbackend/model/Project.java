@@ -26,13 +26,6 @@ public class Project {
     @Lob
     private Blob projectImg;
 
-//    @Column(name = "organization_id")
-//    private Long organizationId;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "organization_id", insertable = false, updatable = false)
-//    private Organization organization;
-
     @Column(name = "owner_id")
     private Long ownerId;
 

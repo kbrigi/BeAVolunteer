@@ -11,13 +11,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { ProjListComponent } from './components/proj-list/proj-list.component';
+import { ProjDetailsComponent } from './components/proj-details/proj-details.component';
+import { RouterModule } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
 @NgModule({
   declarations: [
     ProjFormComponent,
-    ProjListComponent
+    ProjListComponent,
+    ProjDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +34,8 @@ import { ProjListComponent } from './components/proj-list/proj-list.component';
     MatInputModule,
     MatDatepickerModule,
     MatSelectModule,
+    RouterModule,
+    MatGridListModule
   ],
   providers: [
     ProjectService

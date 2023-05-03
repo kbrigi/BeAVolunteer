@@ -6,6 +6,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.service.ProjectService;
 import edu.bbte.beavolunteerbackend.service.UserService;
 import edu.bbte.beavolunteerbackend.util.JWTToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +26,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/proj")
+@Slf4j
 public class ProjectController extends Controller{
     @Autowired
     private ProjectService projectService;
@@ -60,7 +62,8 @@ public class ProjectController extends Controller{
     @GetMapping("")
     public ProjectOutDTO getProject(@RequestParam(required = false) Long id,
                                         @RequestParam(required = false) String name) {
-        if ( id == null ) {
+        if ( id == null && name != null) {
+            log.info(name);
             return projectService.getProjectByName(name);
         }
         return projectService.getProjectById(id);
@@ -71,9 +74,9 @@ public class ProjectController extends Controller{
         return projectService.getAll();
     }
 
-    @GetMapping(value = "/image/{id}")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable Long id) throws SQLException {
-        byte[] product = projectService.getImage(id);
+    @GetMapping(value = "/image/{name}")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable String name) throws SQLException {
+        byte[] product = projectService.getImage(name);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(product);
     }
 

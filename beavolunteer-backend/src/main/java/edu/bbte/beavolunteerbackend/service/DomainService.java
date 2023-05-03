@@ -4,7 +4,6 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.model.*;
 import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
-import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -45,4 +47,15 @@ public class DomainService extends ImgService {
         return getImg(domainImg);
     }
 
+    public List<DomainDTO> getDomains(List <Long> domain_ids) {
+        List <DomainDTO> domainDTOS = new ArrayList<>();
+        for (Long did : domain_ids) {
+            Optional<Domain> domain = domainRepository.findById(did);
+            if (domain.isPresent()) {
+                DomainDTO domainDTO = DomainMapper.domainToDTO(domain.get());
+                domainDTOS.add(domainDTO);
+            }
+        }
+        return domainDTOS;
+    }
 }

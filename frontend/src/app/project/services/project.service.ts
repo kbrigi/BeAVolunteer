@@ -18,4 +18,8 @@ export class ProjectService {
     return this.service.get(`${environment.apiUrl}/proj/all`);
   }
 
+  getProj(name: String) : Observable<Project> {
+    return this.service.get(`${environment.apiUrl}/proj?name=${name}`);
+  }
+
 }

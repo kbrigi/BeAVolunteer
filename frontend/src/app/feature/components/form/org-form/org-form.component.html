@@ -31,7 +31,7 @@
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Password</mat-label>
-          <input [type]="'password'" matInput formControlName="password">
+          <input name = "password1" [type]="'password'" matInput formControlName="password">
           <mat-icon matSuffix> lock</mat-icon>
           <mat-error *ngIf="registrationForm.controls['password'].invalid">min. 8 characters, min. 1 uppercase and 1
             lowercase letter, min 1 number
@@ -42,13 +42,14 @@
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Confirm password</mat-label>
-          <input [type]="'password'" matInput formControlName="confirmationPassword">
+          <input name = "password2" [type]="'password'" matInput formControlName="confirmationPassword">
           <mat-icon matSuffix> lock</mat-icon>
         </mat-form-field>
       </div>
   
       <div class="password-not-match"
-           *ngIf="registrationForm.dirty && passwordFormControl.value !== confirmPasswordFormControl.value">
+           *ngIf="registrationForm.controls['password'].dirty && registrationForm.controls['confirmationPassword'].dirty  
+           && passwordFormControl.value !== confirmPasswordFormControl.value">
         Passwords do not match
       </div>
 

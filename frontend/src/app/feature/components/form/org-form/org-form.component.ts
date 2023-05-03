@@ -5,6 +5,7 @@ import { Domain } from 'src/app/domain/models/domain.model';
 import { Organization } from 'src/app/feature/models/organization.model';
 import { OrgService } from 'src/app/feature/services/user/org/org.service';
 import { DomainService } from 'src/app/domain/services/domain.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-org-form',
@@ -17,7 +18,8 @@ export class OrgFormComponent {
   domains: Domain[] = [];
   selectedDomiains: Array<any[]> = [];
   
-  constructor(private formBuilder: FormBuilder, private orgService: OrgService, private _snackBar: MatSnackBar, private domainService: DomainService) {
+  constructor(private formBuilder: FormBuilder, private orgService: OrgService, private _snackBar: MatSnackBar,
+     private domainService: DomainService, private router: Router) {
     this.registrationForm = this.initForm();
   }
 
@@ -47,16 +49,16 @@ export class OrgFormComponent {
 
   onSubmit(formDirective: FormGroupDirective) {
     // console.log(this.registrationForm.value)
-    this.registrationForm.removeControl('confirmationPassword')
+    // this.registrationForm.removeControl('confirmationPassword')
     let formData: any = new FormData();
     let org: Partial<Organization> = this.registrationForm.value as Partial<Organization>;
     org.logo = undefined;
     formData.append('organization', JSON.stringify(org));
     formData.append('file', this.registrationForm.controls['logo'].value);
     console.log( JSON.stringify(org))
-    for (var pair of formData.entries()) {
-      console.log(pair); 
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair); 
+    // }
     this.orgService.registration(formData).subscribe({
       next: () => {
         this._snackBar.open('Successfull registration! Your account is created!', 'OK', {
@@ -69,7 +71,7 @@ export class OrgFormComponent {
             duration: 10000,
             panelClass: 'fail-snackbar'
           })
-          console.log(e);
+          this.router.navigate(["/registration/org"]);
         }
       });
 

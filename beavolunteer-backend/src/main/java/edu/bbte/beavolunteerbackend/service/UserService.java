@@ -54,6 +54,9 @@ public class UserService extends ImgService {
     @Autowired
     private JWTToken jwToken;
 
+    @Autowired
+    private DomainService domainService;
+
     public void saveUser(VolunteerDTO userDTO) throws BusinessException {
         User user = DTOToUser(userDTO);
         UserValidator.errorList.clear();
@@ -114,8 +117,8 @@ public class UserService extends ImgService {
         List<OrganizationOutDTO> organizationOutDTOS = new ArrayList<>();
         for (Organization org: orgs) {
             OrganizationOutDTO orgDTO = UserMapper.organizationToDTO(org, userRepository.getById(org.getId()));
-
-            List <DomainDTO> domainDTOS = getDomains(org.getId());
+            List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(org.getId());
+            List <DomainDTO> domainDTOS = domainService.getDomains(domain_ids);
             orgDTO.setDomains(domainDTOS);
             organizationOutDTOS.add(orgDTO);
         }
@@ -153,7 +156,8 @@ public class UserService extends ImgService {
         Long id = getUserFromUsername(username).getId();
         if (id != null) {
             OrganizationOutDTO organizationOutDTO =  organizationToDTO(organizationRepository.getById(id), userRepository.getById(id));
-            organizationOutDTO.setDomains(getDomains(id));
+            List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(id);
+            organizationOutDTO.setDomains(domainService.getDomains(domain_ids));
             return organizationOutDTO;
         }
         else {
@@ -161,16 +165,4 @@ public class UserService extends ImgService {
         }
     }
 
-    public List <DomainDTO> getDomains(Long id) {
-        List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(id);
-        List <DomainDTO> domainDTOS = new ArrayList<>();
-        for (Long did : domain_ids) {
-            Optional<Domain> domain = domainRepository.findById(did);
-            if (domain.isPresent()) {
-                DomainDTO domainDTO = DomainMapper.domainToDTO(domain.get());
-                domainDTOS.add(domainDTO);
-            }
-        }
-        return domainDTOS;
-    }
 }

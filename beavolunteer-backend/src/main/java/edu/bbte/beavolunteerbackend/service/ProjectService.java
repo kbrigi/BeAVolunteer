@@ -7,11 +7,9 @@ import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.model.Domain;
 import edu.bbte.beavolunteerbackend.model.Project;
-import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
 import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
 import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
-import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,9 @@ public class ProjectService  extends ImgService  {
 
     @Autowired
     private DomainRepository domainRepository;
+
+    @Autowired
+    private DomainService domainService;
 
     public void saveProject(ProjectInDTO projectDTO, Blob img, Long userID) throws BusinessException {
         if (projectRepository.checkName(projectDTO.getProject_name()) == 0) {
@@ -78,11 +79,18 @@ public class ProjectService  extends ImgService  {
     }
 
     public ProjectOutDTO getProjectByName(String name) {
-        return ProjectMapper.projectToDTO(projectRepository.getByName(name));
+        Project project = projectRepository.getByName(name);
+        if (project != null) {
+            ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
+            List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project.getProjectId());
+            projectOutDTO.setDomains(domainService.getDomains(domain_ids));
+            return projectOutDTO;
+        }
+        return null;
     }
 
-    public byte[] getImage(Long id) throws SQLException {
-        Blob projectImg = projectRepository.getById(id).getProjectImg();
+    public byte[] getImage(String name) throws SQLException {
+        Blob projectImg = projectRepository.getByName(name).getProjectImg();
         return getImg(projectImg);
     }
 
@@ -91,4 +99,5 @@ public class ProjectService  extends ImgService  {
             projectDomainRepository.insertProjectDomain(project.getProjectId(), domainRepository.findByName(d.getDomain_name()).getDomainId());
         }
     }
+
 }

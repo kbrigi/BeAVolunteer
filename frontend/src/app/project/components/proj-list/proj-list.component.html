@@ -1,19 +1,29 @@
-<mat-card  *ngFor="let project of projects">
-    <mat-card-title-group style="padding: 5%;">
-        <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
-        <mat-card-subtitle class="project_creator_name">{{project.creator_name}}</mat-card-subtitle>
-        <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
-    </mat-card-title-group>
-    
-    <!-- <mat-card-content class="project_description">Description: {{project.project_description}}</mat-card-content> -->
+<mat-grid-list cols="3" style="margin-top:5%;" >
+    <mat-grid-tile  *ngFor="let project of projects">
+        <mat-card style="padding: 10%;">
+            <mat-card-title-group style="padding: 5%;">
+                <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
+                <mat-card-subtitle class="project_creator_name">{{project.creator_name}}</mat-card-subtitle>
+                <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
+            </mat-card-title-group>
+            
+            <!-- <mat-card-content class="project_description">Description: {{project.project_description}}</mat-card-content> -->
 
-    <div>
-        <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
-    </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
-    <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content>
+            <div>
+                <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
+            </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
+            <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content>
 
-    <div *ngFor="let domain of project.domains">
-        <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
+            <!-- <div *ngFor="let domain of project.domains">
+                <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
 
-    </div>
-</mat-card>
+            </div> -->
+
+            <mat-card-content >
+                <mat-card-actions>
+                    <button mat-button [routerLink] = '["/project", project.project_name]' >Details</button>
+                </mat-card-actions>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

@@ -34,7 +34,7 @@ public class ProjectMapper {
         ProjectOutDTO projectOutDTO = new ProjectOutDTO();
         projectOutDTO.setProject_name(proj.getProjectName());
         projectOutDTO.setProject_description(proj.getProjectDescription());
-        projectOutDTO.setProject_img("http://localhost:8080/proj/image/" + proj.getProjectId());
+        projectOutDTO.setProject_img("http://localhost:8080/proj/image/" + proj.getProjectName());
         projectOutDTO.setCreation_date(proj.getCreationDate());
         projectOutDTO.setExpiration_date(proj.getExpirationDate());
         projectOutDTO.setOwner(UserMapper.userToDTO(proj.getOwner()));

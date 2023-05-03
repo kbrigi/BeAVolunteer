@@ -8,6 +8,7 @@ import { DomainFormComponent } from './domain/components/domain-form/domain-form
 import { ProjListComponent } from './project/components/proj-list/proj-list.component';
 import { OrgListComponent } from './feature/components/list/org-list/org-list.component';
 import { OrgDetailsComponent } from './feature/components/details/org-details/org-details.component';
+import { ProjDetailsComponent } from './project/components/proj-details/proj-details.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'projects',
     component: ProjListComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'project/:name',
+    component: ProjDetailsComponent,
     pathMatch: 'full'
   },
   {

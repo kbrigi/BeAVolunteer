@@ -15,13 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { VolunteerService } from './services/user/volunteer/volunteer.service';
 import { OrgService } from './services/user/org/org.service';
 import { LoginService } from './services/user/login/login.service';
 import { OrgListComponent } from './components/list/org-list/org-list.component';
 import { OrgDetailsComponent } from './components/details/org-details/org-details.component';
 import { RouterModule } from '@angular/router';
-
 
 
 @NgModule({
@@ -47,7 +47,8 @@ import { RouterModule } from '@angular/router';
     MatSnackBarModule,
     NgxMatFileInputModule,
     MatNativeDateModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    MatGridListModule
   ],
   exports: [],
   providers: [
