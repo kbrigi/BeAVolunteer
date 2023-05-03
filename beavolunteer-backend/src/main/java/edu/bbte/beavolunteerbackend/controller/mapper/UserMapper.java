@@ -9,11 +9,17 @@ import edu.bbte.beavolunteerbackend.model.Organization;
 import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.Volunteer;
 import edu.bbte.beavolunteerbackend.model.Gender;
+import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserMapper {
+
+    @Autowired
+    private static UserRepository userRepository;
 
     public static <T extends UserDTO> User DTOToUser(T userDTO) {
         User user = new User();
@@ -60,9 +66,10 @@ public class UserMapper {
         return user.stream().map(UserMapper::userToDTO).collect(Collectors.toList());
     }
 
+
     public static OrganizationOutDTO organizationToDTO(Organization org, User user) {
         OrganizationOutDTO orgDTO = new OrganizationOutDTO();
-        orgDTO.setUser(userToDTO(user));
+        orgDTO.setUser(user.getUserName());
         orgDTO.setAddress(org.getAddress());
         orgDTO.setDescription(org.getDescription());
         orgDTO.setWebsite(org.getWebsite());

@@ -18,6 +18,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VolunteerService } from './services/user/volunteer/volunteer.service';
 import { OrgService } from './services/user/org/org.service';
 import { LoginService } from './services/user/login/login.service';
+import { OrgListComponent } from './components/list/org-list/org-list.component';
+import { OrgDetailsComponent } from './components/details/org-details/org-details.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -25,7 +28,9 @@ import { LoginService } from './services/user/login/login.service';
   declarations: [
     VolunteerFormComponent,
     OrgFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    OrgListComponent,
+    OrgDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +47,7 @@ import { LoginService } from './services/user/login/login.service';
     MatSnackBarModule,
     NgxMatFileInputModule,
     MatNativeDateModule,
+    RouterModule.forRoot([])
   ],
   exports: [],
   providers: [

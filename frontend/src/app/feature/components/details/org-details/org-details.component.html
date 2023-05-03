@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-title-group style="padding: 5%;">
+        <mat-card-title class="org_name">{{org.user}}</mat-card-title>
+         <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
+    </mat-card-title-group>
+    
+    <mat-card-content *ngFor="let domain of org.domains">{{domain.domain_name}}</mat-card-content>
+
+    <div>
+        <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
+    </div>
+
+     <div *ngFor="let domain of org.domains">
+        <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
+    </div> 
+</mat-card>

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -21,9 +20,6 @@ public class DomainService extends ImgService {
 
     @Autowired
     private DomainRepository domainRepository;
-
-//    @Autowired
-//    private DomainMapper domainMapper;
 
     public void saveDomain(DomainDTO domainDTO, Blob img) throws BusinessException {
         if(domainRepository.checkName(domainDTO.getDomain_name()) == 0) {

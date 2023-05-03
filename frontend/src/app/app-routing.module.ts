@@ -6,6 +6,8 @@ import { ProjFormComponent } from './project/components/proj-form/proj-form.comp
 import { VolunteerFormComponent } from './feature/components/form/volunteer-form/volunteer-form.component';
 import { DomainFormComponent } from './domain/components/domain-form/domain-form.component';
 import { ProjListComponent } from './project/components/proj-list/proj-list.component';
+import { OrgListComponent } from './feature/components/list/org-list/org-list.component';
+import { OrgDetailsComponent } from './feature/components/details/org-details/org-details.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,16 @@ const routes: Routes = [
   {
     path: 'projects',
     component: ProjListComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'orgs',
+    component: OrgListComponent,
+    pathMatch:  'full'
+  },
+  {
+    path: 'org/:name',
+    component: OrgDetailsComponent,
     pathMatch: 'full'
   },
   {

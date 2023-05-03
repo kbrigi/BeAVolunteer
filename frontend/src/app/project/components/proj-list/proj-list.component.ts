@@ -22,7 +22,6 @@ export class ProjListComponent implements OnInit {
     });
   }
    
-
   ngOnInit(): void {
     this.getAllProjects();
   }

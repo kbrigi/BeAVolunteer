@@ -1,7 +1,5 @@
 package edu.bbte.beavolunteerbackend.model.repository;
 
-import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
-import edu.bbte.beavolunteerbackend.model.Domain;
 import edu.bbte.beavolunteerbackend.model.ProjectDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,13 +1,17 @@
 package edu.bbte.beavolunteerbackend.controller.dto.outgoing;
 
+import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class OrganizationOutDTO {
-    UserOutDTO user;
+    String user;
     String description;
     String address;
     String website;
     String logo;
     String phoneNr;
+    List<DomainDTO> domains;
 }

@@ -52,7 +52,6 @@ public class UserController extends Controller{
     public ResponseEntity<String> saveOrganization(@RequestPart(value = "organization") String organization,
                                                    @RequestPart(value = "file") MultipartFile file) throws SQLException, IOException {
         Blob blob = prepareImage(file);
-        log.info(organization, "file:", file);
         if (blob == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -67,20 +66,25 @@ public class UserController extends Controller{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/org/")
-    public OrganizationOutDTO getOrganization(@PathVariable Long id) {
-        return userService.getOrganization(id);
+    @GetMapping("/org/all")
+    public List<OrganizationOutDTO> getAllOrganization() {
+        return userService.getAllOrg();
     }
 
-    @GetMapping("/org/image")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long id) throws SQLException {
-        byte[] logo = userService.getImage(id);
+    @GetMapping("/org/{name}")
+    public OrganizationOutDTO getOrganization(@PathVariable String name) throws BusinessException {
+        return userService.getOrg(name);
+    }
+
+    @GetMapping("/org/image/{username}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String username) throws SQLException {
+        byte[] logo = userService.getImage(username);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(logo);
     }
 
     @GetMapping("/users")
     public List<UserOutDTO> getAllUsers() {
-        return UserMapper.usersToDTO(userService.getAll());
+        return UserMapper.usersToDTO(userService.getAllUser());
     }
 
     @PostMapping(value = "/login")

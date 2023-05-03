@@ -4,6 +4,8 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
+import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
+import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
 import edu.bbte.beavolunteerbackend.model.*;
 import edu.bbte.beavolunteerbackend.model.repository.*;
 import edu.bbte.beavolunteerbackend.model.Role;
@@ -17,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static edu.bbte.beavolunteerbackend.controller.mapper.UserMapper.*;
 
@@ -79,7 +83,6 @@ public class UserService extends ImgService {
             throw new BusinessException("Incorrect password");
         }
         return jwToken.generateToken(user);
-//        return "ok";
     }
 
     public void saveOrg(OrganizationDTO organizationDTO, Blob file) throws BusinessException {
@@ -102,8 +105,21 @@ public class UserService extends ImgService {
         }
     }
 
-    public List<User> getAll() {
+    public List<User> getAllUser() {
         return userRepository.findAll();
+    }
+
+    public List<OrganizationOutDTO> getAllOrg() {
+        List<Organization> orgs = organizationRepository.findAll();
+        List<OrganizationOutDTO> organizationOutDTOS = new ArrayList<>();
+        for (Organization org: orgs) {
+            OrganizationOutDTO orgDTO = UserMapper.organizationToDTO(org, userRepository.getById(org.getId()));
+
+            List <DomainDTO> domainDTOS = getDomains(org.getId());
+            orgDTO.setDomains(domainDTOS);
+            organizationOutDTOS.add(orgDTO);
+        }
+        return organizationOutDTOS;
     }
 
     public OrganizationOutDTO getOrganization(Long id) {
@@ -111,8 +127,8 @@ public class UserService extends ImgService {
         return organizationToDTO(org, userRepository.getById(org.getId()));
     }
 
-    public byte[] getImage(Long id) throws SQLException {
-        Blob projectImg = organizationRepository.getById(id).getLogo();
+    public byte[] getImage(String username) throws SQLException {
+        Blob projectImg = organizationRepository.getById(userRepository.matchUser(username).getId()).getLogo();
         return getImg(projectImg);
     }
 
@@ -131,5 +147,30 @@ public class UserService extends ImgService {
 
     public User getUserFromUsername(String username) {
         return userRepository.matchUser(username);
+    }
+
+    public OrganizationOutDTO getOrg(String username) throws BusinessException {
+        Long id = getUserFromUsername(username).getId();
+        if (id != null) {
+            OrganizationOutDTO organizationOutDTO =  organizationToDTO(organizationRepository.getById(id), userRepository.getById(id));
+            organizationOutDTO.setDomains(getDomains(id));
+            return organizationOutDTO;
+        }
+        else {
+            throw new BusinessException("Error: this user does not exist!");
+        }
+    }
+
+    public List <DomainDTO> getDomains(Long id) {
+        List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(id);
+        List <DomainDTO> domainDTOS = new ArrayList<>();
+        for (Long did : domain_ids) {
+            Optional<Domain> domain = domainRepository.findById(did);
+            if (domain.isPresent()) {
+                DomainDTO domainDTO = DomainMapper.domainToDTO(domain.get());
+                domainDTOS.add(domainDTO);
+            }
+        }
+        return domainDTOS;
     }
 }
