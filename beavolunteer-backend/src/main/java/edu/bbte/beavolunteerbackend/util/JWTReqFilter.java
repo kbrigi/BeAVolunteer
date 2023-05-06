@@ -48,7 +48,7 @@ public class JWTReqFilter extends OncePerRequestFilter {
             // Once we get the token validate it.
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                User user = this.userRepository.matchUser(username);
+                User user = this.userRepository.findByUsername(username);
 
                 // if token is valid configure Spring Security to manually set
                 // authentication

@@ -7,19 +7,21 @@ import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.model.Domain;
 import edu.bbte.beavolunteerbackend.model.Project;
+import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
 import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
 import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
+import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,6 +39,9 @@ public class ProjectService  extends ImgService  {
     @Autowired
     private DomainService domainService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public void saveProject(ProjectInDTO projectDTO, Blob img, Long userID) throws BusinessException {
         if (projectRepository.checkName(projectDTO.getProject_name()) == 0) {
             Project project = ProjectMapper.projectDTOToEntity(projectDTO);
@@ -51,8 +56,13 @@ public class ProjectService  extends ImgService  {
         }
     }
 
-    public void delete(Long id) {
-        projectRepository.delete(projectRepository.getById(id));
+    public void delete(String name) throws BusinessException {
+        Project project = projectRepository.getByName(name);
+        if (project != null) {
+            projectRepository.updateExpired(project.getProjectId(), new Date());
+        }
+        else
+            throw new BusinessException("Project name does not exist!");
     }
 
     public List<ProjectOutDTO> getAll() {
@@ -81,12 +91,19 @@ public class ProjectService  extends ImgService  {
     public ProjectOutDTO getProjectByName(String name) {
         Project project = projectRepository.getByName(name);
         if (project != null) {
-            ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
-            List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project.getProjectId());
-            projectOutDTO.setDomains(domainService.getDomains(domain_ids));
-            return projectOutDTO;
+            return createAndSetDomainsForDTO(project);
         }
         return null;
+    }
+
+    public List<ProjectOutDTO> getProjectByOwnerId(Long userID) throws BusinessException {
+        User user = userRepository.getById(userID);
+        if (user != null) {
+            List<Project> projects =  projectRepository.getByOwner(userID);
+            return ProjectMapper.projectsToDTO(projects);
+        }
+        else
+            throw new BusinessException("User does not exist!");
     }
 
     public byte[] getImage(String name) throws SQLException {
@@ -100,4 +117,79 @@ public class ProjectService  extends ImgService  {
         }
     }
 
+    public List<ProjectOutDTO> getProjectByDomain(String domain) {
+        List<Long> project_ids = projectDomainRepository.getProjectsByDomain(domainRepository.findByName(domain).getDomainId());
+        List<Project> projects = new ArrayList<>();
+        for (Long p_id : project_ids) {
+            projects.add(projectRepository.getById(p_id));
+        }
+        return ProjectMapper.projectsToDTO(projects);
+    }
+
+    public ProjectOutDTO createAndSetDomainsForDTO(Project project) {
+        ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
+        List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project.getProjectId());
+        projectOutDTO.setDomains(domainService.getDomains(domain_ids));
+        return projectOutDTO;
+    }
+//  role = states if owner is a role or an owner name
+    public List<ProjectOutDTO> getProjectDTOsByOwner(String owner, Boolean role) {
+        List<Project> projectsByOwner;
+        if (role) {
+            List<Long> userIdsByRole = userRepository.findByRole(owner);
+            projectsByOwner = projectRepository.getProjectsByOwner(userIdsByRole);
+        }
+        else {
+            Long orgIdByName = userRepository.findByUsername(owner).getId();
+            projectsByOwner = projectRepository.getProjectsByOwner(Collections.singletonList(orgIdByName));
+        }
+
+        List<ProjectOutDTO> projectsByOwnerRole = new ArrayList<>();
+        for (Project project: projectsByOwner) {
+            projectsByOwnerRole.add(createAndSetDomainsForDTO(project));
+        }
+        return projectsByOwnerRole;
+    }
+
+    public List<ProjectOutDTO> getProjectDTOsByDomain(String domainName) {
+        Long domainIdsByName = domainRepository.findByName(domainName).getDomainId();
+        List<Long> projectIdsByDomainType = projectDomainRepository.getProjectsByDomain(domainIdsByName);
+        List<ProjectOutDTO> projectsByDomain = new ArrayList<>();
+        for (Long projectId: projectIdsByDomainType) {
+            projectsByDomain.add(createAndSetDomainsForDTO(projectRepository.getById(projectId)));
+        }
+        return projectsByDomain;
+    }
+
+    public List<ProjectOutDTO> getProjectsFiltered(Map<String, String> filterParams) {
+        List<ProjectOutDTO> finalProjectsDTO = new ArrayList<>();
+        if (filterParams.get("owner") != null && filterParams.get("owner").length() != 2) {
+            finalProjectsDTO.addAll(getProjectDTOsByOwner(filterParams.get("owner"), true));
+        }
+        if (filterParams.get("domain") != null) {
+            String[] domainNames = filterParams.get("domain").split("\\s*,\\s*");
+
+            for (String domainName: domainNames) {
+                if (finalProjectsDTO.isEmpty()) {
+                    finalProjectsDTO.addAll(getProjectDTOsByDomain(domainName));
+                }
+                else {
+                    finalProjectsDTO = finalProjectsDTO.stream().filter(getProjectDTOsByDomain(domainName)::contains).collect(Collectors.toList());
+                }
+            }
+        }
+        if (filterParams.get("orgs") != null && !Objects.equals(filterParams.get("owner"), "ORGANIZATION")) {
+            String[] orgNames = filterParams.get("orgs").split("\\s*,\\s*");
+            for (String orgName: orgNames) {
+                if (finalProjectsDTO.isEmpty()) {
+                    finalProjectsDTO.addAll(getProjectDTOsByOwner(orgName, false));
+                }
+                else {
+                    finalProjectsDTO = finalProjectsDTO.stream().filter(getProjectDTOsByOwner(orgName, false)::contains).collect(Collectors.toList());
+                }
+            }
+        }
+
+        return finalProjectsDTO;
+    }
 }

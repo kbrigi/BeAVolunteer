@@ -53,6 +53,8 @@ export class ProjFormComponent {
     let proj: Partial<Project> = this.projForm.value as Partial<Project>;
     formData.append('project', JSON.stringify(proj));
     formData.append('file', this.projForm.controls['img'].value);
+    const date = this.projForm.controls['expiration_date'].value
+    proj.expiration_date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.projectService.save(formData).subscribe({
       next: () => {
         this._snackBar.open('Successfully saved project!', 'OK', {

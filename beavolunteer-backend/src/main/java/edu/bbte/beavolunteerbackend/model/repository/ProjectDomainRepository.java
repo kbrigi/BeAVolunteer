@@ -1,5 +1,6 @@
 package edu.bbte.beavolunteerbackend.model.repository;
 
+import edu.bbte.beavolunteerbackend.model.Project;
 import edu.bbte.beavolunteerbackend.model.ProjectDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,6 +16,9 @@ public interface ProjectDomainRepository extends JpaRepository<ProjectDomain, Lo
 
     @Query(value="SELECT domain_id FROM project_domain pd WHERE pd.project_id = :pid", nativeQuery = true)
     List<Long> findDomainsByProject(@Param("pid") Long projectId);
+
+    @Query(value = "SELECT project_id FROM project_domain pd WHERE pd.domain_id = :did", nativeQuery = true)
+    List<Long> getProjectsByDomain(@Param("did") Long domainId);
 
     @Modifying
     @Transactional

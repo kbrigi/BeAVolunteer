@@ -7,9 +7,10 @@ import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 public class ProjectMapper {
@@ -21,8 +22,8 @@ public class ProjectMapper {
         Project project = new Project();
         project.setProjectName(projectDTO.getProject_name());
         project.setProjectDescription(projectDTO.getProject_description());
-        project.setCreationDate(new Date());
-        project.setExpirationDate(projectDTO.getExpiration_date());
+        project.setCreationDate(new Date(System.currentTimeMillis()));
+        project.setExpirationDate(new Date(projectDTO.getExpiration_date().getTime()));
         return project;
     }
 

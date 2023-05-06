@@ -10,7 +10,9 @@
         <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
     </div>
 
-     <div *ngFor="let domain of org.domains">
-        <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
-    </div> 
+    <div class="domain_imgs">
+        <div class="domain_img" *ngFor="let domain of org.domains">
+            <button class="domain_button"  [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+        </div> 
+    </div>
 </mat-card>

@@ -18,10 +18,10 @@ export class ProjDetailsComponent implements OnInit{
     owner: {
       user: '',
       email: '',
-      password: ''
+      password: '',
+      role: ''
     },
-    project_img: '',
-    creator_name: ''
+    project_img: ''
   };
   
   constructor(private projectService: ProjectService,  private activatedRoute: ActivatedRoute){

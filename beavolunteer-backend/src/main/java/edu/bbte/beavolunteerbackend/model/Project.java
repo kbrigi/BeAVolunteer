@@ -1,11 +1,10 @@
 package edu.bbte.beavolunteerbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Blob;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data

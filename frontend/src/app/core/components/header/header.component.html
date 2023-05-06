@@ -37,7 +37,7 @@
         <button class="button" *ngIf="logedin"><a routerLink="/save/project"> New project</a>
         </button>
 
-        <button class="button" *ngIf="logedin"><a routerLink="/save/domain"> New domain</a>
+        <button class="button" *ngIf="logedin && logedin_user_role === 'ADMIN'"><a routerLink="/save/domain"> New domain</a>
         </button>
 
         <button class="button"><a routerLink="/projects"> Projects</a>

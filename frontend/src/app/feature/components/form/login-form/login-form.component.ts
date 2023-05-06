@@ -9,7 +9,6 @@ import { LoginService } from 'src/app/feature/services/user/login/login.service'
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {  
-
   loginForm: FormGroup;
   
   constructor(private loginService: LoginService, private _snackBar: MatSnackBar) {
@@ -44,6 +43,7 @@ export class LoginFormComponent {
       })
       console.log(e);
     }
+    
   }
     
   );
@@ -53,3 +53,7 @@ export class LoginFormComponent {
   }
   
 }
+function jwt_decode(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

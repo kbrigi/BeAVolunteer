@@ -13,4 +13,5 @@ public interface DomainRepository extends JpaRepository<Domain, Long> {
 
     @Query(value = "SELECT d.* FROM Domain d WHERE d.domain_name = :name", nativeQuery = true)
     Domain findByName(@Param("name") String domain_name);
+
 }

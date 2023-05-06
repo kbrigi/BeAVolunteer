@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Organization } from 'src/app/feature/models/organization.model';
 import { OrgService } from 'src/app/feature/services/user/org/org.service';
+import { LoginService } from 'src/app/feature/services/user/login/login.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-org-list',
@@ -10,8 +13,12 @@ import { OrgService } from 'src/app/feature/services/user/org/org.service';
 })
 export class OrgListComponent implements OnInit {
   orgs: Organization[] = [];
+  logedin_user_role: String = '';
 
-  constructor(private orgService: OrgService, private router: Router){}
+  constructor(private orgService: OrgService, private userService: LoginService,
+    private router: Router, private _snackBar: MatSnackBar){
+      
+    }
 
   getAllOrgs(): void {
     this.orgService.getAll().subscribe(result => {
@@ -19,13 +26,42 @@ export class OrgListComponent implements OnInit {
     })
   }
 
+  getRole(): void {
+    if (localStorage.getItem('token') !== null) {
+        const token = jwt_decode(localStorage.getItem('token')!);
+        // @ts-ignore
+        const name = token.sub;
+        this.userService.getRole(name).subscribe(result => {
+          this.logedin_user_role = result.role;
+        }
+        );
+      }
+  }
+
+
+
   ngOnInit(): void {
     this.getAllOrgs();
+    this.getRole();
   }
 
-  navigate(username: String): void {
+  clickDelete(username: String): void {
     console.log("/org/"+username);
-    this.router.navigate(["/org"], { queryParams: {name: username}});
+    this.orgService.delete(username).subscribe({
+      next: (result: any) => {
+          this._snackBar.open("You deleted the "+username +" oranization!", 'OK', {
+            duration: 10000,
+            panelClass: 'success-snackbar'
+          });
+          this.router.navigate(["/orgs"]);
+      },
+      error: (e: { error: { message: string; }; }) => { 
+      this._snackBar.open(e.error.message, 'OK', {
+        duration: 10000,
+        panelClass: 'fail-snackbar'
+      })
+      console.log(e);
+    }
+  });
   }
-
 }

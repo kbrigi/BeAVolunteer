@@ -32,6 +32,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'projects/:domain',
+    component: ProjListComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'project/:name',
     component: ProjDetailsComponent,
     pathMatch: 'full'

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -17,9 +19,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int existsEmail(@Param("email") String email);
 
     @Query(value = "SELECT user FROM User user WHERE user.email = :email")
-    User matchEmail(@Param("email") String email);
+    User findByEmail(@Param("email") String email);
 
     @Query(value = "SELECT user FROM User user WHERE user.userName = :username")
-    User matchUser(@Param("username") String username);
+    User findByUsername(@Param("username") String username);
 
+    @Query(value = "SELECT u.id FROM User u WHERE u.role = :role", nativeQuery = true)
+    List<Long> findByRole(@Param("role") String role);
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
@@ -26,4 +27,16 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "SELECT * FROM Project p WHERE p.project_name = :name", nativeQuery = true)
     Project getByName(@Param("name")String project_name);
+
+    @Query(value = "SELECT * FROM Project  p WHERE p.owner_id = :id", nativeQuery = true)
+    List<Project> getByOwner(@Param("id")Long owner);
+
+    @Query(value = "SELECT * FROM Project p WHERE p.owner_id IN :owner_ids", nativeQuery = true)
+    List<Project> getProjectsByOwner(@Param("owner_ids")List<Long> owner);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Project p SET p.expiration_date = :newDate WHERE p.project_id = :id", nativeQuery = true)
+    void updateExpired(@Param("id")Long projectId, @Param("newDate")Date date);
+
 }

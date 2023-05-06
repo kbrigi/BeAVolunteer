@@ -23,4 +23,7 @@ export class OrgService {
     return this.service.get(`${environment.apiUrl}/org/${name}`);
   }
 
+  delete(username: String): Observable<void> {
+    return this.service.delete(`${environment.apiUrl}/org/${username}`);
+  }
 }

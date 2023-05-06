@@ -39,7 +39,7 @@ public class Organization extends User {
     @Column(name = "WEBSITE")
     private String website;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Collection<Project> projects;

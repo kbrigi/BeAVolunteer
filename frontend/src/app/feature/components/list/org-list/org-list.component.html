@@ -7,19 +7,27 @@
                 <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
             </mat-card-title-group>
             
-            <div>
-                <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
-            </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
-            <!-- *ngFor="let domain of org.domains">{{domain.domain_name}} -->
             <mat-card-content >
-                <mat-card-actions>
-                    <button mat-button [routerLink] = '["/org", org.user]' >Details</button>
-                </mat-card-actions>
+                <div>
+                    <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
+                </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
+            <!-- *ngFor="let domain of org.domains">{{domain.domain_name}} -->
+               
             </mat-card-content>
 
             <!-- <div *ngFor="let domain of org.domains">(click)="navigate(org.user)">
                 <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
             </div> -->
+            <div id = "button" >
+                <mat-card-actions>
+                    <button mat-button [routerLink] = '["/org", org.user]' >Details</button>
+                </mat-card-actions>
+
+                <mat-card-actions>
+                    <button mat-button  *ngIf="logedin_user_role === 'ADMIN'" (click)="clickDelete(org.user)" >
+                        <mat-icon>delete</mat-icon></button>
+                </mat-card-actions>
+            </div>
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>

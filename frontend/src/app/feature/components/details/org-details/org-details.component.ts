@@ -20,6 +20,7 @@ export class OrgDetailsComponent implements OnInit {
     logo: '',
     domains: []
   };
+
   
   constructor(private orgService: OrgService,  private activatedRoute: ActivatedRoute){
   }

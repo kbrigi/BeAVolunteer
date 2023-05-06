@@ -6,6 +6,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.service.ProjectService;
 import edu.bbte.beavolunteerbackend.service.UserService;
 import edu.bbte.beavolunteerbackend.util.JWTToken;
+import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 //TO DO
 // Filter: get projects by given domains
@@ -61,17 +63,37 @@ public class ProjectController extends Controller{
 
     @GetMapping("")
     public ProjectOutDTO getProject(@RequestParam(required = false) Long id,
-                                        @RequestParam(required = false) String name) {
-        if ( id == null && name != null) {
-            log.info(name);
+                                    @RequestParam(required = false) String name) {
+        if (name != null) {
             return projectService.getProjectByName(name);
         }
-        return projectService.getProjectById(id);
+        else if (id != null) {
+            return projectService.getProjectById(id);
+        }
+        return null;
+    }
+
+    @GetMapping("/owned")
+    public List<ProjectOutDTO> getProjectsByToken(@RequestHeader("Authorization") String jwttoken) throws BusinessException {
+        String token= jwttoken.substring(17);
+        token = token.substring(0,token.length()-2);
+        Long userID = userService.getUserFromUsername(jwtToken.getUsernameFromToken(token)).getId();
+        return projectService.getProjectByOwnerId(userID);
     }
 
     @GetMapping("/all")
     public List<ProjectOutDTO> getProjects() {
         return projectService.getAll();
+    }
+
+    @GetMapping("/domain/{domain}")
+    public List<ProjectOutDTO> getProjectsByDomain(@PathVariable String domain) {
+        return projectService.getProjectByDomain(domain);
+    }
+
+    @GetMapping("/filter")
+    public List<ProjectOutDTO> getFilteredProjects(@RequestParam Map<String, String> filterParams) {
+        return projectService.getProjectsFiltered(filterParams);
     }
 
     @GetMapping(value = "/image/{name}")
@@ -81,8 +103,8 @@ public class ProjectController extends Controller{
     }
 
     //to do: connect org+vol on delete
-    @DeleteMapping("/{id}")
-    public void deleteProject(@PathVariable Long id) {
-        projectService.delete(id);
+    @DeleteMapping("/{name}")
+    public void deleteProject(@PathVariable String name) throws BusinessException {
+        projectService.delete(name);
     }
 }

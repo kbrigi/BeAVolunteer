@@ -17,9 +17,21 @@ export class ProjectService {
   getAll() : Observable<Project[]> {
     return this.service.get(`${environment.apiUrl}/proj/all`);
   }
+  
+  getProjectsByOwner() : Observable<Project[]>{
+    return this.service.get(`${environment.apiUrl}/proj/owned`);
+  }
+
+  getProjectsByDomain(domain: String): Observable<Project[]> {
+    return this.service.get(`${environment.apiUrl}/proj/domain/${domain}`);
+  }
 
   getProj(name: String) : Observable<Project> {
     return this.service.get(`${environment.apiUrl}/proj?name=${name}`);
+  }
+
+  delete(username: String): Observable<void> {
+    return this.service.delete(`${environment.apiUrl}/proj/${username}`);
   }
 
 }

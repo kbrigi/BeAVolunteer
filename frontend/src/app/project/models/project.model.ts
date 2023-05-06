@@ -8,7 +8,6 @@ export type Project = {
     domains: Domain[],
     creation_date: Date,
     owner: User,
-    project_img: String,
-    creator_name: String
+    project_img: String
 
 }

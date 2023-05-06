@@ -14,7 +14,7 @@ import { ProjListComponent } from './components/proj-list/proj-list.component';
 import { ProjDetailsComponent } from './components/proj-details/proj-details.component';
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -35,7 +35,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDatepickerModule,
     MatSelectModule,
     RouterModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule
   ],
   providers: [
     ProjectService

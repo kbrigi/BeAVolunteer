@@ -87,6 +87,12 @@ public class UserController extends Controller{
         return UserMapper.usersToDTO(userService.getAllUser());
     }
 
+
+    @GetMapping("/role/{username}")
+    public UserOutDTO getRole(@PathVariable String username) throws BusinessException {
+        return userService.getRole(username);
+    }
+
     @PostMapping(value = "/login")
     public ResponseEntity<TokenOutDTO> login(@RequestBody @Valid UserDTO userDTO) {
         try {
@@ -96,6 +102,11 @@ public class UserController extends Controller{
             log.error(businessException.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, businessException.getMessage());
         }
+    }
+
+    @DeleteMapping("org/{name}")
+    public void deleteOrg(@PathVariable String name) throws BusinessException {
+        userService.deleteOrg(name);
     }
 
 }

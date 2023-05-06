@@ -1,12 +1,9 @@
 package edu.bbte.beavolunteerbackend.controller.dto.outgoing;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
-import edu.bbte.beavolunteerbackend.model.Organization;
-import edu.bbte.beavolunteerbackend.model.Volunteer;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Data

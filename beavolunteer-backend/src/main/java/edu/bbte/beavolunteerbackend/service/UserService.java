@@ -4,6 +4,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
 import edu.bbte.beavolunteerbackend.model.*;
@@ -78,7 +79,7 @@ public class UserService extends ImgService {
 
 //check if login data(email+password) is correct
     public String matchUser(String email, String password) throws BusinessException {
-        User user = userRepository.matchEmail(email);
+        User user = userRepository.findByEmail(email);
 
         if(user == null){
             throw new BusinessException("This user does not exist");
@@ -131,7 +132,7 @@ public class UserService extends ImgService {
     }
 
     public byte[] getImage(String username) throws SQLException {
-        Blob projectImg = organizationRepository.getById(userRepository.matchUser(username).getId()).getLogo();
+        Blob projectImg = organizationRepository.getById(userRepository.findByUsername(username).getId()).getLogo();
         return getImg(projectImg);
     }
 
@@ -149,7 +150,7 @@ public class UserService extends ImgService {
     }
 
     public User getUserFromUsername(String username) {
-        return userRepository.matchUser(username);
+        return userRepository.findByUsername(username);
     }
 
     public OrganizationOutDTO getOrg(String username) throws BusinessException {
@@ -161,8 +162,25 @@ public class UserService extends ImgService {
             return organizationOutDTO;
         }
         else {
-            throw new BusinessException("Error: this user does not exist!");
+            return null;
         }
     }
 
+    public void deleteOrg(String name) throws BusinessException {
+        User user = userRepository.findByUsername(name);
+        if (user != null) {
+            userRepository.delete(user);
+        }
+        else
+            throw new BusinessException("Username does not exist!");
+    }
+
+    public UserOutDTO getRole(String username) throws BusinessException {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            return userToDTO(user);
+        }
+        else
+            throw new BusinessException("Username does not exist!");
+    }
 }
