@@ -30,8 +30,19 @@ export class ProjectService {
     return this.service.get(`${environment.apiUrl}/proj?name=${name}`);
   }
 
+  getProjectsFiltered(paramName: String[], domains_param: String[], owner_param: String|undefined) : Observable<Project[]>  {
+    if (owner_param == undefined) {
+    console.log(`${environment.apiUrl}/proj/filter?${paramName[0]}=${domains_param}`)
+      return this.service.get(`${environment.apiUrl}/proj/filter?${paramName[0]}=${domains_param}`);
+    }
+    console.log(`${environment.apiUrl}/proj/filter?${paramName[0]}=${domains_param}&${paramName[1]}=${owner_param}`)
+    return this.service.get(`${environment.apiUrl}/proj/filter?${paramName[0]}=${domains_param}&${paramName[1]}=${owner_param}`);
+    
+  }
+
   delete(username: String): Observable<void> {
     return this.service.delete(`${environment.apiUrl}/proj/${username}`);
   }
+
 
 }

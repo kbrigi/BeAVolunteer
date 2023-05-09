@@ -29,7 +29,6 @@ const routes: Routes = [
   {
     path: 'projects',
     component: ProjListComponent,
-    pathMatch: 'full'
   },
   {
     path: 'projects/:domain',

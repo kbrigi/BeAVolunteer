@@ -15,7 +15,7 @@ import { ProjDetailsComponent } from './components/proj-details/proj-details.com
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     RouterModule,
     MatGridListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [
     ProjectService

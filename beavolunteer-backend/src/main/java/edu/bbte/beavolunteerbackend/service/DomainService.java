@@ -35,7 +35,7 @@ public class DomainService extends ImgService {
     }
 
     public Collection<DomainDTO> getAll() {
-        return DomainMapper.domainsToDTO(domainRepository.findAll());
+        return DomainMapper.domainsToDTO(domainRepository.findAllAsc());
     }
 
     public void remove(Long id) {
