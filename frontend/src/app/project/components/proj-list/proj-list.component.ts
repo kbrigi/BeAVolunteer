@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { Domain } from 'src/app/domain/models/domain.model';
 import { DomainService } from 'src/app/domain/services/domain.service';
 import { Organization } from 'src/app/feature/models/organization.model';
+import { OrgService } from 'src/app/feature/services/user/org/org.service';
 
 @Component({
   selector: 'app-proj-list',
@@ -26,15 +27,17 @@ export class ProjListComponent implements OnInit {
 
   params_domain: String = '';
   query_params_domain: String[] = []
-  query_params_owner: String = ''
+  query_params_owner: string | null | undefined
   query_params_org: String[] = []
-
   constructor(private projectService: ProjectService, private userService: LoginService, private domainService: DomainService,
-    private router: Router, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute){
+    private orgService: OrgService, private router: Router, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute){
+
       this.activatedRoute.params.subscribe((param) => {
         this.params_domain = param['domain']
         if( param['domain'] != undefined) {
-          this.projectService.getProjectsByDomain(this.params_domain).subscribe(result => {
+          console.log("in here:", param['domain'])
+
+          this.projectService.getProjectsByDomain(param['domain']).subscribe(result => {
                   this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
                 })
         }
@@ -43,20 +46,13 @@ export class ProjListComponent implements OnInit {
       this.activatedRoute.queryParams.subscribe((param) => {
         this.query_params_domain = param['domains']
         this.query_params_owner = param['owner']
-        if(!!param['domains'] && !! param['owner']) {
-          this.projectService.getProjectsFiltered(['domain', 'owner'],this.query_params_domain, this.query_params_owner).subscribe(result => {
+        this.query_params_org = param['org']
+
+        if( param['domain'] != undefined ||  param['owner'] != undefined ||  param['org'] != undefined) {
+          this.projectService.getProjectsFiltered(['domain', 'owner', 'orgs'],param['domains'], 
+          param['owner'], param['org']).subscribe(result => {
             this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
-          })
-        }
-        else if(!!param['domains']) {
-          this.projectService.getProjectsFiltered(['domain'],this.query_params_domain, undefined).subscribe(result => {
-                  this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
-                })
-        }
-        else if(!!param['owner']) {
-          this.projectService.getProjectsFiltered(['owner'], [this.query_params_owner], undefined).subscribe(result => {
-                  this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
-                })
+            })
         }
       })
     }
@@ -65,6 +61,12 @@ export class ProjListComponent implements OnInit {
   getAllProjects(): void {
     this.projectService.getAll().subscribe(result => {
       this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
+    });
+  }
+
+  getAllOrgs(): void {
+    this.orgService.getAll().subscribe(result => {
+      this.orgs = result
     });
   }
 
@@ -90,8 +92,11 @@ export class ProjListComponent implements OnInit {
   }
    
   ngOnInit(): void {
-    this.getAllProjects();
+    if (window.location.pathname == "/projects") {
+      this.getAllProjects()
+    }
 
+    this.getAllOrgs();
     // set owned projects + role of user 
     this.getRole();
     this.getUsersProjects();
@@ -138,20 +143,25 @@ export class ProjListComponent implements OnInit {
   }
 
   filterByDomain(values:any):void {
+      this.query_params_owner = this.activatedRoute.snapshot.queryParams['owner']
     if(values.checked) {
+      // already some domain filter params set
       if (!!this.query_params_domain) {
         let params = [this.query_params_domain, values.source.value]
-        this.router.navigate(['/projects'], { queryParams: { 'domains': params, "owner" : this.query_params_owner } });
+        this.router.navigate(['/projects'], { queryParams: { 'domains': params, 
+        "owner" : this.query_params_owner, "org": this.query_params_org } });
       }
+      // setting 1. domain filter
       else {
-        this.router.navigate(['/projects'], { queryParams: { 'domains': values.source.value, "owner" : this.query_params_owner} })
+        this.router.navigate(['/projects'], { queryParams: { 'domains': values.source.value, 
+        "owner" : this.query_params_owner, "org": this.query_params_org} })
       }
     }
-    else {
+    else {  //unchecked
       let params = this.activatedRoute.snapshot.queryParams['domains']
       if (this.query_params_domain == values.source.value ){
-        if (!!this.query_params_owner) {
-          this.router.navigate(['/projects'], { queryParams: { "owner" : this.query_params_owner} });
+        if (!!this.query_params_owner || !!this.query_params_org) {
+          this.router.navigate(['/projects'], { queryParams: { "owner" : this.query_params_owner, "org": this.query_params_org} });
         }
         else {
           this.getAllProjects()
@@ -167,25 +177,65 @@ export class ProjListComponent implements OnInit {
     }
   }
   
-  filterByOwner(values:any):void{
+  filterByOwner(values:any):void {
     if(values.checked) {
+      // if both owner types selected
       if(!!this.query_params_owner) {
-        this.getAllProjects()
-        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain } });
+        // this.getAllProjects()
+        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, "org": this.query_params_org } });
       }
+      // new owner type selected(only 1)
       else {
-        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, "owner" : values.source.value }})
+        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain,
+         "owner" : values.source.value, "org": this.query_params_org }})
       }
     }
     else {
+      // uncheck the only set owner type -> none remains
       if ( this.query_params_owner == values.source.value)
-        if (!!this.query_params_domain) {
-            this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain } });
+      
+      console.log("1 in here with ", this.query_params_domain, this.query_params_org)
+        if (!!this.query_params_domain || !!this.query_params_org) {
+            this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, "org": this.query_params_org } });
         }
         else {
           this.getAllProjects()
           this.router.navigate(['/projects'])
         }
+    }
+  }
+
+  filterByOrgs(values:any):void {
+    this.query_params_owner = this.activatedRoute.snapshot.queryParams['owner']
+    if(values.checked) {
+      if(!!this.query_params_org) {
+        let params = [this.query_params_org, values.source.value]
+        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, 
+        "owner" : this.query_params_owner, "org": params } });
+      }
+      else {
+        this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, 
+        "owner" : this.query_params_owner, "org": values.source.value }})
+      }
+    }
+    else {
+      let params = this.activatedRoute.snapshot.queryParams['org']
+      if (params == values.source.value ){
+        if (!!this.query_params_owner || !!this.query_params_domain) {
+          this.router.navigate(['/projects'], { queryParams: { 'domains': this.query_params_domain, "owner" : this.query_params_owner} });
+        }
+        else {
+          this.getAllProjects()
+          this.router.navigate(['/projects'])
+        }
+      }
+      else {
+        params = params.map((item: string) => item.split(","))
+        params = Array.prototype.concat.apply([], params);
+        params  = params.filter((obj: String) => obj !== values.source.value)
+        this.router.navigate([], { queryParams: { 'domains': this.query_params_domain,
+        "owner" : this.query_params_owner, "org": params} });
+      }
     }
   }
 }

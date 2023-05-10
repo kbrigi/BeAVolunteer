@@ -21,7 +21,7 @@
     <mat-card-title style="margin: 5%;" class="domain_filter_h">Select organizations:</mat-card-title>
     <mat-card-content style=" overflow-y: scroll; height: 250px; ">      
       <section style="width: 13%;" class="example-section">
-        <mat-checkbox *ngFor="let org of orgs" (change)="filterByDomain($event)" value="{{org.user}}">{{org.user}}</mat-checkbox>
+        <mat-checkbox *ngFor="let org of orgs" (change)="filterByOrgs($event)" value="{{org.user}}">{{org.user}}</mat-checkbox>
       </section>
     </mat-card-content>
 

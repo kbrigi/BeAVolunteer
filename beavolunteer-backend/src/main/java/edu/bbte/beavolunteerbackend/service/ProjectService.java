@@ -168,25 +168,28 @@ public class ProjectService  extends ImgService  {
         }
         if (filterParams.get("domain") != null) {
             String[] domainNames = filterParams.get("domain").split("\\s*,\\s*");
-
+            List<ProjectOutDTO> domainProjectsDTO = new ArrayList<>();
             for (String domainName: domainNames) {
-                if (finalProjectsDTO.isEmpty()) {
-                    finalProjectsDTO.addAll(getProjectDTOsByDomain(domainName));
-                }
-                else {
-                    finalProjectsDTO = finalProjectsDTO.stream().filter(getProjectDTOsByDomain(domainName)::contains).collect(Collectors.toList());
-                }
+                domainProjectsDTO.addAll(getProjectDTOsByDomain(domainName));
+            }
+            if (finalProjectsDTO.isEmpty()) {
+                finalProjectsDTO.addAll(domainProjectsDTO);
+            }
+            else {
+                finalProjectsDTO = finalProjectsDTO.stream().filter(domainProjectsDTO::contains).collect(Collectors.toList());
             }
         }
         if (filterParams.get("orgs") != null && !Objects.equals(filterParams.get("owner"), "ORGANIZATION")) {
             String[] orgNames = filterParams.get("orgs").split("\\s*,\\s*");
+            List<ProjectOutDTO> orgsProjectsDTO = new ArrayList<>();
             for (String orgName: orgNames) {
-                if (finalProjectsDTO.isEmpty()) {
-                    finalProjectsDTO.addAll(getProjectDTOsByOwner(orgName, false));
-                }
-                else {
-                    finalProjectsDTO = finalProjectsDTO.stream().filter(getProjectDTOsByOwner(orgName, false)::contains).collect(Collectors.toList());
-                }
+                orgsProjectsDTO.addAll(getProjectDTOsByOwner(orgName, false));
+            }
+            if (finalProjectsDTO.isEmpty()) {
+                finalProjectsDTO.addAll(orgsProjectsDTO);
+            }
+            else {
+                finalProjectsDTO = finalProjectsDTO.stream().filter(orgsProjectsDTO::contains).collect(Collectors.toList());
             }
         }
 
