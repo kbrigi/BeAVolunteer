@@ -20,6 +20,7 @@ import { FeatureModule } from './feature/feature.module';
 import { HeaderComponent } from './core/components/header/header.component';
 import { DomainModule } from './domain/domain.module';
 import { ProjectModule } from './project/project.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ProjectModule } from './project/project.module';
     CoreModule,
     FeatureModule,
     DomainModule,
-    ProjectModule, 
+    ProjectModule,
+    ProfileModule, 
   ],
   bootstrap: [AppComponent]
 })

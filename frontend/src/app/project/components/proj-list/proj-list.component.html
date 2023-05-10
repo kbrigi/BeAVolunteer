@@ -4,7 +4,9 @@
 <div style="margin-top:5%;" class="project_time_type">
     <button mat-button (click)="changeProjects(true)">PAST Projects</button>
     <button mat-button  (click)="changeProjects(false)">CURRENT Projects</button>
-    <h3 style="font-family: Arial;" >Total projects: {{projects.length}}</h3>
+    <h3 style="font-family: Arial;" *ngIf="!params_domain" >Total projects: {{projects.length}}</h3>
+    <h3 style="font-family: Arial;" *ngIf="params_domain" >Total projects related to {{params_domain}}: {{projects.length}}</h3>
+
 </div>
 
 <div class="sortAndEdit" style="margin-left: 85%;">
@@ -18,7 +20,6 @@
     <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
     <button mat-menu-item (click)="sortProduct('+', 'expiration')">Ascending by expiration date</button>
     <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
-
   </mat-menu>
 
 </div>

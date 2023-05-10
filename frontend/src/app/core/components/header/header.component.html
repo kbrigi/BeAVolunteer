@@ -40,11 +40,11 @@
         <button class="button" *ngIf="logedin && logedin_user_role === 'ADMIN'"><a routerLink="/save/domain"> New domain</a>
         </button>
 
-        <button class="button"><a routerLink="/projects"> Projects</a>
-        </button>
+        <button class="button"><a routerLink="/projects"> Projects</a></button>
 
-        <button class="button"><a routerLink="/orgs"> Organizations</a>
-        </button>
+        <button class="button"><a routerLink="/orgs"> Organizations</a></button>
+
+        <button class="button" *ngIf="logedin" ><a routerLink="/profile"> Profile</a></button>
       </div>
   
     </div>

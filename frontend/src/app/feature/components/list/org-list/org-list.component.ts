@@ -38,8 +38,6 @@ export class OrgListComponent implements OnInit {
       }
   }
 
-
-
   ngOnInit(): void {
     this.getAllOrgs();
     this.getRole();

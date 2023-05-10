@@ -9,6 +9,7 @@ import { ProjListComponent } from './project/components/proj-list/proj-list.comp
 import { OrgListComponent } from './feature/components/list/org-list/org-list.component';
 import { OrgDetailsComponent } from './feature/components/details/org-details/org-details.component';
 import { ProjDetailsComponent } from './project/components/proj-details/proj-details.component';
+import { ProfilePageComponent } from './profile/components/profile-page/profile-page.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'registration/org',
     component: OrgFormComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'save/domain',
+    component: DomainFormComponent,
     pathMatch: 'full'
   },
   {
@@ -56,8 +62,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'save/domain',
-    component: DomainFormComponent,
+    path: 'profile',
+    component: ProfilePageComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'profile/:page',
+    component: ProfilePageComponent,
     pathMatch: 'full'
   }
 

@@ -1,0 +1,15 @@
+<div class="options" style="margin-top: 10%;">
+    <mat-list role="list">
+        <mat-list-item style="margin-top: 3%;" role="listitem" *ngFor="let tab of tabs" >
+            <a style="display: flex;" [routerLink]='["/profile", tab.name]'>
+                <div style="padding-right:1%"><mat-icon>{{tab.icon}}</mat-icon></div>
+                <div>{{tab.name}}</div>
+            </a>
+        </mat-list-item>
+    </mat-list>
+</div>
+
+
+<div>
+    <p *ngIf="tab == 'Account'">{{tab}}</p>
+</div>

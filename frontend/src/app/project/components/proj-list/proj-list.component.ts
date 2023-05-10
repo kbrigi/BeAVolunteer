@@ -10,7 +10,6 @@ import { Domain } from 'src/app/domain/models/domain.model';
 import { DomainService } from 'src/app/domain/services/domain.service';
 import { Organization } from 'src/app/feature/models/organization.model';
 import { OrgService } from 'src/app/feature/services/user/org/org.service';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-proj-list',

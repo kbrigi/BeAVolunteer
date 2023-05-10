@@ -30,7 +30,7 @@ import { RouterModule } from '@angular/router';
     OrgFormComponent,
     LoginFormComponent,
     OrgListComponent,
-    OrgDetailsComponent
+    OrgDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +48,7 @@ import { RouterModule } from '@angular/router';
     NgxMatFileInputModule,
     MatNativeDateModule,
     RouterModule.forRoot([]),
-    MatGridListModule
+    MatGridListModule,
   ],
   exports: [],
   providers: [
