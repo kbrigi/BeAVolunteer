@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatRadioModule} from '@angular/material/radio';
     RouterModule,
     MatGridListModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatMenuModule 
   ],
   providers: [
     ProjectService

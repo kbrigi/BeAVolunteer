@@ -1,8 +1,29 @@
-<div style="margin-top:10%;" *ngIf="logedin_user_role == 'ADMIN'" class="project_time_type">
+
+
+
+<div style="margin-top:5%;" class="project_time_type">
     <button mat-button (click)="changeProjects(true)">PAST Projects</button>
     <button mat-button  (click)="changeProjects(false)">CURRENT Projects</button>
+    <h3 style="font-family: Arial;" >Total projects: {{projects.length}}</h3>
 </div>
 
+<div class="sortAndEdit" style="margin-left: 85%;">
+  <button mat-button [matMenuTriggerFor]="menu">Sort:</button>
+  <mat-menu class="sort" #menu="matMenu">
+    <!-- TO DO: when favourites exist -> sort by favourite count -->
+    <button mat-menu-item (click)="sortProduct('-', 'fav')">Most popular</button>
+    <button mat-menu-item (click)="sortProduct('+', 'creation')">Newest </button>
+    <button mat-menu-item (click)="sortProduct('+', 'name')">Ascending by Name</button>
+    <button mat-menu-item (click)="sortProduct('-', 'name')">Descending by Name</button>
+    <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
+    <button mat-menu-item (click)="sortProduct('+', 'expiration')">Ascending by expiration date</button>
+    <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
+
+  </mat-menu>
+
+</div>
+
+<!--  *ngIf="logedin_user_role == 'ADMIN'" -->
 <mat-card style="float: left; width: 15%; margin-left: 2%;">   
     <mat-card-title style="margin: 5%;" class="domain_filter_h">Select an owner type:</mat-card-title>
     <mat-card-content >      
@@ -37,7 +58,6 @@
                 <mat-card-subtitle *ngIf="project.owner.role != 'ORGANIZATION'" class="project_creator_name">{{project.owner.user}}</mat-card-subtitle>    
                 <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
             </mat-card-title-group>
-            <!-- <mat-card-content class="project_description">Description: {{project.project_description}}</mat-card-content> -->
                 <div>
                     <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
                 </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->

@@ -117,15 +117,6 @@ public class ProjectService  extends ImgService  {
         }
     }
 
-    public List<ProjectOutDTO> getProjectByDomain(String domain) {
-        List<Long> project_ids = projectDomainRepository.getProjectsByDomain(domainRepository.findByName(domain).getDomainId());
-        List<Project> projects = new ArrayList<>();
-        for (Long p_id : project_ids) {
-            projects.add(projectRepository.getById(p_id));
-        }
-        return ProjectMapper.projectsToDTO(projects);
-    }
-
     public ProjectOutDTO createAndSetDomainsForDTO(Project project) {
         ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
         List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project.getProjectId());
@@ -194,5 +185,12 @@ public class ProjectService  extends ImgService  {
         }
 
         return finalProjectsDTO;
+    }
+
+    public List<ProjectOutDTO> getProjectByDomainAndFilter(String domain, Map<String, String> filterParams) {
+        List<ProjectOutDTO> projectDomainDTOs = getProjectDTOsByDomain(domain);
+        List<ProjectOutDTO> projectFilteredDTOs = getProjectsFiltered(filterParams);
+        return projectDomainDTOs.stream().filter(projectFilteredDTOs::contains).collect(Collectors.toList());
+
     }
 }

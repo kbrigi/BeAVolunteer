@@ -88,7 +88,13 @@ public class ProjectController extends Controller{
 
     @GetMapping("/domain/{domain}")
     public List<ProjectOutDTO> getProjectsByDomain(@PathVariable String domain) {
-        return projectService.getProjectByDomain(domain);
+        return projectService.getProjectDTOsByDomain(domain);
+    }
+
+    @GetMapping("/domain/{domain}/filter")
+    public List<ProjectOutDTO> getProjectsByDomainAndFilter(@PathVariable String domain,
+                                                            @RequestParam Map<String, String> filterParams) {
+        return projectService.getProjectByDomainAndFilter(domain, filterParams);
     }
 
     @GetMapping("/filter")

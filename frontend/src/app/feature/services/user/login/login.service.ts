@@ -12,9 +12,6 @@ export class LoginService {
   loginState = new BehaviorSubject(!!localStorage.getItem('token'));
   currentLoginState = this.loginState.asObservable();
 
-  // logedinUserRole = new BehaviorSubject(String);
-  // currentRole = this.logedinUserRole.asObservable();
-
   constructor(private service: BackendService) {
   }
 

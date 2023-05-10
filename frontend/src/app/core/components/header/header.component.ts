@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/feature/services/user/login/login.service';
 import jwt_decode from 'jwt-decode';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +13,10 @@ import jwt_decode from 'jwt-decode';
 export class HeaderComponent {
   logedin: boolean = false;
   logedin_user_role: String = '';
+
+  myControl = new FormControl<string>('');
+  options: string[] = [];
+  filteredOptions: Observable<string[]> | undefined;
   constructor(private loginService: LoginService,  private _snackBar: MatSnackBar, private userService: LoginService){}
 
   ngOnInit(): void {

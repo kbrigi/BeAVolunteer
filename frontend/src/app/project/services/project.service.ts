@@ -8,6 +8,8 @@ import { Project } from '../models/project.model';
   providedIn: 'root'
 })
 export class ProjectService {
+  domainPath: String = `${environment.apiUrl}/proj/domain/`
+
   constructor(private service: BackendService) { }  
   
   save(formData: FormData) : Observable<void> {
@@ -23,7 +25,7 @@ export class ProjectService {
   }
 
   getProjectsByDomain(domain: String): Observable<Project[]> {
-    return this.service.get(`${environment.apiUrl}/proj/domain/${domain}`);
+    return this.service.get(this.domainPath+`${domain}`);
   }
 
   getProj(name: String) : Observable<Project> {
@@ -31,8 +33,14 @@ export class ProjectService {
   }
 
   getProjectsFiltered(paramName: String[], domains_param: String[]|undefined, 
-    owner_param: String|undefined, org_param: String[]|undefined) : Observable<Project[]>  {
-      let url = `${environment.apiUrl}/proj/filter?`
+    owner_param: String|undefined, org_param: String[]|undefined, domain: string|undefined) : Observable<Project[]>  {
+      let url
+      if (!!domain) {
+        url = this.domainPath.concat(domain).concat(`/filter?`)
+      }
+      else {
+        url = `${environment.apiUrl}/proj/filter?`  
+      }
       let not_first = false
       if (domains_param != undefined) {
         url += `${paramName[0]}=${domains_param}`
