@@ -17,7 +17,6 @@ export class ProfilePageComponent implements OnInit {
 
   constructor( private activatedRoute: ActivatedRoute){
     this.activatedRoute.params.subscribe((param) => {
-      console.log(param['page'])
       this.tab = param['page']
     })
   }

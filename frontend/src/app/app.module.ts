@@ -21,6 +21,7 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { DomainModule } from './domain/domain.module';
 import { ProjectModule } from './project/project.module';
 import { ProfileModule } from './profile/profile.module';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 
 @NgModule({
   declarations: [

@@ -19,7 +19,7 @@ public class ProjectDomain {
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DOMAIN_ID")
     private Domain domain;
 

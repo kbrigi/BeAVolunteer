@@ -100,7 +100,11 @@ public class ProjectService  extends ImgService  {
         User user = userRepository.getById(userID);
         if (user != null) {
             List<Project> projects =  projectRepository.getByOwner(userID);
-            return ProjectMapper.projectsToDTO(projects);
+            List<ProjectOutDTO> allProjects = new ArrayList<>();
+            for (Project p : projects) {
+                allProjects.add(createAndSetDomainsForDTO(p));
+            }
+            return allProjects;
         }
         else
             throw new BusinessException("User does not exist!");

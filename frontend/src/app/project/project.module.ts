@@ -41,6 +41,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatRadioModule,
     MatMenuModule 
   ],
+  exports: [
+    ProjFormComponent
+  ],
   providers: [
     ProjectService
   ]

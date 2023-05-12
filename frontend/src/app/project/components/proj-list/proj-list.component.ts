@@ -48,9 +48,9 @@ export class ProjListComponent implements OnInit {
         this.query_params_owner = param['owner']
         this.query_params_org = param['org']
         let domain_param =  this.activatedRoute.snapshot.params['domain']
-
+        console.log(param['domains'])
         if( param['domains'] != undefined ||  param['owner'] != undefined ||  param['org'] != undefined) {
-          this.projectService.getProjectsFiltered(['domain', 'owner', 'orgs'],param['domains'], 
+          this.projectService.getProjectsFiltered(['domain', 'owner', 'orgs'], param['domains'], 
           param['owner'], param['org'], domain_param).subscribe(result => {
               this.projects = result.filter(p => p.expiration_date.toString() > this.current_date)
             });
@@ -162,6 +162,9 @@ export class ProjListComponent implements OnInit {
   filterByDomain(values:any):void {
     let domain_param = this.prepateDomainQuery()
     this.query_params_owner = this.activatedRoute.snapshot.queryParams['owner']
+    if (domain_param == undefined) {
+      domain_param = ''
+    }
     if(values.checked) {
       // already some domain filter params set
       if (!!this.query_params_domain) {
@@ -198,6 +201,9 @@ export class ProjListComponent implements OnInit {
   
   filterByOwner(values:any):void {
     let domain_param = this.prepateDomainQuery()
+    if (domain_param == undefined) {
+      domain_param = ''
+    }
     if(values.checked) {
       // if both owner types selected
       if(!!this.query_params_owner) {
@@ -226,6 +232,9 @@ export class ProjListComponent implements OnInit {
   filterByOrgs(values:any):void {
     let domain_param = this.prepateDomainQuery()
     this.query_params_owner = this.activatedRoute.snapshot.queryParams['owner']
+    if (domain_param == undefined) {
+      domain_param = ''
+    }
     if(values.checked) {
       if(!!this.query_params_org) {
         let params = [this.query_params_org, values.source.value]
