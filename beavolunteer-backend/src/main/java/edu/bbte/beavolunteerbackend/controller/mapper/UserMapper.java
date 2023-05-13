@@ -5,10 +5,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
-import edu.bbte.beavolunteerbackend.model.Organization;
-import edu.bbte.beavolunteerbackend.model.User;
-import edu.bbte.beavolunteerbackend.model.Volunteer;
-import edu.bbte.beavolunteerbackend.model.Gender;
+import edu.bbte.beavolunteerbackend.model.*;
 import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,7 +43,10 @@ public class UserMapper {
 
     public static Organization orgDTOToUser(OrganizationDTO organizationDTO, Long id) {
         Organization org = new Organization();
-        org.setId(id);
+//        org.setId(id);
+        org.setUserName(organizationDTO.getUser());
+        org.setRole(Role.ORGANIZATION);
+        org.setEmail(organizationDTO.getEmail());
         org.setDescription(organizationDTO.getDescription());
         org.setPhoneNr(organizationDTO.getPhoneNr());
         org.setAddress(organizationDTO.getAddress());

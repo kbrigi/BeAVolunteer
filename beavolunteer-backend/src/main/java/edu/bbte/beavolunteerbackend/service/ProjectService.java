@@ -9,12 +9,10 @@ import edu.bbte.beavolunteerbackend.model.Domain;
 import edu.bbte.beavolunteerbackend.model.Project;
 import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
-import edu.bbte.beavolunteerbackend.model.repository.ProjectDomainRepository;
 import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
 import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +29,6 @@ public class ProjectService  extends ImgService  {
     private ProjectRepository projectRepository;
 
     @Autowired
-    private ProjectDomainRepository projectDomainRepository;
-
-    @Autowired
     private DomainRepository domainRepository;
 
     @Autowired
@@ -44,19 +39,22 @@ public class ProjectService  extends ImgService  {
 
     public void saveProject(ProjectInDTO projectDTO, Blob img, Long userID) throws BusinessException {
         if (projectRepository.checkName(projectDTO.getProject_name()) == 0) {
-            Project project = ProjectMapper.projectDTOToEntity(projectDTO);
-            project.setProjectImg(img);
-            project.setOwnerId(userID);
-            projectRepository.insertProject(project.getCreationDate(), project.getExpirationDate(),
-                    project.getProjectDescription(), project.getProjectImg(), project.getProjectName(), project.getOwnerId());
-            Project newProject = projectRepository.getByName(project.getProjectName());
-            saveProjectDomain(projectDTO.getDomains(), newProject);
+            projectRepository.saveAndFlush(prepareProject(projectDTO, userID, img));
         } else {
             throw new BusinessException("Project name must be unique");
         }
     }
 
     public void delete(String name) throws BusinessException {
+        Project project = projectRepository.getByName(name);
+        if (project != null) {
+            projectRepository.delete(project);
+        }
+        else
+            throw new BusinessException("Project name does not exist!");
+    }
+
+    public void setExpiredProject(String name) throws BusinessException {
         Project project = projectRepository.getByName(name);
         if (project != null) {
             projectRepository.updateExpired(project.getProjectId(), new Date());
@@ -67,21 +65,7 @@ public class ProjectService  extends ImgService  {
 
     public List<ProjectOutDTO> getAll() {
         List<Project> projects = projectRepository.findAll();
-        List<ProjectOutDTO> projectsDTO = ProjectMapper.projectsToDTO(projects);
-        for (ProjectOutDTO p: projectsDTO) {
-            List <DomainDTO> domainDTOS = new ArrayList<>();
-            Long project_id = projectRepository.getByName(p.getProject_name()).getProjectId();
-            List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project_id);
-            for (Long did : domain_ids) {
-                Optional<Domain> domain = domainRepository.findById(did);
-                if (domain.isPresent()) {
-                    DomainDTO domainDTO = DomainMapper.domainToDTO(domain.get());
-                    domainDTOS.add(domainDTO);
-                }
-            }
-            p.setDomains(domainDTOS);
-        }
-        return projectsDTO;
+        return ProjectMapper.projectsToDTO(projects);
     }
 
     public ProjectOutDTO getProjectById(Long id) {
@@ -115,16 +99,15 @@ public class ProjectService  extends ImgService  {
         return getImg(projectImg);
     }
 
-    public void saveProjectDomain(List<DomainDTO> domains, Project project) {
-        for ( DomainDTO d : domains ) {
-            projectDomainRepository.insertProjectDomain(project.getProjectId(), domainRepository.findByName(d.getDomain_name()).getDomainId());
-        }
-    }
+//    public void saveProjectDomain(List<DomainDTO> domains, Project project) {
+//        for ( DomainDTO d : domains ) {
+//            projectDomainRepository.insertProjectDomain(project.getProjectId(), domainRepository.findByName(d.getDomain_name()).getDomainId());
+//        }
+//    }
 
     public ProjectOutDTO createAndSetDomainsForDTO(Project project) {
         ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
-        List <Long> domain_ids =  projectDomainRepository.findDomainsByProject(project.getProjectId());
-        projectOutDTO.setDomains(domainService.getDomains(domain_ids));
+        projectOutDTO.setDomains(DomainMapper.domainsToDTO(project.getDomains()));
         return projectOutDTO;
     }
 //  role = states if owner is a role or an owner name
@@ -147,11 +130,11 @@ public class ProjectService  extends ImgService  {
     }
 
     public List<ProjectOutDTO> getProjectDTOsByDomain(String domainName) {
-        Long domainIdsByName = domainRepository.findByName(domainName).getDomainId();
-        List<Long> projectIdsByDomainType = projectDomainRepository.getProjectsByDomain(domainIdsByName);
+//        Long domainIdsByName = domainRepository.findByName(domainName).getDomainId();
+        List<Project> projectsByDomainType = projectRepository.getProjectsByDomain(domainName);
         List<ProjectOutDTO> projectsByDomain = new ArrayList<>();
-        for (Long projectId: projectIdsByDomainType) {
-            projectsByDomain.add(createAndSetDomainsForDTO(projectRepository.getById(projectId)));
+        for (Project project: projectsByDomainType) {
+            projectsByDomain.add(createAndSetDomainsForDTO(project));
         }
         return projectsByDomain;
     }
@@ -195,6 +178,30 @@ public class ProjectService  extends ImgService  {
         List<ProjectOutDTO> projectDomainDTOs = getProjectDTOsByDomain(domain);
         List<ProjectOutDTO> projectFilteredDTOs = getProjectsFiltered(filterParams);
         return projectDomainDTOs.stream().filter(projectFilteredDTOs::contains).collect(Collectors.toList());
+
+    }
+
+    public Project prepareProject(ProjectInDTO projectDTO, Long userID, Blob img){
+        Project project = ProjectMapper.projectDTOToEntity(projectDTO);
+        project.setProjectImg(img);
+        project.setOwnerId(userID);
+        Set<Domain> domains = new HashSet<>();
+        for (DomainDTO domainDTO: projectDTO.getDomains()) {
+            domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
+        }
+        project.setDomains(domains);
+        return project;
+    }
+
+    public void updateProject(ProjectInDTO projectDTO, Blob img, Long userID, String name) throws BusinessException {
+        if (projectRepository.checkName(name) != 0) {
+            Project updatedProject = prepareProject(projectDTO, userID, img);
+            updatedProject.setProjectId(projectRepository.getByName(name).getProjectId());
+            log.info(String.valueOf(updatedProject));
+            projectRepository.save(updatedProject);
+        } else {
+            throw new BusinessException("Project name does not exist");
+        }
 
     }
 }

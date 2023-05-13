@@ -4,8 +4,10 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.DomainDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
+import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
 import edu.bbte.beavolunteerbackend.model.*;
 import edu.bbte.beavolunteerbackend.model.repository.*;
@@ -21,8 +23,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import static edu.bbte.beavolunteerbackend.controller.mapper.UserMapper.*;
 
@@ -47,16 +50,10 @@ public class UserService extends ImgService {
     private DomainRepository domainRepository;
 
     @Autowired
-    private OrganizationDomainRepository organizationDomainRepository;
-
-    @Autowired
-    private VolunteerDomainRepository volunteerDomainRepository;
-
-    @Autowired
     private JWTToken jwToken;
 
     @Autowired
-    private DomainService domainService;
+    private ProjectRepository projectRepository;
 
     public void saveUser(VolunteerDTO userDTO) throws BusinessException {
         User user = DTOToUser(userDTO);
@@ -65,13 +62,13 @@ public class UserService extends ImgService {
         log.info(UserValidator.errorList.toString());
         if (UserValidator.errorList.isEmpty()) {
             user.setRole(Role.USER);
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             User savedUser = userRepository.saveAndFlush(user);
 
             Volunteer volunteer = volunteerDTOToVolunteer(userDTO, savedUser.getId());
             volunteerRepository.insertVolunteer(volunteer.getId(), volunteer.getSurname(),
                     volunteer.getFirstName(), volunteer.getPhoneNr(), volunteer.getDescription(),
                     volunteer.getAge(), volunteer.getVolunteered(), String.valueOf(volunteer.getGender()));
-            saveVolunteerDomain(userDTO.getDomains(), savedUser.getId());
         } else {
             throw new BusinessException(UserValidator.errorList.toString());
         }
@@ -93,17 +90,16 @@ public class UserService extends ImgService {
         User user = DTOToUser(organizationDTO);
         UserValidator.errorList.clear();
         userValidator.validate(user);
-        log.info(UserValidator.errorList.toString());
         if (UserValidator.errorList.isEmpty()) {
-            user.setRole(Role.ORGANIZATION);
-            User savedUser = userRepository.saveAndFlush(user);
-
-            Organization org = orgDTOToUser(organizationDTO, savedUser.getId());
+            Organization org = orgDTOToUser(organizationDTO, null);
+            Set<Domain> domains = new HashSet<>();
+            for (DomainDTO domainDTO: organizationDTO.getDomains()) {
+                domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
+            }
             org.setLogo(file);
-            organizationRepository.insertOrg(org.getId(), org.getAddress(),
-                    org.getDescription(), org.getPhoneNr(), org.getLogo(), org.getWebsite());
-
-            saveOrganizationDomain(organizationDTO.getDomains(), org);
+            org.setDomains(domains);
+            org.setPassword(passwordEncoder.encode(organizationDTO.getPassword()));
+            organizationRepository.saveAndFlush(org);
         } else {
             throw new BusinessException(UserValidator.errorList.toString());
         }
@@ -117,16 +113,12 @@ public class UserService extends ImgService {
         List<Organization> orgs = organizationRepository.findAll();
         List<OrganizationOutDTO> organizationOutDTOS = new ArrayList<>();
         for (Organization org: orgs) {
-            OrganizationOutDTO orgDTO = UserMapper.organizationToDTO(org, userRepository.getById(org.getId()));
-            List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(org.getId());
-            List <DomainDTO> domainDTOS = domainService.getDomains(domain_ids);
-            orgDTO.setDomains(domainDTOS);
-            organizationOutDTOS.add(orgDTO);
+            organizationOutDTOS.add(createAndSetDomainsForDTO(org));
         }
         return organizationOutDTOS;
     }
 
-    public OrganizationOutDTO getOrganization(Long id) {
+    public OrganizationOutDTO getOrgById(Long id) {
         Organization org = organizationRepository.getById(id);
         return organizationToDTO(org, userRepository.getById(org.getId()));
     }
@@ -136,40 +128,28 @@ public class UserService extends ImgService {
         return getImg(projectImg);
     }
 
-    public void saveOrganizationDomain(List<DomainDTO> domains, Organization org) {
-        for ( DomainDTO d : domains ) {
-            organizationDomainRepository.saveAndFlush(
-                    new OrganizationDomain(domainRepository.findByName(d.getDomain_name()), org));
-        }
-    }
-
-    public void saveVolunteerDomain(List<DomainDTO> domains, Long userId) {
-        for ( DomainDTO d : domains ) {
-            volunteerDomainRepository.insertVolunteerDomain(userId, domainRepository.findByName(d.getDomain_name()).getDomainId());
-        }
-    }
-
     public User getUserFromUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public OrganizationOutDTO getOrg(String username) throws BusinessException {
+    public OrganizationOutDTO getOrgByUsername(String username) throws BusinessException {
         Long id = getUserFromUsername(username).getId();
         if (id != null) {
-            OrganizationOutDTO organizationOutDTO =  organizationToDTO(organizationRepository.getById(id), userRepository.getById(id));
-            List <Long> domain_ids =  organizationDomainRepository.findDomainsByOrg(id);
-            organizationOutDTO.setDomains(domainService.getDomains(domain_ids));
-            return organizationOutDTO;
+            return createAndSetDomainsForDTO(organizationRepository.getById(id));
         }
         else {
-            return null;
+            throw new BusinessException("Username does not exist!");
         }
     }
 
     public void deleteOrg(String name) throws BusinessException {
         User user = userRepository.findByUsername(name);
         if (user != null) {
-            userRepository.delete(user);
+            List<Project> projects = projectRepository.getByOwner(user.getId());
+            for (Project project: projects) {
+                projectRepository.delete(project);
+            }
+            userRepository.deleteById(user.getId());
         }
         else
             throw new BusinessException("Username does not exist!");
@@ -182,5 +162,30 @@ public class UserService extends ImgService {
         }
         else
             throw new BusinessException("Username does not exist!");
+    }
+
+    public OrganizationOutDTO createAndSetDomainsForDTO(Organization org) {
+        OrganizationOutDTO organizationOutDTO = UserMapper.organizationToDTO(org, userRepository.getById(org.getId()));
+        List<DomainDTO> domains =  DomainMapper.domainsToDTO(org.getDomains());
+        organizationOutDTO.setDomains(domains);
+        return organizationOutDTO;
+    }
+
+    public void setFavouriteProject(String username, String projectName) {
+        Volunteer volunteer = volunteerRepository.getById(userRepository.findByUsername(username).getId());
+        Set<Project> favourites = volunteer.getFavouriteProj();
+        favourites.add(projectRepository.getByName(projectName));
+        volunteer.setFavouriteProj(favourites);
+    }
+
+    public void removeFavouriteProject(String username, String projectName) {
+        Volunteer volunteer = volunteerRepository.getById(userRepository.findByUsername(username).getId());
+        Set<Project> favourites = volunteer.getFavouriteProj();
+        favourites.remove(projectRepository.getByName(projectName));
+        volunteer.setFavouriteProj(favourites);
+    }
+
+    public List<ProjectOutDTO> getFavouriteProject(String username) {
+        return ProjectMapper.projectsToDTO((List<Project>) volunteerRepository.getById(userRepository.findByUsername(username).getId()).getFavouriteProj());
     }
 }

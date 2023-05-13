@@ -29,6 +29,7 @@ export class ProjListComponent implements OnInit {
   query_params_domain: String[] = []
   query_params_owner: String | null | undefined
   query_params_org: String[] = []
+  past_projects: boolean = false
 
   constructor(private projectService: ProjectService, private userService: LoginService, private domainService: DomainService,
     private orgService: OrgService, private router: Router, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute){
@@ -98,6 +99,10 @@ export class ProjListComponent implements OnInit {
         this.logedin_user_projects = result.filter(p => p.expiration_date.toString() > this.current_date).map(item => item.project_name);
         console.log("users projects:", result);
       });
+
+      if (this.logedin_user_role == 'USER') {
+        
+      }
     }
   }
    
@@ -122,7 +127,7 @@ export class ProjListComponent implements OnInit {
   clickDelete(username: String): void {
     this.projectService.delete(username).subscribe({
       next: (result: any) => {
-          this._snackBar.open("You deactivate the "+username +" oranization!", 'OK', {
+          this._snackBar.open("You deleted the "+username +" project!", 'OK', {
             duration: 10000,
             panelClass: 'success-snackbar'
           });
@@ -139,8 +144,29 @@ export class ProjListComponent implements OnInit {
 
   }
 
+  clickDeactivate(username: String): void {
+    this.projectService.deactivate(username).subscribe({
+      next: (result: any) => {
+          this._snackBar.open("You deactivate the "+username +" project!", 'OK', {
+            duration: 10000,
+            panelClass: 'success-snackbar'
+          });
+          this.router.navigate(["/projects"]);
+      },
+      error: (e: { error: { message: string; }; }) => { 
+      this._snackBar.open(e.error.message, 'OK', {
+        duration: 10000,
+        panelClass: 'fail-snackbar'
+      })
+      console.log(e);
+    }
+    });
+
+  }
+
   // past/current project change
   changeProjects(past_projects: boolean): void {
+    this.past_projects = past_projects
     if (past_projects == true) {
       this.projectService.getAll().subscribe(result => {
         this.projects = result.filter(p => p.expiration_date.toString() <= this.current_date);
@@ -288,6 +314,10 @@ export class ProjListComponent implements OnInit {
       this.projects.sort((a, b) => a.creation_date.toString().localeCompare(b.creation_date.toString()));
     }
     console.log(this.projects)
+  }
+
+  selectFavourite(): void {
+
   }
 }
 

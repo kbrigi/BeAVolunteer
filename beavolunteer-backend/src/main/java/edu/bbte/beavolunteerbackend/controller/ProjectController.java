@@ -108,9 +108,34 @@ public class ProjectController extends Controller{
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(product);
     }
 
-    //to do: connect org+vol on delete
     @DeleteMapping("/{name}")
     public void deleteProject(@PathVariable String name) throws BusinessException {
         projectService.delete(name);
+    }
+
+    @PostMapping("/deactivate/{name}")
+    public void deactivateProject(@PathVariable String name) throws BusinessException {
+        projectService.setExpiredProject(name);
+    }
+
+    @PostMapping(value = "/update/{name}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> updateProject(@PathVariable String name, @RequestPart String project, @RequestPart("file") MultipartFile file,
+                              @RequestHeader("Authorization") String jwttoken) throws SQLException, IOException {
+            Blob blob = prepareImage(file);
+            if (blob == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            try {
+                Gson gson = new Gson();
+                ProjectInDTO projectDTO = gson.fromJson(project, ProjectInDTO.class);
+
+                String token= jwttoken.substring(17);
+                token = token.substring(0,token.length()-2);
+                Long userID = userService.getUserFromUsername(jwtToken.getUsernameFromToken(token)).getId();
+                projectService.updateProject(projectDTO, blob, userID, name);
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }

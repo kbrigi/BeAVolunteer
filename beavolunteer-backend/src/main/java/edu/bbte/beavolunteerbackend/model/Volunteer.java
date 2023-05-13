@@ -9,6 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -52,4 +54,6 @@ public class Volunteer extends User {
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Collection<Project> projects;
 
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private Set<Project> favouriteProj = new HashSet<>();
 }

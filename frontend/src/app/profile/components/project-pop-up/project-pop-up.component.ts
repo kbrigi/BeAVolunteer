@@ -21,10 +21,12 @@ export class ProjectPopUpComponent implements OnInit{
   domains: Domain[] = [];
   projectForm!: FormGroup;
   selectedDomains: Domain[] = [];
+  oldName: String = '';
 
   constructor(private fb: FormBuilder, private dialog: MatDialogRef<ProjectPopUpComponent>, private domainService: DomainService,
     @Inject(MAT_DIALOG_DATA) data: Project, private _snackBar: MatSnackBar, private projectService: ProjectService){
       this.givenData = data
+      this.oldName = data.project_name
     }
 
   ngOnInit(): void {
@@ -35,7 +37,6 @@ export class ProjectPopUpComponent implements OnInit{
       expiration_date:  [this.givenData.expiration_date],
       domains:  [this.givenData.domains]
     })
-    console.log( this.projectForm.controls['img'].value)
     this.domainService.getAllDomains().subscribe((result: Domain[]) => 
       this.domains = result
   )
@@ -63,8 +64,9 @@ export class ProjectPopUpComponent implements OnInit{
       formData.append('project', JSON.stringify(project));
       formData.append('file', this.projectForm.controls['img'].value);
       const date = this.projectForm.controls['expiration_date'].value
-      project.expiration_date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      this.projectService.save(formData).subscribe({
+      console.log(date.split("-"))
+      project.expiration_date = new Date(+date[0], +date[1], +date[2]);
+      this.projectService.update(this.oldName, formData).subscribe({
         next: () => {
           this._snackBar.open('Successfully saved project!', 'OK', {
             duration: 10000,

@@ -2,6 +2,7 @@ package edu.bbte.beavolunteerbackend.controller;
 
 import com.google.gson.Gson;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.TokenOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
@@ -73,7 +74,7 @@ public class UserController extends Controller{
 
     @GetMapping("/org/{name}")
     public OrganizationOutDTO getOrganization(@PathVariable String name) throws BusinessException {
-        return userService.getOrg(name);
+        return userService.getOrgByUsername(name);
     }
 
     @GetMapping("/org/image/{username}")
@@ -87,10 +88,26 @@ public class UserController extends Controller{
         return UserMapper.usersToDTO(userService.getAllUser());
     }
 
-
     @GetMapping("/role/{username}")
     public UserOutDTO getRole(@PathVariable String username) throws BusinessException {
         return userService.getRole(username);
+    }
+
+    @GetMapping(value = "/fav")
+    public List<ProjectOutDTO> setVolunteersFavouriteProject(@RequestParam() String username) {
+        return userService.getFavouriteProject(username);
+    }
+
+    @PostMapping(value = "/fav")
+    public ResponseEntity<String> setVolunteersFavouriteProject(@RequestParam() String username, @RequestParam() String project) {
+        userService.setFavouriteProject(username, project);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/fav")
+    public ResponseEntity<String> removeVolunteersFavouriteProject(@RequestParam() String username, @RequestParam() String project) {
+        userService.removeFavouriteProject(username, project);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/login")

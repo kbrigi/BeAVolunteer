@@ -34,6 +34,9 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM Project p WHERE p.owner_id IN :owner_ids", nativeQuery = true)
     List<Project> getProjectsByOwner(@Param("owner_ids")List<Long> owner);
 
+    @Query(value = "select p.* from project p join domain where domain.domain_name = :domain", nativeQuery = true)
+    List<Project> getProjectsByDomain(@Param("domain") String domain);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE Project p SET p.expiration_date = :newDate WHERE p.project_id = :id", nativeQuery = true)

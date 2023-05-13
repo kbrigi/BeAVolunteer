@@ -11,7 +11,7 @@ import java.sql.Blob;
 public class Domain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DOMAIN_ID")
+    @Column(name = "domain_id")
     private Long domainId;
 
     @Column(name = "DOMAIN_NAME", nullable = false)

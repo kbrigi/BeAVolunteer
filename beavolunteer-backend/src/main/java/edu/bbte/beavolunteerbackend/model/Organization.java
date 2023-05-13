@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.sql.Blob;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper=false)
 @Entity
@@ -39,14 +42,11 @@ public class Organization extends User {
     @Column(name = "WEBSITE")
     private String website;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "organization_id", referencedColumnName = "id")
-    private Collection<Project> projects;
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name = "organization_id", referencedColumnName = "id")
+//    private Collection<Project> projects;
 
-//    @MapsId
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    private User user;
-
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private Set<Domain> domains = new HashSet<>();
 }

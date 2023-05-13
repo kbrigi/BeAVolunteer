@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -37,4 +40,7 @@ public class Project {
 
     @Column()
     private Date expirationDate;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Set<Domain> domains = new HashSet<>();
 }

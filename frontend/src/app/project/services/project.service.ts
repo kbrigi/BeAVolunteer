@@ -8,6 +8,7 @@ import { Project } from '../models/project.model';
   providedIn: 'root'
 })
 export class ProjectService {
+
   domainPath: String = `${environment.apiUrl}/proj/domain/`
 
   constructor(private service: BackendService) { }  
@@ -67,9 +68,16 @@ export class ProjectService {
        return this.service.get(url);    
   }
 
-  delete(username: String): Observable<void> {
-    return this.service.delete(`${environment.apiUrl}/proj/${username}`);
+  update(name: String, formData: FormData): Observable<void>  {
+    return this.service.post(`${environment.apiUrl}/proj/update/${name}`, formData);
   }
 
+  delete(name: String): Observable<void> {
+    return this.service.delete(`${environment.apiUrl}/proj/${name}`);
+  }
+
+  deactivate(name: String): Observable<void> {
+    return this.service.post(`${environment.apiUrl}/proj/deactivate/${name}`);
+  }
 
 }

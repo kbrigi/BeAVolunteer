@@ -26,4 +26,8 @@ public class DomainMapper {
         return domains.stream().map(DomainMapper::domainToDTO).collect(Collectors.toList());
     }
 
+    public static List<Domain> domainDTOSToDomain(Collection<DomainDTO> domains) {
+        return domains.stream().map(DomainMapper::domainDTOToDomain).collect(Collectors.toList());
+    }
+
 }
