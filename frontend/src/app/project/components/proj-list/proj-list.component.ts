@@ -20,6 +20,7 @@ export class ProjListComponent implements OnInit {
   projects: Project[] = [];
   logedin_user_role: String = '';
   logedin_user_projects: String[] = [];
+  favourite_projects: String[] = [];
   current_date: String = '';
   domains: Domain[] = []
   orgs: Organization[] = []
@@ -49,7 +50,7 @@ export class ProjListComponent implements OnInit {
         this.query_params_owner = param['owner']
         this.query_params_org = param['org']
         let domain_param =  this.activatedRoute.snapshot.params['domain']
-        console.log(param['domains'])
+        // console.log(param['domains'])
         if( param['domains'] != undefined ||  param['owner'] != undefined ||  param['org'] != undefined) {
           this.projectService.getProjectsFiltered(['domain', 'owner', 'orgs'], param['domains'], 
           param['owner'], param['org'], domain_param).subscribe(result => {
@@ -88,6 +89,12 @@ export class ProjListComponent implements OnInit {
         const name = token.sub;
         this.userService.getRole(name).subscribe(result => {
           this.logedin_user_role = result.role;
+          if (result.role == 'USER') {
+            this.projectService.getFavouriteProjects().subscribe(result => {
+              this.favourite_projects = result.filter(p => p.expiration_date.toString() > this.current_date).map(item => item.project_name);
+              console.log("users fav:", result.filter(p => p.expiration_date.toString() > this.current_date).map(item => item.project_name));}
+              )
+          }
         }
         );
       }
@@ -99,11 +106,10 @@ export class ProjListComponent implements OnInit {
         this.logedin_user_projects = result.filter(p => p.expiration_date.toString() > this.current_date).map(item => item.project_name);
         console.log("users projects:", result);
       });
-
-      if (this.logedin_user_role == 'USER') {
-        
-      }
     }
+    // console.log(this.logedin_user_role == 'USER')
+      
+    
   }
    
   ngOnInit(): void {
@@ -313,11 +319,26 @@ export class ProjListComponent implements OnInit {
     else if  (by == "creation") {
       this.projects.sort((a, b) => a.creation_date.toString().localeCompare(b.creation_date.toString()));
     }
-    console.log(this.projects)
+    else if  (by == "fav") {
+      this.projectService.getFavouriteProjectsSorted().subscribe(result => {
+        let names = this.projects.map(item => item.project_name);
+        this.projects = result.filter(p => p.expiration_date.toString() > this.current_date && names.indexOf(p.project_name) !== -1);  
+      } )
+    }
   }
 
-  selectFavourite(): void {
-
+  selectFavourite(project_name: String): void {
+    // already selected
+    console.log(this.favourite_projects, project_name, this.favourite_projects.indexOf(project_name))
+    if (this.favourite_projects.indexOf(project_name) > -1) {
+      this.projectService.removeFavouriteProjects(project_name).subscribe(result => {
+        this.favourite_projects = result.map(item => item.project_name);
+      });
+    }
+    else {
+      this.projectService.addFavouriteProject(project_name).subscribe(result => {
+        this.favourite_projects = result.map(item => item.project_name);
+        });
+    }
   }
 }
-

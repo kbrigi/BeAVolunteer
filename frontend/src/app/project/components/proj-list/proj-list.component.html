@@ -16,12 +16,10 @@
     <button mat-menu-item (click)="sortProduct('-', 'name')">Descending by Name</button>
     <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
     <button mat-menu-item (click)="sortProduct('+', 'expiration')">Ascending by expiration date</button>
-    <button mat-menu-item (click)="sortProduct('-', 'expiration')">Descending by expiration date</button>
   </mat-menu>
 
 </div>
 
-<!--  *ngIf="logedin_user_role == 'ADMIN'" -->
 <mat-card style="float: left; width: 15%; margin-left: 2%;">   
     <mat-card-title style="margin: 5%;" class="domain_filter_h">Select an owner type:</mat-card-title>
     <mat-card-content >      
@@ -48,13 +46,8 @@
 
 <mat-grid-list cols="3" style="margin-top:5%; margin-left: 15%; " >
     <mat-grid-tile  *ngFor="let project of projects">
-        <mat-card style="padding: 10%;"  >
-          <mat-card-actions>
-            <button mat-button *ngIf="logedin_user_role === 'USER'" 
-            (click)="selectFavourite()" >
-            <mat-icon>favorite</mat-icon></button>
-          </mat-card-actions>
-
+        <mat-card style="padding: 5%;"  >
+          <div style="display: flex;" >
             <mat-card-title-group style="padding: 5%;">
                 <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
                 <mat-card-subtitle *ngIf="project.owner.role == 'ORGANIZATION'" class="project_creator_name"><a   
@@ -62,33 +55,50 @@
                 <mat-card-subtitle *ngIf="project.owner.role != 'ORGANIZATION'" class="project_creator_name">{{project.owner.user}}</mat-card-subtitle>    
                 <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
             </mat-card-title-group>
-                <div>
-                    <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
-                </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
-                <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content>
 
+            <mat-card-actions>
+                <button mat-icon-button *ngIf="logedin_user_role === 'USER' && favourite_projects.indexOf(project.project_name) > -1" 
+                (click)="selectFavourite(project.project_name)" >
+                <mat-icon>favorite</mat-icon></button>
+              
+              <button mat-icon-button *ngIf="logedin_user_role === 'USER' && favourite_projects.indexOf(project.project_name) == -1" 
+                (click)="selectFavourite(project.project_name)" >
+                <mat-icon>favorite_border</mat-icon></button>
+              
+            </mat-card-actions>
+          </div>
+          <div>
+              <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
+          </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
+          <!-- <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content> -->
+          <div class="domain_imgs">
+            <div class="domain_img" *ngFor="let domain of project.domains">
+                <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+                [routerLink] = '["/projects", domain.domain_name]'><img style="width: 60px; height: 60px;" src="{{domain.domain_img}}" ></button>
+            </div> 
+        </div>
                 
             <!-- <div *ngFor="let domain of project.domains">
                 <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
 
             </div> -->
-            <div id = "button" >
-                <mat-card-actions>
-                    <button mat-button [routerLink] = '["/project", project.project_name]' >Details</button>
-                </mat-card-actions>
+        <div id = "button" >
+            <mat-card-actions>
+                <button mat-raised-button [routerLink] = '["/project", project.project_name]' >Details</button>
+            </mat-card-actions>
 
-                <mat-card-actions>
-                  <button mat-button *ngIf="past_projects === false && logedin_user_role === 'ADMIN' || logedin_user_projects.includes(project.project_name)" 
-                  (click)="clickDeactivate(project.project_name)" >
-                  <mat-icon>highlight_off</mat-icon></button>
-                </mat-card-actions>
+            <mat-card-actions>
+              <button mat-fab *ngIf="past_projects === false && logedin_user_role === 'ADMIN' || logedin_user_projects.includes(project.project_name)" 
+              (click)="clickDeactivate(project.project_name)" >
+              <mat-icon>highlight_off</mat-icon></button>
+            </mat-card-actions>
 
-                <mat-card-actions>
-                    <button mat-button *ngIf="logedin_user_role === 'ADMIN' || logedin_user_projects.includes(project.project_name)" 
-                        (click)="clickDelete(project.project_name)" >
-                        <mat-icon>delete</mat-icon></button>
-                </mat-card-actions>
-            </div>
+            <mat-card-actions>
+                <button mat-fab *ngIf="logedin_user_role === 'ADMIN' || logedin_user_projects.includes(project.project_name)" 
+                    (click)="clickDelete(project.project_name)" >
+                    <mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
+        </div>
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>

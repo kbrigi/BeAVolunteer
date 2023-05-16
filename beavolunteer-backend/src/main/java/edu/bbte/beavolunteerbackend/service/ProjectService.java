@@ -32,9 +32,6 @@ public class ProjectService  extends ImgService  {
     private DomainRepository domainRepository;
 
     @Autowired
-    private DomainService domainService;
-
-    @Autowired
     private UserRepository userRepository;
 
     public void saveProject(ProjectInDTO projectDTO, Blob img, Long userID) throws BusinessException {
@@ -99,12 +96,6 @@ public class ProjectService  extends ImgService  {
         return getImg(projectImg);
     }
 
-//    public void saveProjectDomain(List<DomainDTO> domains, Project project) {
-//        for ( DomainDTO d : domains ) {
-//            projectDomainRepository.insertProjectDomain(project.getProjectId(), domainRepository.findByName(d.getDomain_name()).getDomainId());
-//        }
-//    }
-
     public ProjectOutDTO createAndSetDomainsForDTO(Project project) {
         ProjectOutDTO projectOutDTO = ProjectMapper.projectToDTO(project);
         projectOutDTO.setDomains(DomainMapper.domainsToDTO(project.getDomains()));
@@ -130,11 +121,15 @@ public class ProjectService  extends ImgService  {
     }
 
     public List<ProjectOutDTO> getProjectDTOsByDomain(String domainName) {
-//        Long domainIdsByName = domainRepository.findByName(domainName).getDomainId();
-        List<Project> projectsByDomainType = projectRepository.getProjectsByDomain(domainName);
+//        List<Project> projectsByDomainType = projectRepository.getProjectsByDomain(domainName);
         List<ProjectOutDTO> projectsByDomain = new ArrayList<>();
-        for (Project project: projectsByDomainType) {
-            projectsByDomain.add(createAndSetDomainsForDTO(project));
+        for (Project project: projectRepository.findAll()) {
+            for (Domain domain: project.getDomains()) {
+                if (Objects.equals(domain.getDomainName(), domainName)) {
+                    projectsByDomain.add(createAndSetDomainsForDTO(project));
+                    break;
+                }
+            }
         }
         return projectsByDomain;
     }
@@ -170,7 +165,6 @@ public class ProjectService  extends ImgService  {
                 finalProjectsDTO = finalProjectsDTO.stream().filter(orgsProjectsDTO::contains).collect(Collectors.toList());
             }
         }
-
         return finalProjectsDTO;
     }
 

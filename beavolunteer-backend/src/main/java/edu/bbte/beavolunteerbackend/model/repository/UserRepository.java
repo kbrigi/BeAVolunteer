@@ -1,6 +1,5 @@
 package edu.bbte.beavolunteerbackend.model.repository;
 
-import edu.bbte.beavolunteerbackend.model.Role;
 import edu.bbte.beavolunteerbackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
     @Query(value = "SELECT COUNT(user.id) FROM User user WHERE user.user_name = :username", nativeQuery = true)
     int existsUsername(@Param("username") String username);
 

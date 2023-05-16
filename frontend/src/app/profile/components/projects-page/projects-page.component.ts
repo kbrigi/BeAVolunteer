@@ -24,14 +24,20 @@ export class ProjectsPageComponent implements OnInit{
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((param) => {
       this.tab = param['page']
-
+      console.log(param['page'])
       if (localStorage.getItem('token') !== null) {
         if (param['page'] == 'Own projects') {
           this.projectService.getProjectsByOwner().subscribe(result => {
             this.projects = result;
             console.log(result)
           });
-      }
+        }
+        else if (param['page'] == 'Favourites') {
+          this.projectService.getFavouriteProjects().subscribe(result => {
+            this.projects = result;
+            console.log(result)
+          });
+        }     
       }
     })
 

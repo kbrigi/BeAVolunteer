@@ -13,7 +13,8 @@
 
     <div class="domain_imgs">
         <div class="domain_img" *ngFor="let domain of project.domains">
-            <button class="domain_button" [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+            <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+            [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
         </div> 
     </div>
 </mat-card>

@@ -1,6 +1,7 @@
 package edu.bbte.beavolunteerbackend.model.repository;
 
 import edu.bbte.beavolunteerbackend.model.Project;
+import edu.bbte.beavolunteerbackend.model.User;
 import edu.bbte.beavolunteerbackend.model.Volunteer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,9 +10,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO volunteer (id, surname, firstname, phone_nr, description, age, volunteered, gender) " +

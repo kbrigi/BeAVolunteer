@@ -1,3 +1,15 @@
 #button {
     display: flex;
   }
+
+.domain_imgs {
+  display: flex;
+}
+
+.domain_img {
+    margin: 1%;
+}
+
+.domain_button {
+  margin: 8px 8px 8px 0;
+}

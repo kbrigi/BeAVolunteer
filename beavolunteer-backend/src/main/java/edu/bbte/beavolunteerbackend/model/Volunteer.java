@@ -9,14 +9,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "VOLUNTEER")
-//@OnDelete(action = OnDeleteAction.CASCADE)@PrimaryKeyJoinColumn(name="EMPLOYEE_ID")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Volunteer extends User {
 //    @Id
@@ -55,5 +53,5 @@ public class Volunteer extends User {
     private Collection<Project> projects;
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Set<Project> favouriteProj = new HashSet<>();
+    private List<Project> favouriteProj;
 }

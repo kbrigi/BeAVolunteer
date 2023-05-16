@@ -80,4 +80,22 @@ export class ProjectService {
     return this.service.post(`${environment.apiUrl}/proj/deactivate/${name}`);
   }
 
+  // favourite projects
+
+  getFavouriteProjectsSorted() : Observable<Project[]>{
+    return this.service.get(`${environment.apiUrl}/fav/sort`);
+  }
+
+  getFavouriteProjects() : Observable<Project[]>{
+    return this.service.get(`${environment.apiUrl}/fav`);
+  }
+
+  addFavouriteProject(name: String) : Observable<Project[]>{
+    return this.service.post(`${environment.apiUrl}/fav?project=${name}`);
+  }
+
+  removeFavouriteProjects(name: String) : Observable<Project[]>{
+    return this.service.delete(`${environment.apiUrl}/fav?project=${name}`);
+  }
+
 }

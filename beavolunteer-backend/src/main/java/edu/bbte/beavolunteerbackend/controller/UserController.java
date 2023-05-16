@@ -10,6 +10,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
 import edu.bbte.beavolunteerbackend.service.UserService;
+import edu.bbte.beavolunteerbackend.util.JWTToken;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ import java.util.List;
 public class UserController extends Controller{
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JWTToken jwtToken;
 
     @PostMapping("/volunteer")
     public void saveVolunteer(@RequestBody @Valid VolunteerDTO volunteerDTO) {
@@ -93,21 +97,30 @@ public class UserController extends Controller{
         return userService.getRole(username);
     }
 
+    public Long getUserIDFromToken(String jwttoken) {
+        String token= jwttoken.substring(17);
+        token = token.substring(0,token.length()-2);
+        return userService.getUserFromUsername(jwtToken.getUsernameFromToken(token)).getId();
+    }
+
     @GetMapping(value = "/fav")
-    public List<ProjectOutDTO> setVolunteersFavouriteProject(@RequestParam() String username) {
-        return userService.getFavouriteProject(username);
+    public List<ProjectOutDTO> getVolunteersFavouriteProject(@RequestHeader("Authorization") String jwttoken) {
+        return userService.getFavouriteProject(getUserIDFromToken(jwttoken));
     }
 
     @PostMapping(value = "/fav")
-    public ResponseEntity<String> setVolunteersFavouriteProject(@RequestParam() String username, @RequestParam() String project) {
-        userService.setFavouriteProject(username, project);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public List<ProjectOutDTO> setVolunteersFavouriteProject(@RequestHeader("Authorization") String jwttoken, @RequestParam() String project) {
+        return userService.setFavouriteProject(getUserIDFromToken(jwttoken), project);
     }
 
     @DeleteMapping(value = "/fav")
-    public ResponseEntity<String> removeVolunteersFavouriteProject(@RequestParam() String username, @RequestParam() String project) {
-        userService.removeFavouriteProject(username, project);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public List<ProjectOutDTO> removeVolunteersFavouriteProject(@RequestHeader("Authorization") String jwttoken, @RequestParam() String project) {
+        return userService.removeFavouriteProject(getUserIDFromToken(jwttoken), project);
+    }
+
+    @GetMapping(value="/fav/sort")
+    public List<ProjectOutDTO> getSortedProjectsByFav() {
+        return userService.getSortedFavouriteProjects();
     }
 
     @PostMapping(value = "/login")

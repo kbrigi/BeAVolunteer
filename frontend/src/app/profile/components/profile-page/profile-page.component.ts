@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProfilePageComponent implements OnInit {
   tabs = [
     { name: 'Account', icon: 'account_circle'},
-    { name: 'Favourite projects', icon: 'favorite'},
+    { name: 'Favourites', icon: 'favorite'},
     { name: 'Own projects', icon: 'article'}
   ]
 
@@ -23,8 +23,6 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {    
   }
-
-
 
 
 }

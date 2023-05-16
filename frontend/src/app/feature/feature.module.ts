@@ -22,6 +22,7 @@ import { LoginService } from './services/user/login/login.service';
 import { OrgListComponent } from './components/list/org-list/org-list.component';
 import { OrgDetailsComponent } from './components/details/org-details/org-details.component';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { RouterModule } from '@angular/router';
     MatNativeDateModule,
     RouterModule.forRoot([]),
     MatGridListModule,
+    MatButtonModule,
   ],
   exports: [],
   providers: [

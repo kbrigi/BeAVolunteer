@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [    
@@ -37,6 +39,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatSelectModule,
     NgxMatFileInputModule,
     MatDatepickerModule,
+    MatButtonModule,
+    MatTooltipModule,
   ]
 })
 export class ProfileModule { }

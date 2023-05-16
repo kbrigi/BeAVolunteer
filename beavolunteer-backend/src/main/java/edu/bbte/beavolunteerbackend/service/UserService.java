@@ -22,10 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static edu.bbte.beavolunteerbackend.controller.mapper.UserMapper.*;
 
@@ -54,6 +52,9 @@ public class UserService extends ImgService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectService projectService;
 
     public void saveUser(VolunteerDTO userDTO) throws BusinessException {
         User user = DTOToUser(userDTO);
@@ -146,9 +147,7 @@ public class UserService extends ImgService {
         User user = userRepository.findByUsername(name);
         if (user != null) {
             List<Project> projects = projectRepository.getByOwner(user.getId());
-            for (Project project: projects) {
-                projectRepository.delete(project);
-            }
+            projectRepository.deleteAll(projects);
             userRepository.deleteById(user.getId());
         }
         else
@@ -171,21 +170,59 @@ public class UserService extends ImgService {
         return organizationOutDTO;
     }
 
-    public void setFavouriteProject(String username, String projectName) {
-        Volunteer volunteer = volunteerRepository.getById(userRepository.findByUsername(username).getId());
-        Set<Project> favourites = volunteer.getFavouriteProj();
+    public List<ProjectOutDTO> setFavouriteProject(Long userID, String projectName) {
+        Volunteer volunteer = volunteerRepository.getById(userID);
+        List<Project> favourites = volunteer.getFavouriteProj();
         favourites.add(projectRepository.getByName(projectName));
         volunteer.setFavouriteProj(favourites);
+        volunteerRepository.saveAndFlush(volunteer);
+        return ProjectMapper.projectsToDTO(favourites);
     }
 
-    public void removeFavouriteProject(String username, String projectName) {
-        Volunteer volunteer = volunteerRepository.getById(userRepository.findByUsername(username).getId());
-        Set<Project> favourites = volunteer.getFavouriteProj();
+    public List<ProjectOutDTO> removeFavouriteProject(Long userID, String projectName) {
+        Volunteer volunteer = volunteerRepository.getById(userID);
+        List<Project> favourites = volunteer.getFavouriteProj();
         favourites.remove(projectRepository.getByName(projectName));
         volunteer.setFavouriteProj(favourites);
+        volunteerRepository.saveAndFlush(volunteer);
+        return ProjectMapper.projectsToDTO(favourites);
     }
 
-    public List<ProjectOutDTO> getFavouriteProject(String username) {
-        return ProjectMapper.projectsToDTO((List<Project>) volunteerRepository.getById(userRepository.findByUsername(username).getId()).getFavouriteProj());
+    public List<ProjectOutDTO> getFavouriteProject(Long userID) {
+        return ProjectMapper.projectsToDTO(volunteerRepository.getById(userID).getFavouriteProj());
+    }
+
+    public List<ProjectOutDTO> getSortedFavouriteProjects() {
+        HashMap<Project, Integer> allProjects = new HashMap<Project, Integer>();
+
+        List<Long> volunteers = userRepository.findByRole("USER");
+        for (Long userId: volunteers) {
+            Collection<Project> projects = volunteerRepository.getById(userId).getProjects();
+            for(Project project: projects) {
+                Integer count = allProjects.get(project);
+                if(count == null) {
+                    allProjects.put(project, 1);
+                }
+                else {
+                    allProjects.put(project,count + 1);
+                }
+            }
+        }
+        for(Project project: projectRepository.findAll()) {
+            allProjects.putIfAbsent(project, 0);
+        }
+        HashMap<Project, Integer> sortedProjects = allProjects.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+
+        List<Project> allSortedProjects = new ArrayList<>(sortedProjects.keySet());
+//        for (Project p : sortedProjects.keySet()) {
+//            allSortedProjects.add(projectService.createAndSetDomainsForDTO(p));
+//        }
+        return ProjectMapper.projectsToDTO(allSortedProjects);
     }
 }

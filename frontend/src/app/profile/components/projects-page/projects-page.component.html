@@ -14,23 +14,24 @@
                 <!-- <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content> -->
             <div class="domain_imgs">    
                 <div class="domain_img" *ngFor="let domain of project.domains">
-                    <button class="domain_button"><img style="width: 60px; height: 60px;" src="{{domain.domain_img}}" ></button>
+                    <button mat-fab class="domain_button"  matTooltip="{{domain.domain_name}}"><img style="width: 60px; height: 60px;" src="{{domain.domain_img}}" ></button>
                 </div> 
             </div>
                 
             <div id = "button" >
                 <mat-card-actions>
-                    <button mat-button [routerLink] = '["/project", project.project_name]' >Preview details</button>
+                    <button mat-raised-button [routerLink] = '["/project", project.project_name]' >Details</button>
                 </mat-card-actions>
 
-                <mat-card-actions>
-                    <button mat-button (click)="openModifyPopUp(project)"><mat-icon>mode_edit</mat-icon></button>
+                <mat-card-actions *ngIf="tab == 'Own projects'">
+                    <button mat-fab (click)="openModifyPopUp(project)"><mat-icon>mode_edit</mat-icon></button>
                 </mat-card-actions>
 
-                <mat-card-actions>
-                    <button mat-button (click)="clickDelete(project.project_name)" >
+                <mat-card-actions *ngIf="tab == 'Own projects'">
+                    <button mat-fab (click)="clickDelete(project.project_name)" >
                         <mat-icon>delete</mat-icon></button>
                 </mat-card-actions>
+                
             </div>
         </mat-card>
     </mat-grid-tile>

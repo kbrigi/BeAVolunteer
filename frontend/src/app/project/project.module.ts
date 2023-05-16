@@ -15,8 +15,10 @@ import { ProjDetailsComponent } from './components/proj-details/proj-details.com
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatGridListModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatMenuModule 
+    MatMenuModule,
+    MatTooltipModule,
+    MatButtonModule
   ],
   exports: [
     ProjFormComponent
