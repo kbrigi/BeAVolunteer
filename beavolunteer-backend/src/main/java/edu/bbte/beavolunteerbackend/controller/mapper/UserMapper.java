@@ -5,12 +5,15 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.VolunteerOutDTO;
 import edu.bbte.beavolunteerbackend.model.*;
 import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserMapper {
@@ -29,7 +32,9 @@ public class UserMapper {
     public static Volunteer volunteerDTOToVolunteer(VolunteerDTO userDTO, Long id) {
         Volunteer volunteer = new Volunteer();
 //not sure if needed
-        volunteer.setId(id);
+        volunteer.setUserName(userDTO.getUser());
+        volunteer.setEmail(userDTO.getEmail());
+        volunteer.setRole(Role.USER);
         volunteer.setFirstName(userDTO.getFirstname());
         volunteer.setSurname(userDTO.getSurname());
         volunteer.setAge(userDTO.getAge());
@@ -76,5 +81,18 @@ public class UserMapper {
         orgDTO.setPhoneNr(org.getPhoneNr());
         orgDTO.setLogo("http://localhost:8080/org/image/" + org.getUserName());
         return orgDTO;
+    }
+
+    public static VolunteerOutDTO volunteerToDTO(Volunteer volunteer, User user) {
+        VolunteerOutDTO volunteerDTO = new VolunteerOutDTO();
+        volunteerDTO.setUsername(user.getUserName());
+        volunteerDTO.setEmail(user.getEmail());
+        volunteerDTO.setSurname(volunteer.getSurname());
+        volunteerDTO.setFirstname(volunteer.getFirstName());
+        volunteerDTO.setDescription(volunteer.getDescription());
+        volunteerDTO.setVolunteered(volunteer.getVolunteered());
+        volunteerDTO.setPhoneNr(volunteer.getPhoneNr());
+        volunteerDTO.setAge(volunteer.getAge());
+        return volunteerDTO;
     }
 }

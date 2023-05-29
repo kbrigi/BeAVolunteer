@@ -1,10 +1,7 @@
 package edu.bbte.beavolunteerbackend.controller;
 
 import com.google.gson.Gson;
-import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
-import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
-import edu.bbte.beavolunteerbackend.controller.dto.outgoing.TokenOutDTO;
-import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.*;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
@@ -91,6 +88,12 @@ public class UserController extends Controller{
     public List<UserOutDTO> getAllUsers() {
         return UserMapper.usersToDTO(userService.getAllUser());
     }
+
+    @GetMapping("/user/{username}")
+    public VolunteerOutDTO getUser(@PathVariable String username) {
+        return userService.getVolunteerByUsername(username);
+    }
+
 
     @GetMapping("/role/{username}")
     public UserOutDTO getRole(@PathVariable String username) throws BusinessException {

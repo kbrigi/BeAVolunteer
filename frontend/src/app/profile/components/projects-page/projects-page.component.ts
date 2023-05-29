@@ -5,8 +5,6 @@ import { Project } from 'src/app/project/models/project.model';
 import { ProjectService } from 'src/app/project/services/project.service';
 import { ProjectPopUpComponent } from '../project-pop-up/project-pop-up.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Domain } from 'src/app/domain/models/domain.model';
-import { DomainService } from 'src/app/domain/services/domain.service';
 
 @Component({
   selector: 'app-projects-page',

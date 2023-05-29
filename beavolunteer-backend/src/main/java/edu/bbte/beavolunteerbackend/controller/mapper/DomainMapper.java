@@ -5,6 +5,7 @@ import edu.bbte.beavolunteerbackend.model.Domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DomainMapper {
@@ -30,4 +31,7 @@ public class DomainMapper {
         return domains.stream().map(DomainMapper::domainDTOToDomain).collect(Collectors.toList());
     }
 
+    public static Set<Domain> domainDTOSToDomains(Collection<DomainDTO> domains) {
+        return domains.stream().map(DomainMapper::domainDTOToDomain).collect(Collectors.toSet());
+    }
 }

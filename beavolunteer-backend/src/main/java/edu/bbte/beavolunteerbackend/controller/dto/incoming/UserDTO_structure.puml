@@ -1,0 +1,180 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3017393 { 
+   	label=bbte
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1393944971 { 
+   	label=beavolunteerbackend
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   DomainDTO673605572[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DomainDTO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   domain_id: Long [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   domain_img: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   domain_name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OrganizationDTO673605572[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OrganizationDTO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   description: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   domains: List&lt;DomainDTO&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   phoneNr: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   website: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserDTO673605572[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserDTO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   user: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VolunteerDTO673605572[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VolunteerDTO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   age: Integer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   description: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   domains: List&lt;DomainDTO&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   firstname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   gender: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   phoneNr: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   volunteered: Boolean [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+OrganizationDTO673605572 -> DomainDTO673605572[label="domains
+[0..*]"];
+UserDTO673605572 -> OrganizationDTO673605572[arrowhead=none, arrowtail=empty, dir=both];
+UserDTO673605572 -> VolunteerDTO673605572[arrowhead=none, arrowtail=empty, dir=both];
+VolunteerDTO673605572 -> DomainDTO673605572[label="domains
+[0..*]"];
+    
+}
+@enduml

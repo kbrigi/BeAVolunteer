@@ -17,12 +17,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OrgSetComponent } from './components/settings/org-set/org-set.component';
+import { VolunteerSetComponent } from './components/settings/volunteer-set/volunteer-set.component';
 
 @NgModule({
   declarations: [    
     ProfilePageComponent, 
     ProjectsPageComponent, 
-    ProjectPopUpComponent
+    ProjectPopUpComponent, OrgSetComponent, VolunteerSetComponent
   ],
   imports: [
     ProjectModule,

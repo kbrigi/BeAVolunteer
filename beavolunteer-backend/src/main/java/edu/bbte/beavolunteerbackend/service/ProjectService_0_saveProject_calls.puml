@@ -1,0 +1,169 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "edu.bbte.beavolunteerbackend.service.ProjectService#saveProject(ProjectInDTO,Blob,Long)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "edu.bbte.beavolunteerbackend.service.ProjectService",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3017393 { 
+   	label=bbte
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1393944971 { 
+   	label=beavolunteerbackend
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1443845012 { 
+   	label=ProjectMapper
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectMapper435535768XXXprojectDTOToEntity1083363073[
+	label="+ projectDTOToEntity()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectMapper
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1939439776 { 
+   	label=ProjectService
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectService287075190XXXprepareProject850739518[
+	label="+ prepareProject()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectService
+
+null"
+	fontcolor=darkgreen
+];
+
+ProjectService287075190XXXsaveProject452615678[
+	label="+ saveProject()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectService
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_749006574 { 
+   	label=ProjectController
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectController1385187751XXXsaveProject1262703240[
+	label="+ saveProject()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectController
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+ProjectController1385187751XXXsaveProject1262703240 -> ProjectService287075190XXXsaveProject452615678;
+ProjectService287075190XXXprepareProject850739518 -> ProjectMapper435535768XXXprojectDTOToEntity1083363073;
+ProjectService287075190XXXsaveProject452615678 -> ProjectService287075190XXXprepareProject850739518;
+    
+}
+@enduml

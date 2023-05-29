@@ -1,5 +1,5 @@
 import { Domain } from "src/app/domain/models/domain.model"
-import { User } from "src/app/feature/models/user.model"
+import { User } from "src/app/user/models/user.model"
 
 export type Project = { 
     project_name: string,

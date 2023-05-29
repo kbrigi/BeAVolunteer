@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import jwt_decode from 'jwt-decode';
+import { UserService } from 'src/app/user/services/user/user.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -7,22 +10,38 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
+  logedin_user_role: String = '';
+  logedin_user_name: String = '';
+  tab: String = ''
   tabs = [
     { name: 'Account', icon: 'account_circle'},
     { name: 'Favourites', icon: 'favorite'},
     { name: 'Own projects', icon: 'article'}
   ]
-
-  tab: String = ''
-
-  constructor( private activatedRoute: ActivatedRoute){
+  
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private userService: UserService){
     this.activatedRoute.params.subscribe((param) => {
-      this.tab = param['page']
-    })
+      this.tab = param['page'],
+      this.logedin_user_name = param['name']
+      console.log(param['page'])
+    }) 
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {  
+    this.getRole()     
   }
 
+  getRole(): void {
+    if (localStorage.getItem('token') !== null) {
+        const token = jwt_decode(localStorage.getItem('token')!);
+        // @ts-ignore
+        this.logedin_user_name = token.sub;
+
+        this.userService.getRole(this.logedin_user_name).subscribe(result => {
+          this.logedin_user_role = result.role;
+        }
+        );
+      }
+  }
 
 }

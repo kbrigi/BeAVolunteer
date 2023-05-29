@@ -9,7 +9,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -17,9 +19,6 @@ import java.util.List;
 @Table(name = "VOLUNTEER")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Volunteer extends User {
-//    @Id
-//    @Column(unique = true, nullable = false)
-//    private Long id;
 
     @Pattern(regexp = "^[A-Z][a-z]{2,}$")
     @Column(name = "SURNAME", nullable = false)
@@ -54,4 +53,7 @@ public class Volunteer extends User {
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private List<Project> favouriteProj;
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private Set<Domain> domains = new HashSet<>();
 }

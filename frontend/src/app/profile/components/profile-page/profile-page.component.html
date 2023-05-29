@@ -2,7 +2,13 @@
 <div class="options" style="margin-top: 10%; float: left;">
     <mat-list role="list">
         <mat-list-item style="margin-top: 3%;" role="listitem" *ngFor="let tab of tabs" >
-            <a mat-button style="display: flex;" [routerLink]='["/profile", tab.name]'>
+            <a mat-button *ngIf="tab.name != 'Account' && tab.name != undefined" 
+            style="display: flex;" [routerLink]='["/profile", tab.name]'>
+                <mat-icon>{{tab.icon}}</mat-icon>
+                <span>{{tab.name}}</span>
+            </a>
+            <a mat-button *ngIf="tab.name == 'Account' || tab.name == undefined" 
+            style="display: flex;" [routerLink]='["/profile", tab.name, logedin_user_name]'>
                 <mat-icon>{{tab.icon}}</mat-icon>
                 <span>{{tab.name}}</span>
             </a>
@@ -10,7 +16,12 @@
     </mat-list>
 </div>
 
-
 <div style=" margin-left: 15%; ">
-    <app-projects-page></app-projects-page>
+    <div *ngIf="tab != 'Account' && tab != undefined">
+        <app-projects-page></app-projects-page>
+    </div>
+    <div *ngIf="tab == 'Account' || tab == undefined">
+        <app-org-set *ngIf="logedin_user_role != 'USER'" ></app-org-set>
+        <app-volunteer-set *ngIf="logedin_user_role == 'USER'"></app-volunteer-set>
+    </div>
 </div>

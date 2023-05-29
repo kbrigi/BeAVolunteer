@@ -17,5 +17,4 @@ public class Controller {
         return new SerialBlob(bytes);
     }
 
-
 }

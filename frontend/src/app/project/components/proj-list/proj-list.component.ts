@@ -3,13 +3,13 @@ import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from 'src/app/feature/services/user/login/login.service';
 import jwt_decode from 'jwt-decode';
 import { formatDate } from '@angular/common';
 import { Domain } from 'src/app/domain/models/domain.model';
 import { DomainService } from 'src/app/domain/services/domain.service';
-import { Organization } from 'src/app/feature/models/organization.model';
-import { OrgService } from 'src/app/feature/services/user/org/org.service';
+import { Organization } from 'src/app/user/models/organization.model';
+import { OrgService } from 'src/app/user/services/org/org.service';
+import { UserService } from 'src/app/user/services/user/user.service';
 
 @Component({
   selector: 'app-proj-list',
@@ -32,7 +32,7 @@ export class ProjListComponent implements OnInit {
   query_params_org: String[] = []
   past_projects: boolean = false
 
-  constructor(private projectService: ProjectService, private userService: LoginService, private domainService: DomainService,
+  constructor(private projectService: ProjectService, private userService: UserService, private domainService: DomainService,
     private orgService: OrgService, private router: Router, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute){
 
       this.activatedRoute.params.subscribe((param) => {
@@ -50,7 +50,7 @@ export class ProjListComponent implements OnInit {
         this.query_params_owner = param['owner']
         this.query_params_org = param['org']
         let domain_param =  this.activatedRoute.snapshot.params['domain']
-        // console.log(param['domains'])
+        
         if( param['domains'] != undefined ||  param['owner'] != undefined ||  param['org'] != undefined) {
           this.projectService.getProjectsFiltered(['domain', 'owner', 'orgs'], param['domains'], 
           param['owner'], param['org'], domain_param).subscribe(result => {

@@ -6,6 +6,7 @@ import edu.bbte.beavolunteerbackend.controller.dto.incoming.VolunteerDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.OrganizationOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.ProjectOutDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.UserOutDTO;
+import edu.bbte.beavolunteerbackend.controller.dto.outgoing.VolunteerOutDTO;
 import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.UserMapper;
@@ -60,16 +61,15 @@ public class UserService extends ImgService {
         User user = DTOToUser(userDTO);
         UserValidator.errorList.clear();
         userValidator.validate(user);
-        log.info(UserValidator.errorList.toString());
         if (UserValidator.errorList.isEmpty()) {
-            user.setRole(Role.USER);
-            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            User savedUser = userRepository.saveAndFlush(user);
-
-            Volunteer volunteer = volunteerDTOToVolunteer(userDTO, savedUser.getId());
-            volunteerRepository.insertVolunteer(volunteer.getId(), volunteer.getSurname(),
-                    volunteer.getFirstName(), volunteer.getPhoneNr(), volunteer.getDescription(),
-                    volunteer.getAge(), volunteer.getVolunteered(), String.valueOf(volunteer.getGender()));
+            Set<Domain> domains = new HashSet<>();
+            for (DomainDTO domainDTO: userDTO.getDomains()) {
+                domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
+            }
+            Volunteer volunteer = volunteerDTOToVolunteer(userDTO, null);
+            volunteer.setDomains(domains);
+            volunteer.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            volunteerRepository.saveAndFlush(volunteer);
         } else {
             throw new BusinessException(UserValidator.errorList.toString());
         }
@@ -141,6 +141,12 @@ public class UserService extends ImgService {
         else {
             throw new BusinessException("Username does not exist!");
         }
+    }
+
+    public VolunteerOutDTO getVolunteerByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        Volunteer volunteer = volunteerRepository.getById(user.getId());
+        return UserMapper.volunteerToDTO(volunteer, user);
     }
 
     public void deleteOrg(String name) throws BusinessException {
@@ -220,9 +226,6 @@ public class UserService extends ImgService {
                         (e1, e2) -> e1, LinkedHashMap::new));
 
         List<Project> allSortedProjects = new ArrayList<>(sortedProjects.keySet());
-//        for (Project p : sortedProjects.keySet()) {
-//            allSortedProjects.add(projectService.createAndSetDomainsForDTO(p));
-//        }
         return ProjectMapper.projectsToDTO(allSortedProjects);
     }
 }

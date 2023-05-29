@@ -15,3 +15,7 @@
 #button {
     display: flex;
   }
+
+.domain_button {
+  margin: 8px 8px 8px 0;
+}

@@ -32,9 +32,7 @@ public class User {
     @Column(name = "password", length  = 64, nullable = false)
     private String password;
 
-//    @Transient
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
     private Role role;
 
 }

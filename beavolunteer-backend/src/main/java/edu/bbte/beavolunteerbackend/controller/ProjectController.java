@@ -7,8 +7,10 @@ import edu.bbte.beavolunteerbackend.service.ProjectService;
 import edu.bbte.beavolunteerbackend.service.UserService;
 import edu.bbte.beavolunteerbackend.util.JWTToken;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
+import edu.bbte.beavolunteerbackend.validator.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -103,8 +105,11 @@ public class ProjectController extends Controller{
     }
 
     @GetMapping(value = "/image/{name}")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable String name) throws SQLException {
-        byte[] product = projectService.getImage(name);
+    public ResponseEntity<byte[]> getProjectImage(@PathVariable String name) throws SQLException {
+        if (projectService.getProjectByName(name) == null) {
+            throw  new NotFoundException();
+        }
+        byte[] product = projectService.getProjectImg(name);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(product);
     }
 

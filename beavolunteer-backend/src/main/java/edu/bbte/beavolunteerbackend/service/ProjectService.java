@@ -91,7 +91,7 @@ public class ProjectService  extends ImgService  {
             throw new BusinessException("User does not exist!");
     }
 
-    public byte[] getImage(String name) throws SQLException {
+    public byte[] getProjectImg(String name) throws SQLException {
         Blob projectImg = projectRepository.getByName(name).getProjectImg();
         return getImg(projectImg);
     }
@@ -121,7 +121,6 @@ public class ProjectService  extends ImgService  {
     }
 
     public List<ProjectOutDTO> getProjectDTOsByDomain(String domainName) {
-//        List<Project> projectsByDomainType = projectRepository.getProjectsByDomain(domainName);
         List<ProjectOutDTO> projectsByDomain = new ArrayList<>();
         for (Project project: projectRepository.findAll()) {
             for (Domain domain: project.getDomains()) {
@@ -191,7 +190,6 @@ public class ProjectService  extends ImgService  {
         if (projectRepository.checkName(name) != 0) {
             Project updatedProject = prepareProject(projectDTO, userID, img);
             updatedProject.setProjectId(projectRepository.getByName(name).getProjectId());
-            log.info(String.valueOf(updatedProject));
             projectRepository.save(updatedProject);
         } else {
             throw new BusinessException("Project name does not exist");

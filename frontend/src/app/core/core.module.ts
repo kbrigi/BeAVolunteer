@@ -4,6 +4,7 @@ import {BackendService} from "./services/backend/backend.service";
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { TokenInterceptor } from './services/interceptor/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
@@ -18,6 +19,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     BackendService,
     AuthGuardService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+  ],
+  exports: [ 
+    // HeaderComponent
   ]
 })
 export class CoreModule { }

@@ -21,7 +21,8 @@ public class UserValidator implements Validator<User> {
         if (user.getPassword().matches(regexPassword)) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
-            errorList.add("password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number");
+            errorList.add("password must contain minimum eight characters, " +
+                    "at least one uppercase letter, one lowercase letter and one number");
         }
 
         if (userRepository.existsUsername(user.getUserName()) > 0) {

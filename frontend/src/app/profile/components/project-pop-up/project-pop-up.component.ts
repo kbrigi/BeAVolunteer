@@ -41,8 +41,6 @@ export class ProjectPopUpComponent implements OnInit{
       this.domains = result
   )
     this.selectedDomains = this.givenData.domains
-    
-    // this.selectedDomains = this.givenData.domains.map(item => item.domain_name);
   }
 
   close() {
@@ -64,7 +62,6 @@ export class ProjectPopUpComponent implements OnInit{
       formData.append('project', JSON.stringify(project));
       formData.append('file', this.projectForm.controls['img'].value);
       const date = this.projectForm.controls['expiration_date'].value
-      console.log(date.split("-"))
       project.expiration_date = new Date(+date[0], +date[1], +date[2]);
       this.projectService.update(this.oldName, formData).subscribe({
         next: () => {
@@ -79,6 +76,7 @@ export class ProjectPopUpComponent implements OnInit{
           panelClass: 'fail-snackbar'
         })
         });
-        this.dialog.close();
+      this.dialog.close();
+      window.location.reload();
     }
 }

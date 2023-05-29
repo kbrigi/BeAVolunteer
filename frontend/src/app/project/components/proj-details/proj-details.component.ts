@@ -8,7 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './proj-details.component.html',
   styleUrls: ['./proj-details.component.css']
 })
-export class ProjDetailsComponent implements OnInit{
+export class ProjDetailsComponent implements OnInit{  
+
   project: Project = {
     project_name: '',
     project_description: '',
@@ -23,9 +24,10 @@ export class ProjDetailsComponent implements OnInit{
     },
     project_img: ''
   };
-  
-  constructor(private projectService: ProjectService,  private activatedRoute: ActivatedRoute){
-  }
+
+  constructor(private projectService: ProjectService,  
+    private activatedRoute: ActivatedRoute){ }
+
 
   ngOnInit(){
     this.activatedRoute.params.subscribe((param) => {
