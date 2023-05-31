@@ -29,9 +29,8 @@ public class UserMapper {
         return user;
     }
 
-    public static Volunteer volunteerDTOToVolunteer(VolunteerDTO userDTO, Long id) {
+    public static Volunteer volunteerDTOToVolunteer(VolunteerDTO userDTO) {
         Volunteer volunteer = new Volunteer();
-//not sure if needed
         volunteer.setUserName(userDTO.getUser());
         volunteer.setEmail(userDTO.getEmail());
         volunteer.setRole(Role.USER);
@@ -46,9 +45,22 @@ public class UserMapper {
         return volunteer;
     }
 
-    public static Organization orgDTOToUser(OrganizationDTO organizationDTO, Long id) {
+    public static Volunteer volunteerExtendedDTOToVolunteer(VolunteerOutDTO userDTO) {
+        Volunteer volunteer = new Volunteer();
+        volunteer.setUserName(userDTO.getUser());
+        volunteer.setEmail(userDTO.getEmail());
+        volunteer.setRole(Role.USER);
+        volunteer.setFirstName(userDTO.getFirstname());
+        volunteer.setSurname(userDTO.getSurname());
+        volunteer.setAge(userDTO.getAge());
+        volunteer.setDescription(userDTO.getDescription());
+        volunteer.setPhoneNr(userDTO.getPhoneNr());
+        volunteer.setVolunteered(userDTO.getVolunteered());
+        return volunteer;
+    }
+
+    public static Organization orgDTOToUser(OrganizationDTO organizationDTO) {
         Organization org = new Organization();
-//        org.setId(id);
         org.setUserName(organizationDTO.getUser());
         org.setRole(Role.ORGANIZATION);
         org.setEmail(organizationDTO.getEmail());
@@ -75,6 +87,7 @@ public class UserMapper {
     public static OrganizationOutDTO organizationToDTO(Organization org, User user) {
         OrganizationOutDTO orgDTO = new OrganizationOutDTO();
         orgDTO.setUser(user.getUserName());
+        orgDTO.setEmail(user.getEmail());
         orgDTO.setAddress(org.getAddress());
         orgDTO.setDescription(org.getDescription());
         orgDTO.setWebsite(org.getWebsite());
@@ -85,7 +98,7 @@ public class UserMapper {
 
     public static VolunteerOutDTO volunteerToDTO(Volunteer volunteer, User user) {
         VolunteerOutDTO volunteerDTO = new VolunteerOutDTO();
-        volunteerDTO.setUsername(user.getUserName());
+        volunteerDTO.setUser(user.getUserName());
         volunteerDTO.setEmail(user.getEmail());
         volunteerDTO.setSurname(volunteer.getSurname());
         volunteerDTO.setFirstname(volunteer.getFirstName());
@@ -95,4 +108,5 @@ public class UserMapper {
         volunteerDTO.setAge(volunteer.getAge());
         return volunteerDTO;
     }
+
 }

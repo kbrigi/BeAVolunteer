@@ -14,4 +14,12 @@ export class VolunteerService {
   registration(volunteer: Volunteer): Observable<void> {
     return this.service.post(`${environment.apiUrl}/volunteer`, volunteer);
   }
+
+  getByName(username: String): Observable<Volunteer> {
+    return this.service.get(`${environment.apiUrl}/user/${username}`)
+  }
+
+  update(username: String, volunteer: Volunteer): Observable<void> {
+    return this.service.post(`${environment.apiUrl}/update/vol/${username}`, volunteer);
+  }
 }

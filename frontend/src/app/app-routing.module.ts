@@ -62,7 +62,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'profile/Account/:name',
+    path: 'profile/:page/:name',
     component: ProfilePageComponent,
     pathMatch: 'full'
   },

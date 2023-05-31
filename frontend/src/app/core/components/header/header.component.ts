@@ -40,6 +40,8 @@ export class HeaderComponent {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.logedin_user_role = '';
+    this.logedin_user_name = '';
     this.userService.loginState.next(false);
     this._snackBar.open("You successfully logged out!", 'OK', {
       duration: 10000,

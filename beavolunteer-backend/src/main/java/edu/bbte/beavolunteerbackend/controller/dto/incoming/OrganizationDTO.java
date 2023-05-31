@@ -11,7 +11,6 @@ public class OrganizationDTO extends UserDTO{
     String description;
     String address;
     String website;
-//    String logo;
     String phoneNr;
     List<DomainDTO> domains;
 }

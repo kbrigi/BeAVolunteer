@@ -7,7 +7,7 @@
                 <mat-icon>{{tab.icon}}</mat-icon>
                 <span>{{tab.name}}</span>
             </a>
-            <a mat-button *ngIf="tab.name == 'Account' || tab.name == undefined" 
+            <a mat-button *ngIf="(tab.name == 'Account' || tab.name == undefined) && logedin_user_role != 'ADMIN'" 
             style="display: flex;" [routerLink]='["/profile", tab.name, logedin_user_name]'>
                 <mat-icon>{{tab.icon}}</mat-icon>
                 <span>{{tab.name}}</span>
@@ -21,7 +21,10 @@
         <app-projects-page></app-projects-page>
     </div>
     <div *ngIf="tab == 'Account' || tab == undefined">
-        <app-org-set *ngIf="logedin_user_role != 'USER'" ></app-org-set>
-        <app-volunteer-set *ngIf="logedin_user_role == 'USER'"></app-volunteer-set>
+        <!-- <app-org-set *ngIf="logedin_user_role != 'USER'" ></app-org-set> -->
+        <!-- <div *ngIf="logedin_user_role == 'USER'" > -->
+            <app-volunteer-set></app-volunteer-set>
+        <!-- </div> -->
+        <!-- <div style="background-color: brown; width: 500px;"></div> -->
     </div>
 </div>

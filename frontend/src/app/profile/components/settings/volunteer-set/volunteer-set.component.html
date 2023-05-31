@@ -1,1 +1,124 @@
-<p>volunteer-set works!</p>
+<div class="container" style="margin: 5% 35%;">
+    <form [formGroup]="form" style="height:auto" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+  
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="user">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="form.controls['user'].invalid">min. length 5.</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="row" *ngIf="logedin_user_role == 'USER'">
+        <mat-form-field appearance="fill">
+          <mat-label>Surname</mat-label>
+          <input matInput formControlName="surname">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="form.controls['surname'].invalid">min. length 3. and capitalize 1. letter</mat-error>
+        </mat-form-field>
+      </div>      
+      
+      <div class="row"  *ngIf="logedin_user_role == 'USER'">
+        <mat-form-field appearance="fill">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstname">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="form.controls['firstname'].invalid">min. length 3. and capitalize 1. letter</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-icon matSuffix> alternate_email</mat-icon>
+          <mat-error *ngIf="form.controls['email'].invalid">Not a valid email</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Phone number</mat-label>
+          <input matInput formControlName="phoneNr">
+          <mat-icon matSuffix> call</mat-icon>
+          <mat-error *ngIf="form.controls['phoneNr'].invalid">Not a valid phone number</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input [type]="'password'" matInput formControlName="password">
+          <mat-icon matSuffix> lock</mat-icon>
+          <mat-error *ngIf="form.controls['password'].invalid">min. 8 length and min. 1 number</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row"  *ngIf="logedin_user_role == 'USER'">
+        <mat-form-field appearance="fill">
+          <mat-label>Age</mat-label>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <input matInput formControlName="age">
+          <mat-error *ngIf="form.controls['age'].invalid">min. 14 years</mat-error>
+        </mat-form-field>
+      </div> 
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="row"  *ngIf="logedin_user_role == 'USER'">
+        <section class="volunteered">
+            <mat-checkbox matInput formControlName="volunteered">Volunteered</mat-checkbox>
+        </section>
+      </div>
+
+      
+      <div class="row" *ngIf="logedin_user_role == 'ORGANIZATION'">
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <mat-icon matSuffix>location_on</mat-icon>
+          <input matInput formControlName="address">
+        </mat-form-field>
+      </div>
+
+
+      <div class="row" *ngIf="logedin_user_role == 'ORGANIZATION'">
+        <mat-form-field appearance="fill">
+          <mat-label>Website</mat-label>
+          <mat-icon matSuffix>link</mat-icon>
+          <input matInput formControlName="website">
+        </mat-form-field>
+      </div>
+
+      <div class="row" *ngIf="logedin_user_role == 'ORGANIZATION'"> 
+        <mat-form-field>
+          <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>  
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Domains</mat-label>
+          <mat-icon matSuffix>workspaces</mat-icon>
+          <mat-select class="domains" formControlName="domains" multiple>
+            <mat-option *ngFor="let domain of domains" [value]="domain">{{ domain.domain_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+      
+      <div class="row">
+        <button mat-raised-button class="button" mat-button color="primary"
+                type="submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>

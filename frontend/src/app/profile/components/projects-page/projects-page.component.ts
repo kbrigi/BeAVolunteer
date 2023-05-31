@@ -56,7 +56,7 @@ export class ProjectsPageComponent implements OnInit{
   clickDelete(username: String): void {
     this.projectService.delete(username).subscribe({
       next: (result: any) => {
-          this._snackBar.open("You deactivate the "+username +" oranization!", 'OK', {
+          this._snackBar.open("You deleted the "+ username +" project!", 'OK', {
             duration: 10000,
             panelClass: 'success-snackbar'
           });

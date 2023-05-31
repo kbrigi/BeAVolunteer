@@ -25,10 +25,25 @@ export class ProfilePageComponent implements OnInit {
       this.logedin_user_name = param['name']
       console.log(param['page'])
     }) 
+
+    //  
+    // console.log(localStorage.getItem('token'))
+    // if (localStorage.getItem('token') !== null) {
+    //     const token = jwt_decode(localStorage.getItem('token')!);
+    //     // @ts-ignore
+    //     this.logedin_user_name = token.sub;
+
+    //     this.userService.getRole(this.logedin_user_name).subscribe(result => {
+    //       this.logedin_user_role = result.role;
+    //       console.log(result.role)
+    //     }
+    //     );
+    //   }  
   }
 
   ngOnInit(): void {  
-    this.getRole()     
+    this.getRole() 
+    
   }
 
   getRole(): void {

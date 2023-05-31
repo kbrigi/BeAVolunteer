@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class OrganizationOutDTO {
     String user;
+    String email;
     String description;
     String address;
     String website;

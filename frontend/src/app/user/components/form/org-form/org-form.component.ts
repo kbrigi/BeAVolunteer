@@ -56,9 +56,6 @@ export class OrgFormComponent {
     formData.append('organization', JSON.stringify(org));
     formData.append('file', this.registrationForm.controls['logo'].value);
     console.log( JSON.stringify(org))
-    // for (var pair of formData.entries()) {
-    //   console.log(pair); 
-    // }
     this.orgService.registration(formData).subscribe({
       next: () => {
         this._snackBar.open('Successfull registration! Your account is created!', 'OK', {

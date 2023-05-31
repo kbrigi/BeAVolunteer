@@ -171,7 +171,6 @@ public class ProjectService  extends ImgService  {
         List<ProjectOutDTO> projectDomainDTOs = getProjectDTOsByDomain(domain);
         List<ProjectOutDTO> projectFilteredDTOs = getProjectsFiltered(filterParams);
         return projectDomainDTOs.stream().filter(projectFilteredDTOs::contains).collect(Collectors.toList());
-
     }
 
     public Project prepareProject(ProjectInDTO projectDTO, Long userID, Blob img){

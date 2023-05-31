@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OrgSetComponent } from './components/settings/org-set/org-set.component';
 import { VolunteerSetComponent } from './components/settings/volunteer-set/volunteer-set.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [    
@@ -43,6 +44,7 @@ import { VolunteerSetComponent } from './components/settings/volunteer-set/volun
     MatDatepickerModule,
     MatButtonModule,
     MatTooltipModule,
+    MatCheckboxModule,
   ]
 })
 export class ProfileModule { }

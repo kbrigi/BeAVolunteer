@@ -65,7 +65,7 @@ export class ProjectPopUpComponent implements OnInit{
       project.expiration_date = new Date(+date[0], +date[1], +date[2]);
       this.projectService.update(this.oldName, formData).subscribe({
         next: () => {
-          this._snackBar.open('Successfully saved project!', 'OK', {
+          this._snackBar.open('Successfully updated your project!', 'OK', {
             duration: 10000,
             panelClass: 'success-snackbar'
           });

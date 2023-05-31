@@ -1,6 +1,7 @@
 package edu.bbte.beavolunteerbackend.controller;
 
 import com.google.gson.Gson;
+import edu.bbte.beavolunteerbackend.controller.dto.incoming.ProjectInDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.outgoing.*;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.OrganizationDTO;
 import edu.bbte.beavolunteerbackend.controller.dto.incoming.UserDTO;
@@ -135,6 +136,46 @@ public class UserController extends Controller{
             log.error(businessException.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, businessException.getMessage());
         }
+    }
+
+    @PostMapping(value = "/update/vol/{name}")
+    public ResponseEntity<String> updateProject(@PathVariable String name, @RequestBody VolunteerOutDTO volunteer) throws SQLException, IOException {
+        try {
+//            String token= jwttoken.substring(17);
+//            token = token.substring(0,token.length()-2);
+//            String userName = userService.getUserFromUsername(jwtToken.getUsernameFromToken(token)).getUserName();
+//            if (userName == name) {
+            userService.updateVolunteer(name, volunteer);
+//            }
+//            else {
+//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/org/update/{name}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> updateOrganization(@RequestPart(value = "organization") String organization, @PathVariable String name,
+                                                   @RequestPart(value = "file", required = false) MultipartFile file) throws SQLException, IOException {
+        Blob blob = null;
+        if (file != null) {
+            blob = prepareImage(file);
+            if (blob == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            Gson gson = new Gson();
+            OrganizationDTO orgDTO = gson.fromJson(organization, OrganizationDTO.class);
+
+            userService.updateOrg(name, orgDTO, blob);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("org/{name}")

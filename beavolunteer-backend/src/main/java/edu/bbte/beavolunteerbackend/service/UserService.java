@@ -66,7 +66,7 @@ public class UserService extends ImgService {
             for (DomainDTO domainDTO: userDTO.getDomains()) {
                 domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
             }
-            Volunteer volunteer = volunteerDTOToVolunteer(userDTO, null);
+            Volunteer volunteer = volunteerDTOToVolunteer(userDTO);
             volunteer.setDomains(domains);
             volunteer.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             volunteerRepository.saveAndFlush(volunteer);
@@ -92,7 +92,7 @@ public class UserService extends ImgService {
         UserValidator.errorList.clear();
         userValidator.validate(user);
         if (UserValidator.errorList.isEmpty()) {
-            Organization org = orgDTOToUser(organizationDTO, null);
+            Organization org = orgDTOToUser(organizationDTO);
             Set<Domain> domains = new HashSet<>();
             for (DomainDTO domainDTO: organizationDTO.getDomains()) {
                 domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
@@ -203,7 +203,7 @@ public class UserService extends ImgService {
 
         List<Long> volunteers = userRepository.findByRole("USER");
         for (Long userId: volunteers) {
-            Collection<Project> projects = volunteerRepository.getById(userId).getProjects();
+            List<Project> projects = volunteerRepository.getById(userId).getFavouriteProj();
             for(Project project: projects) {
                 Integer count = allProjects.get(project);
                 if(count == null) {
@@ -227,5 +227,63 @@ public class UserService extends ImgService {
 
         List<Project> allSortedProjects = new ArrayList<>(sortedProjects.keySet());
         return ProjectMapper.projectsToDTO(allSortedProjects);
+    }
+
+    public void updateVolunteer(String name, VolunteerOutDTO volunteerDTO) {
+        Volunteer volunteer = UserMapper.volunteerExtendedDTOToVolunteer(volunteerDTO);
+        User user = userRepository.findByUsername(name);
+        if (volunteerDTO.getDomains() != null ) {
+            Set<Domain> domains = new HashSet<>();
+            for (DomainDTO domainDTO : volunteerDTO.getDomains()) {
+                domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
+            }
+            volunteer.setDomains(domains);
+        }
+        else {
+            volunteer.setDomains(volunteerRepository.getById(user.getId()).getDomains());
+        }
+        if (volunteerDTO.getPassword() != null) {
+            volunteer.setPassword(passwordEncoder.encode(volunteerDTO.getPassword()));
+        }
+        else {
+            volunteer.setPassword(volunteerRepository.getById(user.getId()).getPassword());
+        }
+        volunteer.setId(userRepository.findByUsername(name).getId());
+//        log.info(volunteer);
+        volunteerRepository.save(volunteer);
+    }
+
+    public void updateOrg(String name, OrganizationDTO orgDTO, Blob blob) {
+        User user = userRepository.findByUsername(name);
+        Organization old_org = organizationRepository.getById(user.getId());
+        Organization organization = UserMapper.orgDTOToUser(orgDTO);
+//        img
+        if (blob == null) {
+            organization.setLogo(old_org.getLogo());
+        }
+        else {
+            organization.setLogo(blob);
+        }
+//        domains
+        if (organization.getDomains() != null) {
+            Set<Domain> domains = new HashSet<>();
+            for (DomainDTO domainDTO: orgDTO.getDomains()) {
+                domains.add(domainRepository.findByName(domainDTO.getDomain_name()));
+            }
+            organization.setDomains(domains);
+        }
+        else {
+            organization.setDomains(old_org.getDomains());
+        }
+//        password
+        if (organization.getPassword() != null) {
+            organization.setPassword(passwordEncoder.encode(organization.getPassword()));
+        }
+        else {
+            organization.setPassword(old_org.getPassword());
+        }
+        organization.setId(old_org.getId());
+        organizationRepository.save(organization);
+
     }
 }

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Data
 public class VolunteerOutDTO {
-    String username;
+    String user;
     String email;
     String password;
     String surname;

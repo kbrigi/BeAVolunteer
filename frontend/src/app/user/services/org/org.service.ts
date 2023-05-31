@@ -9,10 +9,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class OrgService {
+
   constructor(private service: BackendService) { }  
 
   registration(formData: FormData): Observable<void> {
     return this.service.post(`${environment.apiUrl}/org`, formData);
+  }
+
+  update(formData: FormData, name: String): Observable<void> {
+    return this.service.post(`${environment.apiUrl}/org/update/${name}`, formData);
   }
 
   getAll(): Observable<Organization[]> {

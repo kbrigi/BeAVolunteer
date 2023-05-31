@@ -17,7 +17,8 @@ export class VolunteerFormComponent {
   domains: Domain[] = [];
   genders: String[] = ["FEMALE", "MALE"];
   
-  constructor(private formBuilder: FormBuilder, private volunteerService: VolunteerService, private _snackBar: MatSnackBar, private domainService: DomainService) {
+  constructor(private formBuilder: FormBuilder, private volunteerService: VolunteerService,
+     private _snackBar: MatSnackBar, private domainService: DomainService) {
     this.registrationForm = this.initForm();
   }
 

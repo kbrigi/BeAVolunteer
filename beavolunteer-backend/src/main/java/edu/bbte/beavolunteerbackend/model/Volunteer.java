@@ -45,11 +45,11 @@ public class Volunteer extends User {
     @Column(name = "GENDER")
     private Gender gender;
 
-    @JsonIgnore
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private Collection<Project> projects;
+//    @JsonIgnore
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+//    private Collection<Project> projects;
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private List<Project> favouriteProj;
