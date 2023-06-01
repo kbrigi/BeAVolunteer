@@ -29,6 +29,10 @@ export class ProjectService {
     return this.service.get(this.domainPath+`${domain}`);
   }
 
+  getProjectsBySearch(search: String): Observable<Project[]> {
+    return this.service.get(`${environment.apiUrl}/proj/search/${search}`);
+  }
+
   getProj(name: String) : Observable<Project> {
     return this.service.get(`${environment.apiUrl}/proj?name=${name}`);
   }

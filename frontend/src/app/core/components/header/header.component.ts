@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-// import { LoginService } from 'src/app/user/services/user/login/user.service';
 import jwt_decode from 'jwt-decode';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
+import { map, Observable, startWith } from "rxjs";
 import { UserService } from 'src/app/user/services/user/user.service';
+import { ProjectService } from 'src/app/project/services/project.service';
+import { Router } from '@angular/router';
+import { Project } from 'src/app/project/models/project.model';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +20,15 @@ export class HeaderComponent {
   myControl = new FormControl<string>('');
   options: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
-  constructor(private userService: UserService,  private _snackBar: MatSnackBar){}
+
+  constructor(private userService: UserService,  private _snackBar: MatSnackBar,
+    private projectService: ProjectService, private router: Router){}
 
   ngOnInit(): void {
+    this.userService.logedinUsername.subscribe(result => this.logedin_user_name = result);
     this.userService.currentLoginState.subscribe(result => this.logedin = result);
     this.getRole();
+    
   }
 
   getRole(): void {
@@ -36,6 +42,23 @@ export class HeaderComponent {
         }
         );
       }
+  }
+
+  _filter(myproduct: string): string[] {
+    const filterValue = myproduct.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  clickedFn(): void {
+    if (this.myControl.value != null) {
+      var name: string = this.myControl.value!
+      if(name.substring(0, 1) === " ")
+      name = name.trimStart();
+      this.router.navigate(['/projects/'+name]);
+    }
+    this.myControl.setValue(' ');
+  
   }
 
   logout(): void {

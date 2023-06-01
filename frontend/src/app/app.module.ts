@@ -9,6 +9,11 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { DomainModule } from './domain/domain.module';
 import { ProjectModule } from './project/project.module';
 import { ProfileModule } from './profile/profile.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,8 +27,15 @@ import { ProfileModule } from './profile/profile.module';
     UserModule,
     DomainModule,
     ProjectModule,
-    ProfileModule, 
+    ProfileModule,
+    BrowserAnimationsModule,
+    MatIconModule,  
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,5 +1,5 @@
 
-.domain_imgs {
+ .domain_imgs {
     display: flex;
   }
 
@@ -7,11 +7,6 @@
     margin: 1%;
 }
 
-.domain_button {
-    border: none; 
-    border-radius: 55%;
-    color:transparent;
-}
 
 .domain_img :hover {
     margin: 2%;

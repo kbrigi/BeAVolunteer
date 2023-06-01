@@ -95,7 +95,6 @@ public class UserController extends Controller{
         return userService.getVolunteerByUsername(username);
     }
 
-
     @GetMapping("/role/{username}")
     public UserOutDTO getRole(@PathVariable String username) throws BusinessException {
         return userService.getRole(username);

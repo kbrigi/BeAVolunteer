@@ -1,6 +1,9 @@
-<div class="container" style="margin: 5% 35%;">
-    <form [formGroup]="form" style="height:auto" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
-  
+<h4 style="margin-top: 7%;">Update your account:</h4>
+
+<div class="container" style="margin: 3% 30%;">
+    <form [formGroup]="form" style="height:auto;" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+      <div class="2cols" style="display: flex;">
+      <div class="col">
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Username</mat-label>
@@ -64,14 +67,6 @@
         </mat-form-field>
       </div> 
 
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <textarea matInput formControlName="description"></textarea>
-        </mat-form-field>
-      </div>
-
       <div class="row"  *ngIf="logedin_user_role == 'USER'">
         <section class="volunteered">
             <mat-checkbox matInput formControlName="volunteered">Volunteered</mat-checkbox>
@@ -113,7 +108,19 @@
           </mat-select>
         </mat-form-field>
     </div>
-      
+    </div>
+
+    <div class="col2">
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <textarea matInput rows="20" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
       <div class="row">
         <button mat-raised-button class="button" mat-button color="primary"
                 type="submit">

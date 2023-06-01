@@ -11,12 +11,13 @@ import { environment } from 'src/environments/environment';
 export class UserService {
 
   loginState = new BehaviorSubject(!!localStorage.getItem('token'));
+  logedinUsername = new BehaviorSubject('');
   currentLoginState = this.loginState.asObservable();
 
   constructor(private service: BackendService) {
   }
 
-  login(user: User): Observable<void> {
+  login(user: User): Observable<String> {
     return this.service.post(`${environment.apiUrl}/login`, user)
   }
 

@@ -1,25 +1,19 @@
 <nav>
     <div class="header" >
   
-      <!-- <form class="searchbar-form">
+      <form class="searchbar-form">
         <mat-form-field class="searchbar" appearance="outline">
           <div class="searchbar-div">
-            <input placeholder="Product Name" type="text" #nameProduct name="nameProduct" matInput
-                   [formControl]="myControl" [matAutocomplete]="auto"/>
-            <button color="primary" class="searchButton" mat-icon-button (click)="clickedFn()">
+            <input placeholder="Project Name" type="text" #nameProduct name="nameProject" matInput
+           [formControl]="myControl"/>
+            <button color="primary" class="searchButton" mat-icon-button (click)="clickedFn()" >
               <mat-icon>search</mat-icon>
             </button>
   
           </div>
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
   
         </mat-form-field>
-        style="display: flex; align-items: center; flex: 1;justify-content: flex-end"
-      </form> -->
+      </form> 
   
       <div >
         <button class="button" *ngIf="logedin" (click)="logout()"><a routerLink="/login">Logout</a>

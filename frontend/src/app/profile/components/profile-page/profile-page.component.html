@@ -1,30 +1,42 @@
 
-<div class="options" style="margin-top: 10%; float: left;">
+<div class="options" style="float: left;">
+    <div style="margin-left: 18%; margin-bottom: 15%;">
+        <igx-avatar class="name_circle" [initials]="logedin_user_name" shape="circle" size="large"></igx-avatar> 
+        <h5>{{logedin_user_name}}</h5>
+    </div>
+
     <mat-list role="list">
-        <mat-list-item style="margin-top: 3%;" role="listitem" *ngFor="let tab of tabs" >
-            <a mat-button *ngIf="tab.name != 'Account' && tab.name != undefined" 
-            style="display: flex;" [routerLink]='["/profile", tab.name]'>
-                <mat-icon>{{tab.icon}}</mat-icon>
-                <span>{{tab.name}}</span>
+        <mat-list-item  role="listitem" >
+            <a mat-button
+            style="display: flex;" [routerLink]='["/profile", "Account", logedin_user_name]'>
+                <mat-icon>account_circle</mat-icon>
+                <span>Account</span>
+        </a>
+        </mat-list-item> 
+
+        <mat-list-item role="listitem" >
+            <a mat-button *ngIf="logedin_user_role == 'USER'" 
+            style="display: flex;" [routerLink]='["/profile", "Favourites", logedin_user_name]'>
+                <mat-icon>favorite</mat-icon>
+                <span>Favourites</span>
             </a>
-            <a mat-button *ngIf="(tab.name == 'Account' || tab.name == undefined) && logedin_user_role != 'ADMIN'" 
-            style="display: flex;" [routerLink]='["/profile", tab.name, logedin_user_name]'>
-                <mat-icon>{{tab.icon}}</mat-icon>
-                <span>{{tab.name}}</span>
+        </mat-list-item>
+        
+        <mat-list-item role="listitem" >
+            <a mat-button
+            style="display: flex;" [routerLink]='["/profile", "Own projects", logedin_user_name]'>
+                <mat-icon>article</mat-icon>
+                <span>Own projects</span>
             </a>
         </mat-list-item>
     </mat-list>
 </div>
 
-<div style=" margin-left: 15%; ">
+<div style=" margin-left: 10%; ">
     <div *ngIf="tab != 'Account' && tab != undefined">
         <app-projects-page></app-projects-page>
     </div>
     <div *ngIf="tab == 'Account' || tab == undefined">
-        <!-- <app-org-set *ngIf="logedin_user_role != 'USER'" ></app-org-set> -->
-        <!-- <div *ngIf="logedin_user_role == 'USER'" > -->
             <app-volunteer-set></app-volunteer-set>
-        <!-- </div> -->
-        <!-- <div style="background-color: brown; width: 500px;"></div> -->
     </div>
 </div>

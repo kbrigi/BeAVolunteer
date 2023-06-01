@@ -17,28 +17,28 @@ export class ProjectsPageComponent implements OnInit{
 
   constructor(private projectService: ProjectService,private activatedRoute: ActivatedRoute,  
     private _snackBar: MatSnackBar, private router: Router, private dialog: MatDialog){
+      this.activatedRoute.params.subscribe((param) => {
+        this.tab = param['page']
+        console.log(param['page'])
+        if (localStorage.getItem('token') !== null) {
+          if (param['page'] == 'Own projects') {
+            this.projectService.getProjectsByOwner().subscribe(result => {
+              this.projects = result;
+              console.log(result)
+            });
+          }
+          else if (param['page'] == 'Favourites') {
+            this.projectService.getFavouriteProjects().subscribe(result => {
+              this.projects = result;
+              console.log(result)
+            });
+          }     
+        }
+      })
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((param) => {
-      this.tab = param['page']
-      console.log(param['page'])
-      if (localStorage.getItem('token') !== null) {
-        if (param['page'] == 'Own projects') {
-          this.projectService.getProjectsByOwner().subscribe(result => {
-            this.projects = result;
-            console.log(result)
-          });
-        }
-        else if (param['page'] == 'Favourites') {
-          this.projectService.getFavouriteProjects().subscribe(result => {
-            this.projects = result;
-            console.log(result)
-          });
-        }     
-      }
-    })
-
+    
   }
 
   openModifyPopUp(project: Project) {

@@ -1,12 +1,10 @@
-<mat-grid-list cols="3" style="margin-top:5%; margin-left: 10%; " >
+<h4 style="margin-top: 7%;">{{tab}}</h4>
+
+<mat-grid-list cols="3" style="margin-top:3%; margin-left: 10%; " >
     <mat-grid-tile  *ngFor="let project of projects">
         <mat-card style="padding: 10%;"  >
             <mat-card-title-group style="padding: 5%;">
                 <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
-                <!-- <mat-card-subtitle *ngIf="project.owner.role == 'ORGANIZATION'" class="project_creator_name"><a   
-                    [routerLink] = '["/org", project.owner.user]'>{{project.owner.user}}</a></mat-card-subtitle>
-                <mat-card-subtitle *ngIf="project.owner.role != 'ORGANIZATION'" class="project_creator_name">{{project.owner.user}}</mat-card-subtitle>     -->
-                <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
             </mat-card-title-group>
                 <div>
                     <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >

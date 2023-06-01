@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { OrgService } from './services/org/org.service';
 import { UserService } from './services/user/user.service';
 import { VolunteerService } from './services/volunteer/volunteer.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { VolunteerService } from './services/volunteer/volunteer.service';
     RouterModule.forRoot([]),
     MatGridListModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   exports: [],
   providers: [

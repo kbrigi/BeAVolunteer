@@ -4,15 +4,14 @@
          <!-- <mat-card-subtitle class="project_creator_name">{{org.owner}}</mat-card-subtitle> -->
     </mat-card-title-group>
     
-    <mat-card-content *ngFor="let domain of org.domains">{{domain.domain_name}}</mat-card-content>
-
     <div>
         <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
     </div>
 
     <div class="domain_imgs">
         <div class="domain_img" *ngFor="let domain of org.domains">
-            <button class="domain_button"  [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+            <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+            [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
         </div> 
     </div>
 </mat-card>

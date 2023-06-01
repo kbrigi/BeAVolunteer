@@ -27,6 +27,7 @@ export class ProjListComponent implements OnInit {
   roles: String[] = ["organization", "user"]
 
   params_domain: String = '';
+  params_search: String = '';
   query_params_domain: String[] = []
   query_params_owner: String | null | undefined
   query_params_org: String[] = []
@@ -37,9 +38,15 @@ export class ProjListComponent implements OnInit {
 
       this.activatedRoute.params.subscribe((param) => {
         this.params_domain = param['domain']
-        if( param['domain'] != undefined) {
+        this.params_search = param['search']
 
+        if( param['domain'] != undefined) {
           this.projectService.getProjectsByDomain(param['domain']).subscribe(result => {
+                  this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
+                })
+        }
+        if( param['search'] != undefined) {
+          this.projectService.getProjectsBySearch(param['search']).subscribe(result => {
                   this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
                 })
         }

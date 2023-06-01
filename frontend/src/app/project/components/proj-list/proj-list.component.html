@@ -1,15 +1,14 @@
 <div style="margin-top:5%;" class="project_time_type">
     <button mat-button (click)="changeProjects(true)">PAST Projects</button>
     <button mat-button  (click)="changeProjects(false)">CURRENT Projects</button>
-    <h3 style="font-family: Arial;" *ngIf="!params_domain" >Total projects: {{projects.length}}</h3>
-    <h3 style="font-family: Arial;" *ngIf="params_domain" >Total projects related to {{params_domain}}: {{projects.length}}</h3>
+    <h4 style="font-family: Arial;" *ngIf="!params_domain" >Total projects: {{projects.length}}</h4>
+    <h4 style="font-family: Arial;" *ngIf="params_domain" >Total projects related to {{params_domain}}: {{projects.length}}</h4>
 
 </div>
 
 <div class="sortAndEdit" style="margin-left: 85%;">
-  <button mat-button [matMenuTriggerFor]="menu">Sort:</button>
+  <button mat-raised-button [matMenuTriggerFor]="menu">Sort:</button>
   <mat-menu class="sort" #menu="matMenu">
-    <!-- TO DO: when favourites exist -> sort by favourite count -->
     <button mat-menu-item (click)="sortProduct('-', 'fav')">Most popular</button>
     <button mat-menu-item (click)="sortProduct('+', 'creation')">Newest </button>
     <button mat-menu-item (click)="sortProduct('+', 'name')">Ascending by Name</button>
@@ -78,10 +77,6 @@
             </div> 
         </div>
                 
-            <!-- <div *ngFor="let domain of project.domains">
-                <img class="image" style="width: 250px; height: 200px;" src="{{domain.domain_img}}" >
-
-            </div> -->
         <div id = "button" >
             <mat-card-actions>
                 <button mat-raised-button [routerLink] = '["/project", project.project_name]' >Details</button>

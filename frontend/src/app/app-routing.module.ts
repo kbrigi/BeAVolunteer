@@ -47,6 +47,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'project/:search',
+    component: ProjDetailsComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'orgs',
     component: OrgListComponent,
     pathMatch:  'full'

@@ -38,3 +38,25 @@
   a:hover {
     color: #c2c2c2;
   }
+
+  
+.searchbar-form {
+  margin-top: 0.3%;
+  flex: .75;
+}
+
+.searchbar {
+  width: 100%;
+}
+
+.icon-button:hover, .searchButton:hover {
+  color: #e8f5e8;
+}
+
+.searchButton {
+  color: inherit;
+}
+
+.searchbar-div {
+  display: flex;
+}
