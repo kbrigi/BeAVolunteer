@@ -168,9 +168,33 @@ public class ProjectService  extends ImgService  {
     }
 
     public List<ProjectOutDTO> getProjectByDomainAndFilter(String domain, Map<String, String> filterParams) {
-        List<ProjectOutDTO> projectDomainDTOs = getProjectDTOsByDomain(domain);
+        List<Domain> domains = domainRepository.findAll();
+        List<ProjectOutDTO> projectPrefiltered = new ArrayList<>();
+        for (Domain d: domains) {
+            if(Objects.equals(d.getDomainName(), domain)) {
+                projectPrefiltered = getProjectDTOsByDomain(domain);
+                break;
+            }
+        }
+        if (projectPrefiltered.isEmpty()) {
+            projectPrefiltered = getProjectBySearch(domain);
+        }
         List<ProjectOutDTO> projectFilteredDTOs = getProjectsFiltered(filterParams);
-        return projectDomainDTOs.stream().filter(projectFilteredDTOs::contains).collect(Collectors.toList());
+        log.info(String.valueOf(projectPrefiltered));
+        log.info(String.valueOf(projectFilteredDTOs));
+
+        return projectPrefiltered.stream().filter(projectFilteredDTOs::contains).collect(Collectors.toList());
+    }
+
+    public List<ProjectOutDTO> getProjectBySearch(String name) {
+        List<ProjectOutDTO> all = getAll();
+        List<ProjectOutDTO> searched = new ArrayList<>();
+        for (ProjectOutDTO project: all) {
+            if (project.getProject_name().contains(name)) {
+                searched.add(project);
+            }
+        }
+        return searched;
     }
 
     public Project prepareProject(ProjectInDTO projectDTO, Long userID, Blob img){
@@ -195,4 +219,5 @@ public class ProjectService  extends ImgService  {
         }
 
     }
+
 }

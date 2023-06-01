@@ -88,6 +88,11 @@ public class ProjectController extends Controller{
         return projectService.getAll();
     }
 
+    @GetMapping("/search/{name}")
+    public List<ProjectOutDTO> getProjectsBySearch(@PathVariable String name) {
+        return projectService.getProjectBySearch(name);
+    }
+
     @GetMapping("/domain/{domain}")
     public List<ProjectOutDTO> getProjectsByDomain(@PathVariable String domain) {
         return projectService.getProjectDTOsByDomain(domain);

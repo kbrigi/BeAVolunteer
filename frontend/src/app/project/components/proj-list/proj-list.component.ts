@@ -38,18 +38,25 @@ export class ProjListComponent implements OnInit {
 
       this.activatedRoute.params.subscribe((param) => {
         this.params_domain = param['domain']
-        this.params_search = param['search']
 
-        if( param['domain'] != undefined) {
-          this.projectService.getProjectsByDomain(param['domain']).subscribe(result => {
-                  this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
-                })
-        }
-        if( param['search'] != undefined) {
-          this.projectService.getProjectsBySearch(param['search']).subscribe(result => {
-                  this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
-                })
-        }
+        // filter by categories init
+        this.domainService.getAllDomains().subscribe((result: Domain[]) => {
+          this.domains = result
+          if( param['domain'] != undefined) {
+            if(result.find((e: Domain) => e.domain_name === param['domain'] )) {
+                this.projectService.getProjectsByDomain(param['domain']).subscribe(result => {
+                        this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
+                      })
+              }
+              // not domain param but searched value!
+              else {
+                this.projectService.getProjectsBySearch(param['domain']).subscribe(result => {
+                        this.projects = result.filter(p => p.expiration_date.toString() > this.current_date);
+                      })
+              }
+            }
+          }
+        );
       })
 
       this.activatedRoute.queryParams.subscribe((param) => {
@@ -129,11 +136,6 @@ export class ProjListComponent implements OnInit {
     this.getUsersProjects();
     
     this.current_date = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
-
-    // filter by categories init
-    this.domainService.getAllDomains().subscribe((result: Domain[]) => 
-      this.domains = result
-    );
 
   }
 

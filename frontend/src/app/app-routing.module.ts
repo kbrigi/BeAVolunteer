@@ -47,7 +47,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'project/:search',
+    path: 'projects/:search',
     component: ProjDetailsComponent,
     pathMatch: 'full'
   },
