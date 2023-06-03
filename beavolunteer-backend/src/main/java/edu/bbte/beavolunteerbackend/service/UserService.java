@@ -286,4 +286,13 @@ public class UserService extends ImgService {
         organizationRepository.save(organization);
 
     }
+
+    public Integer getOrgNr() {
+        return organizationRepository.getNr();
+    }
+
+    public Integer getVolNr() {
+        return volunteerRepository.getNr();
+
+    }
 }

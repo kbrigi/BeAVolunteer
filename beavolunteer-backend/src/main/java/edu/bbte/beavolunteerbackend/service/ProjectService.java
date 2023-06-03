@@ -220,4 +220,7 @@ public class ProjectService  extends ImgService  {
 
     }
 
+    public Integer getNr() {
+        return projectRepository.getProjectsNr();
+    }
 }

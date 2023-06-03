@@ -83,6 +83,11 @@ public class ProjectController extends Controller{
         return projectService.getProjectByOwnerId(userID);
     }
 
+    @GetMapping("/nr")
+    public Integer getProjectsNr() {
+        return projectService.getNr();
+    }
+
     @GetMapping("/all")
     public List<ProjectOutDTO> getProjects() {
         return projectService.getAll();

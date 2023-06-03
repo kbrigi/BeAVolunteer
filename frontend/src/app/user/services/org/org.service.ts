@@ -20,6 +20,10 @@ export class OrgService {
     return this.service.post(`${environment.apiUrl}/org/update/${name}`, formData);
   }
 
+  getNr(): Observable<number> {
+    return this.service.get(`${environment.apiUrl}/org/nr`);
+  }
+
   getAll(): Observable<Organization[]> {
     return this.service.get(`${environment.apiUrl}/org/all`);
   }

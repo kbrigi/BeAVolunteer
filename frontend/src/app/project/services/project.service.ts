@@ -17,6 +17,10 @@ export class ProjectService {
     return this.service.post(`${environment.apiUrl}/proj/save`, formData);
   }
 
+  getNr(): Observable<number> {
+    return this.service.get(`${environment.apiUrl}/proj/nr`);
+  }
+
   getAll() : Observable<Project[]> {
     return this.service.get(`${environment.apiUrl}/proj/all`);
   }

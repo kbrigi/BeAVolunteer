@@ -37,9 +37,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "select p.* from project p join domain where domain.domain_name = :domain", nativeQuery = true)
     List<Project> getProjectsByDomain(@Param("domain") String domain);
 
+    @Query(value = "SELECT COUNT(p.project_id) FROM Project p", nativeQuery = true)
+    Integer getProjectsNr();
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE Project p SET p.expiration_date = :newDate WHERE p.project_id = :id", nativeQuery = true)
     void updateExpired(@Param("id")Long projectId, @Param("newDate")Date date);
-
 }

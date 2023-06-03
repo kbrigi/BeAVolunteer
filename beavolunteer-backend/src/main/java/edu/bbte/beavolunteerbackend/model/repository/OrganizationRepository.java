@@ -20,4 +20,7 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
             + " :desc, :phone, :logo, :web, :domains)", nativeQuery = true)
     void insertOrg(@Param("id") Long id, @Param("address") String address, @Param("desc") String desc,
                    @Param("phone") String phone, @Param("logo") Blob logo, @Param("web") String web, @Param("domains") List<Domain> domains);
+
+    @Query(value = "SELECT COUNT(*) FROM organization", nativeQuery = true)
+    Integer getNr();
 }

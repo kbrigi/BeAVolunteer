@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { HomeComponent } from './home/component/home.component';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     UserModule,
     DomainModule,
     ProjectModule,
+    HomeModule,
     ProfileModule,
     BrowserAnimationsModule,
     MatIconModule,  

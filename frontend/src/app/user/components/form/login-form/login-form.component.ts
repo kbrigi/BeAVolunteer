@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode';
 })
 export class LoginFormComponent {  
   loginForm: FormGroup;
-  
+
   constructor(private userService: UserService, private _snackBar: MatSnackBar) {
     this.loginForm = this.ngOnInit()
   }
@@ -54,6 +54,6 @@ export class LoginFormComponent {
   this.loginForm.reset()
   formDirective.resetForm()
   }
-  
+
 }
 

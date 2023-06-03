@@ -69,6 +69,16 @@ public class UserController extends Controller{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/org/nr")
+    public Integer getOrgsNr() {
+        return userService.getOrgNr();
+    }
+
+    @GetMapping("/user/nr")
+    public Integer getVolunteersNr() {
+        return userService.getVolNr();
+    }
+
     @GetMapping("/org/all")
     public List<OrganizationOutDTO> getAllOrganization() {
         return userService.getAllOrg();

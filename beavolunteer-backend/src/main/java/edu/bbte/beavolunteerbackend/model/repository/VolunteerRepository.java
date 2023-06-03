@@ -23,4 +23,8 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
             " :desc, :age, :volunt, :gen)", nativeQuery = true)
     void insertVolunteer(@Param("id") Long id, @Param("name1") String surname, @Param("name2") String firstname, @Param("phone") String phoneNr, @Param("desc") String desc,
                          @Param("age") Integer age, @Param("volunt") Boolean volunteered, @Param("gen") String gender);
+
+    @Query(value = "SELECT COUNT(*) FROM volunteer", nativeQuery = true)
+    Integer getNr();
+
 }

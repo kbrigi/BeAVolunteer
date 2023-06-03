@@ -27,7 +27,6 @@ export class ProjListComponent implements OnInit {
   roles: String[] = ["organization", "user"]
 
   params_domain: String = '';
-  params_search: String = '';
   query_params_domain: String[] = []
   query_params_owner: String | null | undefined
   query_params_org: String[] = []
@@ -38,6 +37,7 @@ export class ProjListComponent implements OnInit {
 
       this.activatedRoute.params.subscribe((param) => {
         this.params_domain = param['domain']
+        console.log( param['domain'])
 
         // filter by categories init
         this.domainService.getAllDomains().subscribe((result: Domain[]) => {
@@ -248,7 +248,6 @@ export class ProjListComponent implements OnInit {
     if(values.checked) {
       // if both owner types selected
       if(!!this.query_params_owner) {
-        // this.getAllProjects()
         this.router.navigate(['/projects'+domain_param], { queryParams: { 'domains': this.query_params_domain, "org": this.query_params_org } });
       }
       // new owner type selected(only 1)

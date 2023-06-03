@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'edu.bbte'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 targetCompatibility = '11'
 
@@ -36,4 +36,8 @@ dependencies {
 
 //	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.3.Final'
 //	annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.3.Final'
+}
+
+jar {
+	enabled = false
 }
