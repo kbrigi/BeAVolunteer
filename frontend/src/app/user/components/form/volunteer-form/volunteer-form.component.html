@@ -1,6 +1,8 @@
-<div class="container" style="margin: 5% 35%;">
-    <form [formGroup]="registrationForm" style="height:auto" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
-  
+<div class="container" >
+  <h5>Create a new User account:</h5>
+  <form [formGroup]="registrationForm" style="height:auto" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+  <div class="2cols" style="display: flex;">
+    <div class="col">
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Username</mat-label>
@@ -37,14 +39,6 @@
         </mat-form-field>
       </div>
   
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Phone number</mat-label>
-          <input matInput formControlName="phoneNr">
-          <mat-icon matSuffix> call</mat-icon>
-          <mat-error *ngIf="registrationForm.controls['phoneNr'].invalid">Not a valid phone number</mat-error>
-        </mat-form-field>
-      </div>
   
       <div class="row">
         <mat-form-field appearance="fill">
@@ -63,34 +57,36 @@
         </mat-form-field>
       </div>
   
-      <div class="password-not-match"
-      *ngIf="registrationForm.controls['password'].dirty && registrationForm.controls['confirmationPassword'].dirty  
-      && passwordFormControl.value !== confirmPasswordFormControl.value">
-        Passwords do not match
-      </div>
-
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Age</mat-label>
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <input matInput formControlName="age">
-          <mat-error *ngIf="registrationForm.controls['age'].invalid">min. 14 years</mat-error>
-        </mat-form-field>
-      </div> 
-
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <textarea matInput formControlName="description"></textarea>
-        </mat-form-field>
-      </div>
-
       <div class="row">
         <section  class="volunteered">
             <mat-checkbox matInput formControlName="volunteered">Volunteered</mat-checkbox>
         </section>
       </div>
+
+      <div class="password-not-match"
+      *ngIf="registrationForm.controls['password'].dirty && registrationForm.controls['confirmationPassword'].dirty  
+      && passwordFormControl.value !== confirmPasswordFormControl.value">
+        Passwords do not match
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Phone number</mat-label>
+          <input matInput formControlName="phoneNr">
+          <mat-icon matSuffix> call</mat-icon>
+          <mat-error *ngIf="registrationForm.controls['phoneNr'].invalid">Not a valid phone number</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Age</mat-label>
+          <mat-icon matSuffix>fingerprint</mat-icon>
+          <input matInput formControlName="age">
+          <mat-error *ngIf="registrationForm.controls['age'].invalid">min. 14 years</mat-error>
+        </mat-form-field>
+      </div> 
 
       <div class="row">
         <mat-form-field appearance="fill">
@@ -112,13 +108,24 @@
           </mat-select>
         </mat-form-field>
     </div>
-      
+
+    
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <mat-icon matSuffix>description</mat-icon>
+        <textarea matInput  rows="5" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+
       <div class="row">
-        <button mat-raised-button class="button" [disabled]="!registrationForm.valid" mat-raised-button mat-button color="primary"
+        <button mat-raised-button class="submitButton" [disabled]="!registrationForm.valid"
                 type="submit">
           Submit
         </button>
       </div>
+    </div>
+  </div>
     </form>
   </div>
   

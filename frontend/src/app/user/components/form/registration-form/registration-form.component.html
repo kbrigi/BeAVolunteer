@@ -1,0 +1,21 @@
+<div class="container" id="container">
+    <div class="card">
+    <div class="form-container volunteer-container"  *ngIf="tab=='volunteer'">
+        <app-volunteer-form></app-volunteer-form>
+    </div>
+    <div class="form-container org-container" *ngIf="tab=='org'" >
+        <app-org-form></app-org-form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay-panel overlay-left"  *ngIf="tab=='org'">
+            <h3>Let the journey begin!</h3>
+            <button mat-raised-button class="ghost"  routerLink="/registration/volunteer" >Join as a Volunteer</button>
+        </div>
+        <div class="overlay-panel overlay-right" *ngIf="tab=='volunteer'">
+            <h3>Let the journey begin!</h3>
+            <button mat-raised-button class="ghost" routerLink="/registration/org">Join as an Organization</button>
+        </div>
+    </div>
+    </div>
+
+</div>

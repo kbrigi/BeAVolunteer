@@ -24,6 +24,7 @@ import { OrgService } from './services/org/org.service';
 import { UserService } from './services/user/user.service';
 import { VolunteerService } from './services/volunteer/volunteer.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RegistrationFormComponent } from './components/form/registration-form/registration-form.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     LoginFormComponent,
     OrgListComponent,
     OrgDetailsComponent,
+    RegistrationFormComponent,
   ],
   imports: [
     CommonModule,

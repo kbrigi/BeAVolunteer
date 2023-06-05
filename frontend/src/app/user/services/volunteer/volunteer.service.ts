@@ -16,7 +16,7 @@ export class VolunteerService {
   }
 
   getNr(): Observable<number> {
-    return this.service.post(`${environment.apiUrl}/user/nr`);
+    return this.service.get(`${environment.apiUrl}/user/nr`);
   }
 
   getByName(username: String): Observable<Volunteer> {

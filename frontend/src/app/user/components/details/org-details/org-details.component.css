@@ -1,13 +1,77 @@
-
- .domain_imgs {
-    display: flex;
-  }
-
-.domain_img {
-    margin: 1%;
+.container {
+  margin: 15% 35%;    
+  background-color: rgb(9, 32, 5);
+  width: 100%;
+  height: 100%;
+  position:fixed;
+  padding:0;
+  margin:0;
+  overflow-y: scroll;
+  top:0;
+  left:0;
 }
 
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 1100px;
+  max-width: 100%;
+  height: 1000px;
+  margin-top: 5%;
+  margin-left: 15%;
+  margin-bottom: 10%;
+}
+
+.domains {
+  margin-top: 14%;
+  margin-right: 15%;
+}
+
+.domain_img {
+    margin: 30%;
+}
 
 .domain_img :hover {
     margin: 2%;
 }
+
+.textDiv{
+  margin-top: 3%;
+  margin-left: 1%;  
+  >h3 {
+    margin-left: 10%;
+    width: 380px;
+    text-align: center;
+    font-family: Arial;
+  }
+  .contact{
+    margin-left: 10%;
+    >h4, h5{
+      font-family: Arial;
+      display: inline-block;
+    }
+    .icons{
+      display: inline-block; 
+      padding-right: 10%;
+    }
+
+  }
+}
+
+
+.descriptionDiv{
+  margin-top: 3%;
+  margin-left: 7%;
+  >h4, p{
+    font-family: Arial;
+  }
+  .description {
+    column-count: 2;
+    height: 350px;
+    width: 1000px;
+  }
+}
+

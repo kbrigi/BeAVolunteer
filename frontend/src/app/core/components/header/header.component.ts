@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import jwt_decode from 'jwt-decode';
 import { FormControl } from '@angular/forms';
@@ -20,6 +20,8 @@ export class HeaderComponent {
   myControl = new FormControl<string>('');
   options: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
+  toggleSearch: boolean = false;
+  @ViewChild('searchbar') searchbar!: ElementRef;
 
   constructor(private userService: UserService,  private _snackBar: MatSnackBar,
     private projectService: ProjectService, private router: Router){}
@@ -50,7 +52,15 @@ export class HeaderComponent {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  clickedFn(): void {
+  openSearch(): void{
+    this.toggleSearch = true;
+  }
+  searchClose() {
+    this.myControl.setValue(' ');
+    this.toggleSearch = false;
+  }
+
+  search(): void {
     if (this.myControl.value != null) {
       var name: string = this.myControl.value!
       if(name.substring(0, 1) === " ")

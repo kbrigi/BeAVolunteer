@@ -1,0 +1,58 @@
+.container {
+    margin: 15% 35%;
+    background-color: rgb(9, 32, 5);
+    width: 100%;
+    height: 100%;
+    position:fixed;
+    padding:0;
+    margin:0;
+    overflow-y: scroll;
+    top:0;
+    left:0;
+}
+
+
+.bothParts {
+    display: flex;
+    justify-content: space-between;  
+}
+
+.mat-mdc-card-content:first-child {
+    padding-top: 0;
+}
+
+.card {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    margin-top: 8%;
+    margin-left: 20%;
+    width: 60%;
+    height: 70%;
+}
+
+.logo {
+    margin-left: 25%;
+}
+
+.loginPart {
+    margin-top: 2%;
+    margin-left: 10%;
+}
+
+.submitButton {
+    width: 100%;
+    /* background-color: darkgreen; */
+}
+
+.imgPart {
+    float:right;
+    padding-left: 2%;
+    
+    margin:0;
+    top:0;
+    left:0;
+}
+
+.imgPart>img {
+    border-radius: 1%;
+    margin-left: 11.5%;
+}

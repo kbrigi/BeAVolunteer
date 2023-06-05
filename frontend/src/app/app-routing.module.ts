@@ -11,21 +11,17 @@ import { OrgDetailsComponent } from './user/components/details/org-details/org-d
 import { ProjDetailsComponent } from './project/components/proj-details/proj-details.component';
 import { ProfilePageComponent } from './profile/components/profile-page/profile-page.component';
 import { HomeComponent } from './home/component/home.component';
+import { RegistrationFormComponent } from './user/components/form/registration-form/registration-form.component';
 
 const routes: Routes = [
   {
-    path: 'registration/user',
-    component: VolunteerFormComponent,
+    path: 'registration/:page',
+    component: RegistrationFormComponent,
     pathMatch: 'full'
   },
   {
     path: '',
     component: HomeComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'registration/org',
-    component: OrgFormComponent,
     pathMatch: 'full'
   },
   {

@@ -6,6 +6,8 @@ import { TokenInterceptor } from './services/interceptor/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     CommonModule, 
+    MatInputModule,
+    FormsModule,
   ],
   providers: [
     BackendService,

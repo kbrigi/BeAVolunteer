@@ -1,29 +1,55 @@
-<div class="container" style="margin: 15% 35%;">
-    <form [formGroup]="loginForm" #formDirective="ngForm" (ngSubmit)="login(formDirective)">
-  
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>email</mat-label>
-          <input matInput formControlName="email">
-          <mat-icon matSuffix>account_circle</mat-icon>
-        </mat-form-field>
-      </div>
-  
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>password</mat-label>
-          <input [type]="'password'" matInput formControlName="password">
-          <mat-icon matSuffix> lock</mat-icon>
-        </mat-form-field>
-      </div>
-  
-      <div class="row">
-        <button mat-raised-button class="button" [disabled]="!loginForm.valid" mat-raised-button mat-button color="primary"
-                type="submit">
-          Login
-        </button>
-      </div>
-  
-    </form>
+<div class="container">
+
+  <mat-card class="card">
+
+   <mat-card-content class="bothParts">
+    <div class="loginPart">
+    
+      <img class="logo" src="../../../../../assets/logoDark.png" width="80" height="80">
+      <h4 style="padding-bottom: 10%;">Welcome back!</h4>
+      <form [formGroup]="loginForm" #formDirective="ngForm" (ngSubmit)="login(formDirective)">
+    
+        <div class="row">
+          <mat-form-field appearance="fill">
+            <mat-label>email</mat-label>
+            <input matInput formControlName="email">
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-error *ngIf="loginForm.controls['email'].invalid">not a valid email</mat-error>
+          </mat-form-field>
+        </div>
+    
+        <div class="row">
+          <mat-form-field appearance="fill">
+            <mat-label>password</mat-label>
+            <input [type]="'password'" matInput formControlName="password">
+            <mat-icon matSuffix> lock</mat-icon>
+            <mat-error *ngIf="loginForm.controls['password'].invalid">min. 8 length and min. 1 number</mat-error>
+          </mat-form-field>
+        </div>
+    
+        <div class="rowSubmit" >
+          <button mat-raised-button class="submitButton" [disabled]="!loginForm.valid" 
+                  type="submit">
+            Log in
+          </button>
+        </div>
+        <p style="margin: 0; text-align: center;">or</p>
+        
+      </form>
+      
+        <div class="row">
+            <button mat-raised-button class="submitButton" routerLink="/registration/org">
+              Create account
+            </button>
+        </div>
+   </div>  
+
+   <div class="imgPart">
+      <img mat-card-img src="../../../../../assets/loginPlants.jpg" width="480" height="465">
+
+
+   </div>
+    </mat-card-content>
+  </mat-card>
   </div>
   

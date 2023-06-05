@@ -1,17 +1,66 @@
-<mat-card>
-    <mat-card-title-group  style="padding: 5%;">
-        <mat-card-title class="org_name">{{org.user}}</mat-card-title>
-         <!-- <mat-card-subtitle class="project_creator_name">{{org.owner}}</mat-card-subtitle> -->
-    </mat-card-title-group>
-    
-    <div>
-        <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
+<div class="container" id="container">
+    <div class="card">
+        <div style="display: flex;">
+            <div class="imgDiv">
+                <img class="image" style="width: 600px; height: 500px;" src="{{org.logo}}" >
+            </div>
+
+            <div class="textDiv">
+                <h3>{{org.user}}</h3>
+                <div class="contact">
+                    <h4>Contact:</h4>
+                    <div>
+                        <mat-icon class="icons" matSuffix>link</mat-icon>
+                        <h5>{{org.website}}</h5>
+                    </div>
+                    
+                    <div>
+                        <mat-icon class="icons" matSuffix>call</mat-icon>
+                        <h5>{{org.phoneNr}}</h5>
+                    </div>
+                    
+                    <div>
+                        <mat-icon class="icons" matSuffix>location_on</mat-icon>
+                        <h5>{{org.address}}</h5>
+                    </div>
+                    
+                    
+
+                </div>
+
+
+            </div>
+            <div class="domains">
+                <div class="domain_img" *ngFor="let domain of org.domains">
+                    <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+                    [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+                </div> 
+            </div>
+        </div>
+
+        <div class="descriptionDiv">
+            <h4>Description:</h4>
+            <div class="description">
+                <p>{{org.description}}</p>
+            </div>
+        </div>
     </div>
 
-    <div class="domain_imgs">
-        <div class="domain_img" *ngFor="let domain of org.domains">
-            <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
-            [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
-        </div> 
-    </div>
-</mat-card>
+    
+<!--     
+    <mat-card>
+        <mat-card-title-group  style="padding: 5%;">
+            <mat-card-title class="org_name">{{org.user}}</mat-card-title>
+            <mat-card-subtitle class="project_creator_name">{{org.owner}}</mat-card-subtitle> 
+        </mat-card-title-group>
+        
+       
+
+        <div class="domain_imgs">
+            <div class="domain_img" *ngFor="let domain of org.domains">
+                <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+                [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+            </div> 
+        </div>
+    </mat-card> -->
+</div>

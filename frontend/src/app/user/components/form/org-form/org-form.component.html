@@ -1,6 +1,8 @@
-<div class="container" style="margin: 5% 35%;">
-    <form [formGroup]="registrationForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
-  
+<div class="container">
+  <h5>Create a new Organization account:</h5>
+    <form [formGroup]="registrationForm" #formDirective="ngForm" style="height:auto" (ngSubmit)="onSubmit(formDirective)">
+    <div class="2cols" style="display: flex;">
+      <div class="col">
       <div class="row">
         <mat-form-field appearance="fill">
           <mat-label>Organization Name</mat-label>
@@ -46,7 +48,7 @@
           <mat-icon matSuffix> lock</mat-icon>
         </mat-form-field>
       </div>
-  
+      
       <div class="password-not-match"
            *ngIf="registrationForm.controls['password'].dirty && registrationForm.controls['confirmationPassword'].dirty  
            && passwordFormControl.value !== confirmPasswordFormControl.value">
@@ -60,14 +62,10 @@
           <input matInput formControlName="address">
         </mat-form-field>
       </div>
-
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <mat-icon matSuffix>description</mat-icon>
-          <textarea matInput rows="4" formControlName="description"></textarea>
-        </mat-form-field>
+  
       </div>
+
+      <div class="col">
 
       <div class="row">
         <mat-form-field appearance="fill">
@@ -77,28 +75,29 @@
         </mat-form-field>
       </div>
 
-      <div class="row"> 
+      <!-- <div class="row"> 
         <mat-form-field>
           <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select an image" accept=".jpeg,.jpg,.png">
             <mat-icon ngxMatFileInputIcon>folder</mat-icon>
           </ngx-mat-file-input>
         </mat-form-field>
-    </div>  
-       <!-- <div class="row"> 
+    </div>   -->
+      <!-- <div class="row">  
         <mat-form-field>
            <label class="org-image" for="logo">Select a logo</label> 
-            <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
+             <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
               <mat-icon style="padding: 12px;" ngxMatFileInputIcon>folder</mat-icon>
-            </ngx-mat-file-input>
-         <input
+            </ngx-mat-file-input> 
+         <input matInput
           class="field pic-choose"
           type="file"
           id="logo"
           name="logo"
           (change)="uploadFile($event)"
-        />  
-        </mat-form-field>
+        />   
+        </mat-form-field> 
       </div>  -->
+
 
       <div class="row">
         <mat-form-field appearance="fill">
@@ -110,13 +109,31 @@
         </mat-form-field>
     </div>
 
+    
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <mat-icon matSuffix>description</mat-icon>
+        <textarea matInput rows="7" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+
+      <div class="row" style="margin-bottom: 5%;" > 
+        <mat-form-field>
+             <ngx-mat-file-input id="logo" formControlName="logo" (change)="uploadFile($event)" placeholder="Select a logo" accept=".jpeg,.jpg,.png">
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input> 
+      </mat-form-field>
+      </div>
+
       <div class="row">
-        <button mat-raised-button class="button" [disabled]="!registrationForm.valid" mat-raised-button mat-button color="primary"
+        <button mat-raised-button class="submitButton" [disabled]="!registrationForm.valid" mat-raised-button mat-button color="primary"
                 type="submit">
           Submit
         </button>
       </div>
-      
+      </div>
+    </div>
     </form>
   </div>
   
