@@ -4,7 +4,7 @@ import { LoginFormComponent } from './user/components/form/login-form/login-form
 import { OrgFormComponent } from './user/components/form/org-form/org-form.component';
 import { ProjFormComponent } from './project/components/proj-form/proj-form.component';
 import { VolunteerFormComponent } from './user/components/form/volunteer-form/volunteer-form.component';
-import { DomainFormComponent } from './domain/components/domain-form/domain-form.component';
+import { DomainFormComponent } from './project/components/domain-form/domain-form.component';
 import { ProjListComponent } from './project/components/proj-list/proj-list.component';
 import { OrgListComponent } from './user/components/list/org-list/org-list.component';
 import { OrgDetailsComponent } from './user/components/details/org-details/org-details.component';

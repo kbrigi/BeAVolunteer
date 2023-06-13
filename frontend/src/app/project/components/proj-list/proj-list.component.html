@@ -62,7 +62,7 @@
     
   <mat-grid-list cols="3" style="margin-top:1%; margin-left: 15%;" rowHeight="1:1.1"  [gutterSize]="'20px'">
       <mat-grid-tile class="tile" *ngFor="let project of projects" style=" margin-top:13%;" >
-          <mat-card style="height: 130%;">
+          <mat-card style="height: 135%; ">
             <div class="imgDiv">
                 <button class="fav" mat-icon-button *ngIf="logedin_user_role === 'USER' && favourite_projects.indexOf(project.project_name) > -1" 
                 (click)="selectFavourite(project.project_name)"  color="warn">

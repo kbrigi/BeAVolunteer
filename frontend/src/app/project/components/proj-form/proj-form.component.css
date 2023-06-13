@@ -25,10 +25,12 @@
 }
 
 form{
+    z-index: 1;
+    display: flex;
     position: absolute;
     top: 0;
     height: 100%;
-    margin-left:60%;
+    margin-left:53%;
     margin-top: 1%;
     left: 0;
     width: 50%;

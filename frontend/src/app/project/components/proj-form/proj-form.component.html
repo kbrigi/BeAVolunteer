@@ -1,8 +1,10 @@
 <div class="container">
   <div class="card">
+  <!-- <div class="allForms"> -->
     <form  [formGroup]="projForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
 
-    <h5 style="margin-bottom: 1%;">Create a new project:</h5>
+    <div style="height: 400px; ">
+    <h5 style="margin-bottom: 2%;">Create a new project:</h5>
         <div class="row">
             <mat-form-field appearance="fill">
               <mat-label>Project Name</mat-label>
@@ -12,14 +14,6 @@
             </mat-form-field>
         </div>
 
-        <div class="row">
-            <mat-form-field appearance="fill">
-              <mat-label>Description</mat-label>
-              <mat-icon matSuffix>description</mat-icon>
-              <textarea matInput rows="4" formControlName="project_description"></textarea>
-              <mat-error *ngIf="projForm.controls['project_description'].invalid">Project's description must have min. length 15.</mat-error>
-            </mat-form-field>
-        </div>
 
         <div class="row">
             <mat-form-field appearance="fill">
@@ -48,19 +42,36 @@
                 <mat-icon ngxMatFileInputIcon>folder</mat-icon>
               </ngx-mat-file-input>
             </mat-form-field>
-        </div>    
+        </div>   
+      </div>    
+
+      <div style="margin-top: 10%; margin-left: 3%; height: 400px;">
+        <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Description</mat-label>
+              <mat-icon matSuffix>description</mat-icon>
+              <textarea matInput rows="10" formControlName="project_description"></textarea>
+              <mat-error *ngIf="projForm.controls['project_description'].invalid">Project's description must have min. length 15.</mat-error>
+            </mat-form-field>
+        </div>
 
         <div class="row">
             <button class="button" [disabled]="!projForm.valid" mat-raised-button mat-button
-                    type="submit">
+                    type="submit" style="width: 100%;">
               Submit
             </button>
           </div>
-
+    </div>
     </form>
+    
+    <div style="margin-left: 30%; margin-top: 18%;
+     z-index: 2; position:relative" *ngIf="logedin_user_role == 'ADMIN'">
+      <app-domain-form></app-domain-form>
+    </div>
+    
+  <!-- </div> -->
   <div class="overlay-container">
     <div class="overlay-panel">
-
     </div>
 
   </div>

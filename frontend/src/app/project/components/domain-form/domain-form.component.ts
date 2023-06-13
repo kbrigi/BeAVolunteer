@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Domain } from '../../models/domain.model';
+import { Domain } from '../../../domain/models/domain.model';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { DomainService } from '../../services/domain.service';
+import { DomainService } from '../../../domain/services/domain.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

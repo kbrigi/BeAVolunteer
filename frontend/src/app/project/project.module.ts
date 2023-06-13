@@ -20,15 +20,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { DomainModule } from '../domain/domain.module';
+import { DomainFormComponent } from './components/domain-form/domain-form.component';
 
 @NgModule({
   declarations: [
     ProjFormComponent,
     ProjListComponent,
-    ProjDetailsComponent
+    ProjDetailsComponent,
+    DomainFormComponent
   ],
   imports: [
     CommonModule,
+    DomainModule,
     MatFormFieldModule,
     MatCardModule,
     NgxMatFileInputModule,

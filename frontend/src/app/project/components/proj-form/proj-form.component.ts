@@ -5,6 +5,8 @@ import { Domain } from 'src/app/domain/models/domain.model';
 import { DomainService } from 'src/app/domain/services/domain.service';
 import { Project } from 'src/app/project/models/project.model';
 import { ProjectService } from '../../services/project.service';
+import { UserService } from 'src/app/user/services/user/user.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-proj-form',
@@ -19,8 +21,10 @@ export class ProjFormComponent {
   // 3 months from now
   maxDate = new Date(Date.now() + (3600 * 1000 * 2160)); 
   domains: Domain[] = [];
+  logedin_user_role: String = '';
   
-  constructor(private formBuilder: FormBuilder, private projectService: ProjectService, private _snackBar: MatSnackBar, private domainService: DomainService) {
+  constructor(private formBuilder: FormBuilder, private projectService: ProjectService,
+     private _snackBar: MatSnackBar, private domainService: DomainService, private userService: UserService) {
     this.projForm = this.initForm();
   }
 
@@ -28,6 +32,16 @@ export class ProjFormComponent {
     this.domainService.getAllDomains().subscribe((result: Domain[]) => 
       this.domains = result
     )
+
+    if (localStorage.getItem('token') !== null) {
+      const token = jwt_decode(localStorage.getItem('token')!);
+      // @ts-ignore
+      const name = token.sub;
+      this.userService.getRole(name).subscribe(result => {
+        this.logedin_user_role = result.role;
+      }
+      );
+    }
   }
 
   private initForm(): FormGroup {
