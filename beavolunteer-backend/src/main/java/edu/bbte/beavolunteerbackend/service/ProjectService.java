@@ -7,10 +7,9 @@ import edu.bbte.beavolunteerbackend.controller.mapper.DomainMapper;
 import edu.bbte.beavolunteerbackend.controller.mapper.ProjectMapper;
 import edu.bbte.beavolunteerbackend.model.Domain;
 import edu.bbte.beavolunteerbackend.model.Project;
+import edu.bbte.beavolunteerbackend.model.Role;
 import edu.bbte.beavolunteerbackend.model.User;
-import edu.bbte.beavolunteerbackend.model.repository.DomainRepository;
-import edu.bbte.beavolunteerbackend.model.repository.ProjectRepository;
-import edu.bbte.beavolunteerbackend.model.repository.UserRepository;
+import edu.bbte.beavolunteerbackend.model.repository.*;
 import edu.bbte.beavolunteerbackend.validator.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,12 @@ public class ProjectService  extends ImgService  {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private VolunteerRepository volunteerRepository;
+
+    @Autowired
+    private OrganizationRepository organizationRepository;
 
     public void saveProject(ProjectInDTO projectDTO, Blob img, Long userID) throws BusinessException {
         if (projectRepository.checkName(projectDTO.getProject_name()) == 0) {
@@ -217,10 +222,20 @@ public class ProjectService  extends ImgService  {
         } else {
             throw new BusinessException("Project name does not exist");
         }
-
     }
 
     public Integer getNr() {
         return projectRepository.getProjectsNr();
+    }
+
+    public String getPhoneByProjectName(String name) {
+        User user = projectRepository.getByName(name).getOwner();
+        if(user.getRole() == Role.USER) {
+            return "4"+volunteerRepository.getById(user.getId()).getPhoneNr();
+        }
+        else if(user.getRole() == Role.ORGANIZATION) {
+            return "4"+organizationRepository.getById(user.getId()).getPhoneNr();
+        }
+        return "";
     }
 }

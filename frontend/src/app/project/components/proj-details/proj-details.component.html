@@ -1,3 +1,57 @@
+<div class="container" id="container">
+    <div class="card">
+        <div style="display: flex;">
+            <div class="imgDiv">
+                <img class="image" style="width: 600px; height: 500px;" src="{{project.project_img}}" >
+            </div>
+
+            <div class="textDiv">
+                <h3>{{project.project_name}}</h3>
+                                <div class="contact">
+                    <h4>Contact:</h4>
+                    <div>
+                        <mat-icon class="icons" matSuffix>account_circle</mat-icon>
+                        <a *ngIf="project.owner.role == 'ORGANIZATION'" [routerLink] = '["/org", project.owner.user]'><h5>{{project.owner.user}}</h5></a>
+                        <h5 *ngIf="project.owner.role != 'ORGANIZATION'" class="project_creator_name">{{project.owner.user}}</h5>
+                    </div>
+
+                    <div>
+                        <mat-icon class="icons" matSuffix> alternate_email</mat-icon>
+                        <h5>{{project.owner.email}}</h5>
+                    </div>
+                    
+                    <div>
+                        <mat-icon class="icons" matSuffix> call</mat-icon>
+                        <h5>+{{phoneNr}}</h5>
+                    </div>
+
+                    <div>
+                        <mat-icon class="icons" matSuffix><mat-icon>date_range</mat-icon></mat-icon>
+                        <h5>{{project.creation_date}} - {{project.expiration_date}}</h5>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="domains">
+                <div class="domain_img" *ngFor="let domain of project.domains">
+                    <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
+                    [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
+                </div> 
+            </div>
+        </div>
+
+        <div class="descriptionDiv">
+            <h4>Description:</h4>
+            <div class="description">
+                <p>{{project.project_description}}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 
 <mat-card>
     <mat-card-title-group style="padding: 5%;">
         <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
@@ -17,4 +71,4 @@
             [routerLink] = '["/projects", domain.domain_name]'><img style="width: 80px; height: 80px;" src="{{domain.domain_img}}" ></button>
         </div> 
     </div>
-</mat-card>
+</mat-card> -->

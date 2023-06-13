@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home/component/home.component';
 import { HomeModule } from './home/home.module';
+import { IgxAvatarModule } from 'igniteui-angular';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HomeModule } from './home/home.module';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    IgxAvatarModule
   ],
   bootstrap: [AppComponent]
 })

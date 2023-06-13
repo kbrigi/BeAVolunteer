@@ -1,0 +1,50 @@
+.container {
+    margin: 15% 35%;    
+    background-color: rgb(9, 32, 5);
+    width: 100%;
+    height: 100%;
+    position:fixed;
+    padding:0;
+    margin:0;
+    overflow-y: scroll;
+    top:0;
+    left:0;
+  }
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 1200px;
+    max-width: 100%;
+    min-height: 600px;
+    margin-top: 5%;
+    margin-left: 10%;
+}
+
+form{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    margin-left:60%;
+    margin-top: 1%;
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.overlay-panel {
+    background: url(../../../../assets/project.jpg) top center /cover no-repeat;
+     position: absolute;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+     padding: 0 40px;
+     text-align: center;
+     top: 0;
+     height: 100%;
+     width: 50%;
+}

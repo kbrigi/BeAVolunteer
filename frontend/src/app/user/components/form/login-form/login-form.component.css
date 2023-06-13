@@ -44,15 +44,25 @@
 }
 
 .imgPart {
-    float:right;
     padding-left: 2%;
-    
-    margin:0;
+    background: url("../../../../../assets/loginPlants.jpg") top center /cover no-repeat;
+    margin-left:51%;
     top:0;
     left:0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    border-radius: 1%;
 }
 
 .imgPart>img {
-    border-radius: 1%;
+    
     margin-left: 11.5%;
 }

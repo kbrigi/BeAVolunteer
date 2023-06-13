@@ -1,15 +1,23 @@
-<h4 style="margin-top: 7%;">{{tab}}</h4>
+<h4 style="margin-top: 7%; color: #ebe8cd;">{{tab}}</h4>
 
-<mat-grid-list cols="3" style="margin-top:3%; margin-left: 10%; " >
+<mat-grid-list cols="3" style="margin-top:3%; margin-left: 1%; " rowHeight="1:1" >
     <mat-grid-tile  *ngFor="let project of projects">
-        <mat-card style="padding: 10%;"  >
-            <mat-card-title-group style="padding: 5%;">
+        <mat-card style="height: 130%;" >
+            <div class="imgDiv">
+                <button class="delete" mat-fab (click)="clickDelete(project.project_name)" 
+                color="warn"  *ngIf="tab == 'Own projects'" >
+                    <mat-icon>delete</mat-icon></button>
+                <img class="image" style="width: 350px; height: 300px;" src="{{project.project_img}}" >
+            </div>
+            
+            <mat-card-title-group  style=" margin-left: 28%;">
                 <mat-card-title class="project_name">{{project.project_name}}</mat-card-title>
-            </mat-card-title-group>
-                <div>
-                    <img class="image" style="width: 250px; height: 200px;" src="{{project.project_img}}" >
-                </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
-                <!-- <mat-card-content class="project_description" *ngFor="let domain of project.domains">{{domain.domain_name}}</mat-card-content> -->
+                <!-- <mat-card-subtitle style="margin-left: 20%;" *ngIf="project.owner.role == 'ORGANIZATION'" class="project_creator_name"><a   
+                    [routerLink] = '["/org", project.owner.user]'>{{project.owner.user}}</a></mat-card-subtitle>
+                <mat-card-subtitle style="margin-left: 20%;" *ngIf="project.owner.role != 'ORGANIZATION'" class="project_creator_name">{{project.owner.user}}</mat-card-subtitle>     -->
+                <!-- <mat-card-subtitle class="project_creator_name">{{project.project_img}}</mat-card-subtitle> -->
+              </mat-card-title-group>
+
             <div class="domain_imgs">    
                 <div class="domain_img" *ngFor="let domain of project.domains">
                     <button mat-fab class="domain_button"  matTooltip="{{domain.domain_name}}"><img style="width: 60px; height: 60px;" src="{{domain.domain_img}}" ></button>
@@ -17,18 +25,15 @@
             </div>
                 
             <div id = "button" >
-                <mat-card-actions>
+                <div style="margin-left: 35%; margin-top: 2%;">
                     <button mat-raised-button [routerLink] = '["/project", project.project_name]' >Details</button>
-                </mat-card-actions>
+                </div>
 
-                <mat-card-actions *ngIf="tab == 'Own projects'">
-                    <button mat-fab (click)="openModifyPopUp(project)"><mat-icon>mode_edit</mat-icon></button>
-                </mat-card-actions>
+                <div style="margin-left: 23%;" *ngIf="tab == 'Own projects'">
+                    <button mat-fab (click)="openModifyPopUp(project)" color="warn">
+                        <mat-icon>mode_edit</mat-icon></button>
+                </div>
 
-                <mat-card-actions *ngIf="tab == 'Own projects'">
-                    <button mat-fab (click)="clickDelete(project.project_name)" >
-                        <mat-icon>delete</mat-icon></button>
-                </mat-card-actions>
                 
             </div>
         </mat-card>

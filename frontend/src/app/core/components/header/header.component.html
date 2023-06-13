@@ -1,7 +1,13 @@
 <nav>
     <div class="header" >
-      <form class="searchbar-form" *ngIf="toggleSearch == true">
-        <mat-form-field class="searchbar" appearance="outline">
+
+    <div style="display: flex; align-items: center; ">
+        <img class="logo" src="../../../../../assets/logo.png" width="30" height="30">
+        <h5 style="margin-top: 0; margin-bottom: 0; margin-left:1%; color: #ebe8cd;">Be a Volunteer</h5>
+      </div>
+ 
+      <form class="searchbar-form" >
+        <mat-form-field class="searchbar" appearance="outline" *ngIf="toggleSearch == true">
           <div class="searchbar-div">
             <button color="primary" class="searchButton" mat-icon-button (click)="search()"
             [disabled]="myControl.value == ''">
@@ -17,11 +23,6 @@
         </mat-form-field>
       </form> 
   
-      
-
-        <button class="buttonOut" *ngIf="logedin" (click)="logout()"  routerLink="/login">
-          <mat-icon>logout</mat-icon>
-        </button>
 
         <button color="primary" class="openSearchButton" mat-icon-button (click)="openSearch()" 
         *ngIf="toggleSearch == false">
@@ -31,16 +32,11 @@
         <button class="button"><a routerLink="/">Home</a>
         </button>
 
-        <img class="logo" src="../../../../../assets/logo.png" width="30" height="30">
- 
         <!-- <button class="button" *ngIf="!logedin"><a routerLink="/registration/user"> New user</a>
         </button>
 
         <button class="button" *ngIf="!logedin"><a routerLink="/registration/org"> New org</a>
         </button> -->
-
-        <button class="button" *ngIf="logedin"><a routerLink="/save/project"> New project</a>
-        </button>
 
         <button class="button" *ngIf="logedin && logedin_user_role === 'ADMIN'"><a routerLink="/save/domain"> New domain</a>
         </button>
@@ -49,13 +45,19 @@
 
         <button class="button"><a routerLink="/orgs"> Organizations</a></button>
 
-        <button class="button" *ngIf="logedin && logedin_user_role != 'ADMIN'" >
-          <a [routerLink]='["/profile/Account", logedin_user_name]'> Profile</a></button>
-
+        <button class="buttonProfile" *ngIf="logedin && logedin_user_role != 'ADMIN'" >
+          <a [routerLink]='["/profile/Account", logedin_user_name]'>
+              <igx-avatar class="name_circle" [initials]="logedin_user_name" shape="circle" size="small"></igx-avatar> 
+          </a> 
+        </button>
   
         <button class="button" *ngIf="!logedin"><a routerLink="/login">Login</a>
         </button>
       
+        <button mat-icon-button class="buttonOut" *ngIf="logedin" (click)="logout()" 
+         routerLink="/login" style="margin-right: 2%;">
+          <mat-icon>logout</mat-icon>
+        </button>
   
     </div>
   </nav>

@@ -25,6 +25,7 @@ export class ProjListComponent implements OnInit {
   domains: Domain[] = []
   orgs: Organization[] = []
   roles: String[] = ["organization", "user"]
+  selected_sort: String = "Newest"
 
   params_domain: String = '';
   query_params_domain: String[] = []
@@ -310,24 +311,30 @@ export class ProjListComponent implements OnInit {
   sortProduct(type: String, by:String): void{
     if  (by == "name") {
       if (type == "+") {
+        this.selected_sort = "Ascending by Name"
         this.projects.sort((a, b) => a.project_name.localeCompare(b.project_name));
       }
       else {
+        this.selected_sort = "Descending by Name"
         this.projects.sort((a, b) => b.project_name.localeCompare(a.project_name));
       }
     }
     else if  (by == "expiration") {
       if (type == "+") {
+        this.selected_sort = "Ascending by expiration date"
         this.projects.sort((a, b) => a.expiration_date.toString().localeCompare(b.expiration_date.toString()));
       }
       else {
+        this.selected_sort = "Descending by expiration date"
         this.projects.sort((a, b) => b.expiration_date.toString().localeCompare(a.expiration_date.toString()));
       }
     }
-    else if  (by == "creation") {
+    else if  (by == "Newest") {
+      this.selected_sort = by
       this.projects.sort((a, b) => a.creation_date.toString().localeCompare(b.creation_date.toString()));
     }
-    else if  (by == "fav") {
+    else if  (by == "Most popular") {
+      this.selected_sort = by
       this.projectService.getFavouriteProjectsSorted().subscribe(result => {
         let names = this.projects.map(item => item.project_name);
         this.projects = result.filter(p => p.expiration_date.toString() > this.current_date && names.indexOf(p.project_name) !== -1);  

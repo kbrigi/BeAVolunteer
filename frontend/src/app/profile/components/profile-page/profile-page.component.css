@@ -1,4 +1,17 @@
+.container{
+    margin: 15% 35%;
+    background-color: rgb(9, 32, 5);
+    width: 100%;
+    height: 100%;
+    position:fixed;
+    padding:0;
+    margin:0;
+    overflow-y: scroll;
+    top:0;
+    left:0;
+}
+
 igx-avatar {
-    background: #d5390e;
-    color: #000000;
+    background: #ebe8cd;
+    color:rgb(9, 32, 5);
 }

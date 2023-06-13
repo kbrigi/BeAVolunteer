@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/user/services/user/user.service';
 
 @Component({
   selector: 'app-proj-details',
@@ -24,8 +25,9 @@ export class ProjDetailsComponent implements OnInit{
     },
     project_img: ''
   };
+  phoneNr: String = '';
 
-  constructor(private projectService: ProjectService,  
+  constructor(private projectService: ProjectService, 
     private activatedRoute: ActivatedRoute){ }
 
 
@@ -34,6 +36,10 @@ export class ProjDetailsComponent implements OnInit{
       this.projectService.getProj(param['name']).subscribe(result => {
         this.project =  result;
         console.log(this.project)
+      })
+
+      this.projectService.getPhoneByProject(param['name']).subscribe(result => {
+        this.phoneNr =  result;
       })
     })
   }

@@ -1,6 +1,8 @@
-<div class="container" style="margin: 15% 35%;">
-    <form [formGroup]="projForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+<div class="container">
+  <div class="card">
+    <form  [formGroup]="projForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
 
+    <h5 style="margin-bottom: 1%;">Create a new project:</h5>
         <div class="row">
             <mat-form-field appearance="fill">
               <mat-label>Project Name</mat-label>
@@ -56,4 +58,11 @@
           </div>
 
     </form>
+  <div class="overlay-container">
+    <div class="overlay-panel">
+
+    </div>
+
+  </div>
+  </div>
 </div>

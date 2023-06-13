@@ -1,16 +1,19 @@
 <div class="container" id="container">
     <h4 class="title">All Organizations</h4>
-    <mat-grid-list cols="3" style="margin-top:2%;" >
+    <mat-grid-list cols="3" style="margin-top:3%;" >
         <mat-grid-tile *ngFor="let org of orgs">
-            <mat-card style="padding: 10%;">
-                <mat-card-title-group style="padding: 5%;">
+            <mat-card>
+                <div class="imgDiv">
+                    <button class="delete" mat-fab color="warn" *ngIf="logedin_user_role === 'ADMIN'" (click)="clickDelete(org.user)" >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <img class="image" style="width: 350px; height: 300px;" src="{{org.logo}}" >
+                </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
+                
+                <mat-card-content>
+                <mat-card-title-group class="title_center" style="padding: 3%; margin-left: 28%;">
                     <mat-card-title class="org_name" > {{org.user}}</mat-card-title>
                 </mat-card-title-group>
-                
-                <mat-card-content >
-                    <div>
-                        <img class="image" style="width: 250px; height: 200px;" src="{{org.logo}}" >
-                    </div><!--  onerror="this.src='https://www.inkling.com/wp-content/uploads/2021/06/SD-default-image.png'" -->
                 <div class="domain_imgs">
                     <div class="domain_img" *ngFor="let domain of org.domains">
                         <button mat-fab class="domain_button" matTooltip="{{domain.domain_name}}"
@@ -21,12 +24,7 @@
 
                 <div id = "button" >
                     <mat-card-actions>
-                        <button mat-raised-button [routerLink] = '["/org", org.user]' >Details</button>
-                    </mat-card-actions>
-
-                    <mat-card-actions>
-                        <button mat-fab  *ngIf="logedin_user_role === 'ADMIN'" (click)="clickDelete(org.user)" >
-                            <mat-icon>delete</mat-icon></button>
+                        <button class="details" mat-raised-button [routerLink] = '["/org", org.user]' >Details</button>
                     </mat-card-actions>
                 </div>
             </mat-card>

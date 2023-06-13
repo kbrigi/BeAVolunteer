@@ -1,3 +1,7 @@
+nav{
+  display: flex;
+}
+
 .header {
     display: flex;
     position: fixed;
@@ -8,8 +12,8 @@
     height: 55px;
     justify-content: space-between;
     align-items: center; 
-    flex: 1;
-    justify-content: center;
+    /* flex: 1; */
+    justify-content: flex-end
   }
   
   .button {
@@ -23,19 +27,38 @@
     font-size: 20px;
     cursor: pointer;
     line-height: 35px;
-    /* margin-left:50px; */
-    /* margin-right: 30px; */
+    position: relative;
   }
 
+  .buttonProfile{
+    background-color: transparent;
+    border: none;
+    padding: 10px 25px;
+  }
+
+ .button:after {
+    content:'';
+    position: absolute;
+    width: 0;
+    left: 0;
+    height: 3px;
+    background-color: #ebe8cd;
+    bottom: -2px;
+    transition: 0.5s;
+  }
+
+  .button:hover:after{
+    width: 90%;
+  }
   
+
   a {
     color: #ebe8cd;
     text-decoration: none;
   }
   
-  a:hover {
+  a:focus {
     color: #bcd2a3;
-
   }
 
 .searchbar-form {
@@ -45,7 +68,7 @@
 }
 
 .searchbar {
-  width: 50%;
+  width: 60%;
   display: flex;
   /* margin-left: 3%; */
 }
@@ -64,12 +87,11 @@
 }
 
 .searchbar-field {
-  opacity: 0;
+  /* opacity: 0; */
   display: flex;
 }
 
 .openSearchButton, .buttonOut{
-  /* margin-top: 2%; */
   color:  #ebe8cd;
 }
 
@@ -77,7 +99,7 @@ input{
   color: #ebe8cd;
 }
 
-.logo{
-  /* margin-left: 10%; */
-  /* margin-right: 15%; */
+igx-avatar {
+  background: #ebe8cd;
+  color:  rgb(9, 32, 5);
 }

@@ -20,17 +20,40 @@
 }
 
 #button {
-    display: flex;
+  display: flex;
+  margin-left: 35%; 
 }
 
 .domain_imgs {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .domain_img {
-    margin: 1%;
+  margin: 1%;
 }
 
 .domain_button {
   margin: 8px 8px 8px 0;
+}
+
+.image{
+  width: 100%; 
+  height: 80%;
+}
+
+.imgDiv {
+  position: relative;
+  display: inline-block;
+}
+
+.delete{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.details{
+  width: 100%;
 }

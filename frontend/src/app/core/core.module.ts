@@ -4,10 +4,9 @@ import {BackendService} from "./services/backend/backend.service";
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { TokenInterceptor } from './services/interceptor/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HeaderComponent } from './components/header/header.component';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { IgxAvatarModule } from 'igniteui-angular';
 
 
 
@@ -18,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule, 
     MatInputModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [
     BackendService,

@@ -28,18 +28,19 @@
     position: absolute;
     top: 0;
     height: 100%;
+    margin-left:15%;
 }
 
 .volunteer-container {
     left: 0;
     width: 50%;
     z-index: 2;
-    margin-left: 45%;
+    margin-left: 47%;
 
 }
 
 .org-container {
-    margin-left: 45%;
+    margin-left: 47%;
     left: 0;
     width: 50%;
     z-index: 1;
@@ -65,7 +66,7 @@ form {
 }
 
 .overlay-panel {
-  background: url(../../../../../assets/journey.jpg) top 50px center /cover no-repeat;
+   background: url(../../../../../assets/journey.jpg) top center /cover no-repeat;
     position: absolute;
     display: flex;
     align-items: center;
@@ -76,4 +77,17 @@ form {
     top: 0;
     height: 100%;
     width: 50%;
+        
+    .website{
+        margin-bottom: 0;
+        margin-top: 55%;
+        font-size: 10px;
+    }
+
+
+    .title{
+        margin-top: 30%;
+        margin-bottom: 5%;
+    }
+
 }

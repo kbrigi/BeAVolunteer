@@ -19,6 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatRadioModule,
     MatMenuModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    MatButtonToggleModule
   ],
   exports: [
     ProjFormComponent

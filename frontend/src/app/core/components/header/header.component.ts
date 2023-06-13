@@ -16,7 +16,7 @@ import { Project } from 'src/app/project/models/project.model';
 export class HeaderComponent {
   logedin: boolean = false;
   logedin_user_role: String = '';
-  logedin_user_name: String = '';
+  logedin_user_name: string = '';
   myControl = new FormControl<string>('');
   options: string[] = [];
   filteredOptions: Observable<string[]> | undefined;

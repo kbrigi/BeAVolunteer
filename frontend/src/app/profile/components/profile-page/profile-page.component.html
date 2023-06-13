@@ -1,32 +1,32 @@
-
+<div class="container">
 <div class="options" style="float: left;">
-    <div style="margin-left: 18%; margin-bottom: 15%;">
+    <div style="margin-left: 18%; margin-bottom: 15%; margin-top: 45%;">
         <igx-avatar class="name_circle" [initials]="logedin_user_name" shape="circle" size="large"></igx-avatar> 
-        <h5>{{logedin_user_name}}</h5>
+        <h5 style="color:#ebe8cd;">{{logedin_user_name}}</h5>
     </div>
 
     <mat-list role="list">
         <mat-list-item  role="listitem" >
             <a mat-button
             style="display: flex;" [routerLink]='["/profile", "Account", logedin_user_name]'>
-                <mat-icon>account_circle</mat-icon>
-                <span>Account</span>
+                <mat-icon style="color: #ebe8cd;">account_circle</mat-icon>
+                <span style="color: #ebe8cd;">Account</span>
         </a>
         </mat-list-item> 
+     
+        <mat-list-item role="listitem" >
+            <a mat-button
+            style="display: flex;" [routerLink]='["/profile", "Own projects", logedin_user_name]'>
+                <mat-icon style="color: #ebe8cd;">article</mat-icon>
+                <span style="color: #ebe8cd;">Own projects</span>
+            </a>
+        </mat-list-item>
 
         <mat-list-item role="listitem" >
             <a mat-button *ngIf="logedin_user_role == 'USER'" 
             style="display: flex;" [routerLink]='["/profile", "Favourites", logedin_user_name]'>
-                <mat-icon>favorite</mat-icon>
-                <span>Favourites</span>
-            </a>
-        </mat-list-item>
-        
-        <mat-list-item role="listitem" >
-            <a mat-button
-            style="display: flex;" [routerLink]='["/profile", "Own projects", logedin_user_name]'>
-                <mat-icon>article</mat-icon>
-                <span>Own projects</span>
+                <mat-icon style="color: #ebe8cd;">favorite</mat-icon>
+                <span style="color: #ebe8cd;">Favourites</span>
             </a>
         </mat-list-item>
     </mat-list>
@@ -39,4 +39,5 @@
     <div *ngIf="tab == 'Account' || tab == undefined">
             <app-volunteer-set></app-volunteer-set>
     </div>
+</div>
 </div>
